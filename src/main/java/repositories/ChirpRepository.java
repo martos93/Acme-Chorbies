@@ -4,9 +4,9 @@ package repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import domain.Cache;
+import domain.Chirp;
 
 @Repository
-public interface ChirpRepository extends JpaRepository<Cache, Integer> {
+public interface ChirpRepository extends JpaRepository<Chirp, Integer> {
 
 }
