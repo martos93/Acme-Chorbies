@@ -23,35 +23,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Chirp extends DomainEntity {
 
 	private Date				moment;
-	private String				message;
+	private String				text;
 	private String				subject;
 	private Collection<String>	attachments;
-	private String				senderName;
-	private String				receiverName;
-
-
-	@NotBlank
-	public String getSenderName() {
-		return this.senderName;
-	}
-	public void setSenderName(final String senderName) {
-		this.senderName = senderName;
-	}
-
-	@NotBlank
-	public String getReceiverName() {
-		return this.receiverName;
-	}
-	public void setReceiverName(final String receiverName) {
-		this.receiverName = receiverName;
-	}
-	@NotBlank
-	public String getMessage() {
-		return this.message;
-	}
-	public void setMessage(final String message) {
-		this.message = message;
-	}
 
 	@NotNull
 	@Past
@@ -62,6 +36,14 @@ public class Chirp extends DomainEntity {
 	}
 	public void setMoment(final Date moment) {
 		this.moment = moment;
+	}
+	
+	@NotBlank
+	public String getText() {
+		return this.text;
+	}
+	public void setText(final String text) {
+		this.text = text;
 	}
 
 	@NotBlank
