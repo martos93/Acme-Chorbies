@@ -18,6 +18,7 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -28,7 +29,7 @@ public class Chorbi extends Actor {
 
 	private String		picture;
 	private String		description;
-	private String		kindRelashionship;
+	private String		kindRelationship;
 	private String		genre;
 	private Date		birthDate;
 	private Coordinates	location;
@@ -37,7 +38,7 @@ public class Chorbi extends Actor {
 
 
 	@NotBlank
-	@Email
+	@URL
 	public String getPicture() {
 		return this.picture;
 	}
@@ -54,11 +55,11 @@ public class Chorbi extends Actor {
 	}
 
 	@Pattern(regexp = "^ACTIVITIES$|^FRIENDSHIP$|^LOVE$")
-	public String getKindRelashionship() {
-		return this.kindRelashionship;
+	public String getKindRelationship() {
+		return this.kindRelationship;
 	}
-	public void setKindRelashionship(final String kindRelashionship) {
-		this.kindRelashionship = kindRelashionship;
+	public void setKindRelationship(final String kindRelationship) {
+		this.kindRelationship = kindRelationship;
 	}
 
 	@Pattern(regexp = "^MAN$|^WOMAN$")
