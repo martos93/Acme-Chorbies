@@ -15,7 +15,6 @@ import org.springframework.validation.Validator;
 import repositories.ActorRepository;
 import security.Authority;
 import security.LoginService;
-import security.UserAccount;
 import domain.Actor;
 
 @Service
@@ -23,10 +22,10 @@ import domain.Actor;
 public class ActorService {
 
 	@Autowired
-	private ActorRepository			actorRepository;
+	private ActorRepository	actorRepository;
 
 	@Autowired
-	private Validator				validator;
+	private Validator		validator;
 
 
 	// Constructor
@@ -49,16 +48,18 @@ public class ActorService {
 	}
 
 	// Other business methods
-	public Actor getLoggedActor() {
-		Actor result;
-		UserAccount user;
-		if (this.isAuthenticated() == true) {
-			user = LoginService.getPrincipal();
-			result = this.actorRepository.findActorByUsername(user.getUsername());
-		} else
-			result = null;
-		return result;
-	}
+	/*
+	 * public Actor getLoggedActor() {
+	 * Actor result;
+	 * UserAccount user;
+	 * if (this.isAuthenticated() == true) {
+	 * user = LoginService.getPrincipal();
+	 * result = this.actorRepository.findActorByUsername(user.getUsername());
+	 * } else
+	 * result = null;
+	 * return result;
+	 * }
+	 */
 
 	public Boolean isAuthenticated() {
 		Boolean res = true;
@@ -71,20 +72,24 @@ public class ActorService {
 		return res;
 	}
 
-	public Actor findActorByUsername(final String username) {
-		return this.actorRepository.findActorByUsername(username);
-	}
+	/*
+	 * public Actor findActorByUsername(final String username) {
+	 * return this.actorRepository.findActorByUsername(username);
+	 * }
+	 */
 
 	public Actor save(final Actor a) {
 		return this.actorRepository.save(a);
 	}
 
-	public Actor edit(final Actor actor) {
-		Assert.notNull(actor);
-		final Actor logged = this.getLoggedActor();
-		Assert.isTrue(actor.equals(logged));
-		return this.save(actor);
-	}
+	/*
+	 * public Actor edit(final Actor actor) {
+	 * Assert.notNull(actor);
+	 * final Actor logged = this.getLoggedActor();
+	 * Assert.isTrue(actor.equals(logged));
+	 * return this.save(actor);
+	 * }
+	 */
 
 	public void checkPrincipal(final Actor actor1, final Actor actor2) {
 		Assert.isTrue(actor1.getId() == actor2.getId());

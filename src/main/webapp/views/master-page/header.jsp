@@ -45,6 +45,17 @@
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()">
+			
+			<li>
+				<a class="fNiv"> 
+					<spring:message code="master.page.chorbi" /> 
+				</a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="chorbi/list.do"><spring:message code="master.page.chorbiList" /></a></li>
+
+				</ul>
+			</li>
 			<li>
 				<a class="fNiv"> 
 					<spring:message code="master.page.profile" /> 
