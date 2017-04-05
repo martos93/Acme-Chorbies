@@ -1,21 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- 
- * PopulateDatabase.xml
- *
- * Copyright (C) 2017 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
- * http://www.tdg-seville.info/License.html
- -->
+<!-- * PopulateDatabase.xml * * Copyright (C) 2017 Universidad de Sevilla 
+	* * The use of this project is hereby constrained to the conditions of the 
+	* TDG Licence, a copy of which you may download from * http://www.tdg-seville.info/License.html -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	">
-	
+
 	<!-- User accounts -->
 
 	<bean id="userAccount1" class="security.UserAccount">
@@ -56,9 +50,32 @@
 			</list>
 		</property>
 	</bean>
-	
-	<!-- Other domain beans come here -->	
-	
+
+	<bean id="userAccount4" class="security.UserAccount">
+		<property name="username" value="chorbi1" />
+		<property name="password" value="3daa859a294cdefb20a84840240a76f5" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="CHORBI" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	<bean id="userAccount5" class="security.UserAccount">
+		<property name="username" value="chorbi2" />
+		<property name="password" value="0c8746de81268518ff83490301db8652" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="CHORBI" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Other domain beans come here -->
+
 	<!-- Admin -->
 
 	<bean id="admin" class="domain.Administrator">
@@ -105,7 +122,7 @@
 		<property name="banned" value="false" />
 		<property name="love">
 			<list>
-				<ref bean="love1"/>
+				<ref bean="love1" />
 			</list>
 		</property>
 		<property name="lovedBy">
@@ -127,7 +144,7 @@
 			<null />
 		</property>
 	</bean>
-	
+
 	<bean id="chorbi2" class="domain.Chorbi">
 		<property name="UserAccount" ref="userAccount3" />
 		<property name="name" value="chorbi2" />
@@ -166,7 +183,7 @@
 		</property>
 		<property name="lovedBy">
 			<list>
-				<ref bean="love1"/>
+				<ref bean="love1" />
 			</list>
 		</property>
 		<property name="sended">
@@ -184,94 +201,94 @@
 			<null />
 		</property>
 	</bean>
-	
+
 	<!-- Chirp -->
-	
+
 	<bean id="chirp1" class="domain.Chirp">
 		<property name="moment" value="2017/03/15 12:20" />
 		<property name="subject" value="Hola" />
 		<property name="text" value="Bienvenido a la web." />
-		
-		<property name="attachments" >
-		<list>
-			<value>http://www.google.es/asdf.jpg</value>
-		</list>
+
+		<property name="attachments">
+			<list>
+				<value>http://www.google.es/asdf.jpg</value>
+			</list>
 		</property>
-		<property name="sender" ref="chorbi1"/>
-		<property name="receiver" ref="chorbi2"/>	
+		<property name="sender" ref="chorbi1" />
+		<property name="receiver" ref="chorbi2" />
 	</bean>
-	
+
 	<bean id="chirp2" class="domain.Chirp">
 		<property name="moment" value="2017/03/15 12:20" />
 		<property name="subject" value="¿Que tal?" />
 		<property name="text" value="¿Tienes whatsapp?" />
-		
-		<property name="attachments" >
-		<list>
-			<value>http://www.asdf.es/asdf.jpg</value>
-		</list>
+
+		<property name="attachments">
+			<list>
+				<value>http://www.asdf.es/asdf.jpg</value>
+			</list>
 		</property>
-		<property name="sender" ref="chorbi1"/>
-		<property name="receiver" ref="chorbi2"/>
+		<property name="sender" ref="chorbi1" />
+		<property name="receiver" ref="chorbi2" />
 	</bean>
-	
+
 	<bean id="chirp3" class="domain.Chirp">
 		<property name="moment" value="2017/03/15 12:20" />
 		<property name="subject" value="¿Que tal?" />
 		<property name="text" value="¿Tienes whatsapp?" />
-		
-		<property name="attachments" >
-		<list>
-			<value>http://www.asdf.es/asdf.jpg</value>
-		</list>
+
+		<property name="attachments">
+			<list>
+				<value>http://www.asdf.es/asdf.jpg</value>
+			</list>
 		</property>
-		<property name="sender" ref="chorbi2"/>
-		<property name="receiver" ref="chorbi1"/>			
+		<property name="sender" ref="chorbi2" />
+		<property name="receiver" ref="chorbi1" />
 	</bean>
-	
+
 	<!-- Banner -->
 	<bean id="banners" class="domain.Banner">
-	<property name="banners" >
-	<list>
-	<value>http://www.google.es/banner1.jpg</value>
-	
-	<value>http://www.google.es/banner2.jpg</value>
-	
-	<value>http://www.google.es/banner3.jpg</value>
-	</list>
-	</property>
+		<property name="banners">
+			<list>
+				<value>http://www.google.es/banner1.jpg</value>
+
+				<value>http://www.google.es/banner2.jpg</value>
+
+				<value>http://www.google.es/banner3.jpg</value>
+			</list>
+		</property>
 	</bean>
-	
+
 	<!-- Cache -->
 	<bean id="cache" class="domain.Cache">
-	<property name="time" value="200" />
+		<property name="time" value="200" />
 	</bean>
-	
+
 	<!-- Templates -->
 	<bean id="template1" class="domain.Template">
-	<property name="kindRelationship" value="LOVE" />
-	<property name="aproxAge" value="18" />
-	<property name="genre" value="MAN" />
-	<property name="keyword" value="amigable" />
-	<property name="location" ref="coordinate1" />
-	<property name="searcher" ref="chorbi1" />
-	<property name="results">
-	<list></list>
-	</property>
+		<property name="kindRelationship" value="LOVE" />
+		<property name="aproxAge" value="18" />
+		<property name="genre" value="MAN" />
+		<property name="keyword" value="amigable" />
+		<property name="location" ref="coordinate1" />
+		<property name="searcher" ref="chorbi1" />
+		<property name="results">
+			<list></list>
+		</property>
 	</bean>
-	
+
 	<bean id="template2" class="domain.Template">
-	<property name="kindRelationship" value="FRIENDSHIP" />
-	<property name="aproxAge" value="22" />
-	<property name="genre" value="WOMAN" />
-	<property name="keyword" value="amigable" />
-	<property name="location" ref="coordinate2" />
-	<property name="searcher" ref="chorbi2" />
-	<property name="results">
-	<list></list>
-	</property>
+		<property name="kindRelationship" value="FRIENDSHIP" />
+		<property name="aproxAge" value="22" />
+		<property name="genre" value="WOMAN" />
+		<property name="keyword" value="amigable" />
+		<property name="location" ref="coordinate2" />
+		<property name="searcher" ref="chorbi2" />
+		<property name="results">
+			<list></list>
+		</property>
 	</bean>
-	
+
 	<!-- Coordinates -->
 	<bean id="coordinate1" class="domain.Coordinates">
 		<property name="longitude" value="436635345.345345" />
@@ -281,8 +298,8 @@
 		<property name="province" value="Sevilla" />
 		<property name="city" value="Brenes" />
 	</bean>
-	
-	<bean id="coordinate2" class="domain.Coordinates">	
+
+	<bean id="coordinate2" class="domain.Coordinates">
 		<property name="longitude" value="436635345.345345" />
 		<property name="latitude" value="3456565.345435" />
 		<property name="country" value="Spain" />
@@ -290,15 +307,15 @@
 		<property name="province" value="Barcelona" />
 		<property name="city" value="Sant Boi" />
 	</bean>
-	
+
 	<!-- Loves -->
-	
-	<bean id="love1" class ="domain.Love">
-		<property name="moment" value="2017/02/05"/>
-		<property name="comment" value="So beautiful"/>
-		<property name="lover" ref="chorbi1"/>
-		<property name="loved" ref="chorbi2"/>	
-		
+
+	<bean id="love1" class="domain.Love">
+		<property name="moment" value="2017/02/05" />
+		<property name="comment" value="So beautiful" />
+		<property name="lover" ref="chorbi1" />
+		<property name="loved" ref="chorbi2" />
+
 	</bean>
 
 </beans>
