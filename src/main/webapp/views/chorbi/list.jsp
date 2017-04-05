@@ -19,10 +19,10 @@
 
 <display:table name="chorbi" id="row" requestURI="${requestUri}"
 	class="displaytag" keepStatus="true" pagesize="5" >
-		
-	<spring:message code="chorbi.name" var="titleColumn"/>
-	<display:column property="name" title="${titleColumn}"/>
-	
+
+	<spring:message code="chorbi.name" var="titleColumn" />
+	<display:column property="name" title="${titleColumn}" />
+
 	<spring:message code="chorbi.email" var="titleColumn"/>
 	<display:column property="email" title="${titleColumn}"/>
 	

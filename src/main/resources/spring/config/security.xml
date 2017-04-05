@@ -48,10 +48,10 @@
 		<security:intercept-url pattern="/chorbi/listByLikes.do"
 			access="isAuthenticated()" />
 
-		<security:intercept-url pattern="/chorbi/listLikes.do"
-			access="isAuthenticated()" />
-		<security:intercept-url pattern="/chorbi/listLikedBy.do"
-			access="isAuthenticated()" />
+		<security:intercept-url pattern="/like/chorbi/listLikes.do"
+			access="hasRole('CHORBI')" />
+		<security:intercept-url pattern="/like/chorbi/listLikedBy.do"
+			access="hasRole('CHORBI')" />
 
 
 
