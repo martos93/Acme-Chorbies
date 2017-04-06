@@ -52,6 +52,10 @@
 			access="hasRole('CHORBI')" />
 		<security:intercept-url pattern="/like/chorbi/listLikedBy.do"
 			access="hasRole('CHORBI')" />
+		<security:intercept-url pattern="/like/chorbi/delete.do"
+			access="hasRole('CHORBI')" />
+		<security:intercept-url pattern="/like/chorbi/create.do"
+			access="hasRole('CHORBI')" />
 
 
 

@@ -9,6 +9,7 @@
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 <display:table name="loves" id="row" requestURI="${requestURI}"
 	pagesize="10" class="displaytag">
@@ -24,6 +25,15 @@
 
 	<spring:message code="love.comment" var="comment" />
 	<display:column property="comment" title="${comment}" />
+
+
+	<display:column>
+		<input
+			onclick="javascript: window.location.replace('like/chorbi/delete.do?id=${row.id}');"
+			value="<spring:message code="love.delete" />" type="button"
+			name="delete" />
+	</display:column>
+
 
 
 </display:table>

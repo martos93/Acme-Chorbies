@@ -39,7 +39,7 @@
 						code="master.page.chorbi.likes" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="like/chorbi/listLike.do"><spring:message
+					<li><a href="like/chorbi/listLikes.do"><spring:message
 								code="master.page.chorbi.likes" /></a></li>
 					<li><a href="like/chorbi/listLikedBy.do"><spring:message
 								code="master.page.chorbi.likedBy" /></a></li>
