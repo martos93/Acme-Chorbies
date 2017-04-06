@@ -22,7 +22,7 @@
 <display:table name="chorbi" id="row" requestURI="${requestUri}"
 	class="displaytag" keepStatus="true" pagesize="5">
 	
-	<security:authorize access="hasRole('CHORBI')">
+	<security:authorize access="isAuthenticated()">
 		<spring:message code="chorbi.name" var="titleColumn" />
 		<display:column property="name" title="${titleColumn}" />
 	
@@ -38,18 +38,19 @@
 				onclick="javascript: window.location.replace('chorbi/listByLikes.do?chorbi=${row.id}');"
 				value="<spring:message code="chorbi.love" />" type="button" />
 		</display:column>
-	
-		<jstl:if test="${!row.equals(chorb)}">
-	
-			<spring:message code="chorbi.like" var="titleColumn" />
-			<display:column title="${titleColumn}">
-				<input
-					onclick="javascript: window.location.replace('like/chorbi/create.do?id=${row.id}');"
-					value="<spring:message code="chorbi.like" />" type="button" />
-			</display:column>
-	
-	
-		</jstl:if>
+		<security:authorize access="hasRole('CHORBI')">
+			<jstl:if test="${!row.equals(chorb)}">
+		
+				<spring:message code="chorbi.like" var="titleColumn" />
+				<display:column title="${titleColumn}">
+					<input
+						onclick="javascript: window.location.replace('like/chorbi/create.do?id=${row.id}');"
+						value="<spring:message code="chorbi.like" />" type="button" />
+				</display:column>		
+		
+			</jstl:if>
+		</security:authorize>
+		
 	</security:authorize>
 	
 	<security:authorize access="hasRole('ADMIN')">

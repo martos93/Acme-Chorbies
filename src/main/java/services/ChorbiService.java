@@ -96,9 +96,9 @@ public class ChorbiService {
 	}
 
 	public Boolean isChorbi() {
-		Boolean res = true;
+		Boolean res = false;
 		try {
-			LoginService.getPrincipal().getAuthorities().contains(Authority.CHORBI);
+			res = LoginService.getPrincipal().getAuthorities().contains(Authority.CHORBI);
 		} catch (final Exception e) {
 			res = false;
 		}

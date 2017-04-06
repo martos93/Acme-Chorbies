@@ -9,15 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Chorbi;
 import services.ChorbiService;
+import domain.Chorbi;
 
 @Controller
 @RequestMapping("/chorbi")
 public class ChorbiController extends AbstractController {
 
 	@Autowired
-	private ChorbiService chorbiService;
+	private ChorbiService	chorbiService;
 
 
 	@RequestMapping("/list")
@@ -27,8 +27,10 @@ public class ChorbiController extends AbstractController {
 		final Collection<Chorbi> all = this.chorbiService.findAll();
 
 		res.addObject("chorbi", all);
-		res.addObject("chorb", this.chorbiService.findByPrincipal());
 		res.addObject("requestUri", "/chorbi/list.do");
+
+		if (this.chorbiService.isChorbi())
+			res.addObject("chorb", this.chorbiService.findByPrincipal());
 
 		return res;
 
