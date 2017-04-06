@@ -272,6 +272,7 @@
 		<property name="keyword" value="amigable" />
 		<property name="location" ref="coordinate1" />
 		<property name="searcher" ref="chorbi1" />
+		<property name="moment" value="2017/03/01 00:00" />
 		<property name="results">
 			<list></list>
 		</property>
@@ -284,6 +285,7 @@
 		<property name="keyword" value="amigable" />
 		<property name="location" ref="coordinate2" />
 		<property name="searcher" ref="chorbi2" />
+		<property name="moment" value="2017/04/01 00:00" />
 		<property name="results">
 			<list></list>
 		</property>
