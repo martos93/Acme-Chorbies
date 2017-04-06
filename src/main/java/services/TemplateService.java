@@ -65,7 +65,9 @@ public class TemplateService {
 	}
 
 	public Template save(final Template template) {
+
 		Assert.notNull(template);
+		Assert.isTrue(this.chorbiService.findByPrincipal().equals(template.getSearcher()));
 		Template res;
 		res = this.templateRepository.save(template);
 		return res;
