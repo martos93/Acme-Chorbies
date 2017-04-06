@@ -2,18 +2,23 @@
 package domain;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -24,6 +29,7 @@ public class Template extends DomainEntity {
 	private String		genre;
 	private String		keyword;
 	private Coordinates	location;
+	private Date		moment;
 
 
 	@Pattern(regexp = "^ACTIVITIES$|^FRIENDSHIP$|^LOVE$")
@@ -63,6 +69,18 @@ public class Template extends DomainEntity {
 	}
 	public void setLocation(final Coordinates location) {
 		this.location = location;
+	}
+
+	@Past
+	@NotNull
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
+	public Date getMoment() {
+		return this.moment;
+	}
+
+	public void setMoment(final Date moment) {
+		this.moment = moment;
 	}
 
 
