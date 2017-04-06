@@ -28,6 +28,9 @@ public class ChorbiService {
 	@Autowired
 	private ActorService		actorService;
 
+	@Autowired
+	private LoginService		loginService;
+
 
 	public Chorbi create() {
 
@@ -100,9 +103,10 @@ public class ChorbiService {
 	}
 
 	public Chorbi findByPrincipal() {
+
 		final UserAccount userAccount = LoginService.getPrincipal();
 		final Chorbi chorbi = this.chorbiRepository.findByPrincipal(userAccount.getId());
-
+		System.out.println();
 		Assert.isTrue(chorbi.getUserAccount().equals(userAccount));
 		return chorbi;
 	}
