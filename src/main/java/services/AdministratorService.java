@@ -7,10 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import domain.Administrator;
 import repositories.AdministratorRepository;
 import security.Authority;
 import security.LoginService;
+import domain.Administrator;
+import domain.Chorbi;
 
 @Service
 @Transactional
@@ -18,7 +19,14 @@ public class AdministratorService {
 
 	//Repository---------------------------------------------------------
 	@Autowired
-	private AdministratorRepository administratorRepository;
+	private AdministratorRepository	administratorRepository;
+
+	//Services-----------------------------------------------------------
+	@Autowired
+	private ActorService			actorService;
+
+	@Autowired
+	private ChorbiService			chorbiService;
 
 
 	//Constructor--------------------------------------------------------
@@ -38,6 +46,22 @@ public class AdministratorService {
 		final Authority aut = new Authority();
 		aut.setAuthority(Authority.ADMIN);
 		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(aut));
+	}
+
+	public void banChorbi(final Chorbi c) {
+		Assert.isTrue(this.actorService.isAuthenticated());
+		this.checkLoggedIsAdmin();
+		c.getUserAccount().setIsBanned(true);
+		this.chorbiService.save(c);
+
+	}
+
+	public void unBanChorbi(final Chorbi c) {
+		Assert.isTrue(this.actorService.isAuthenticated());
+		this.checkLoggedIsAdmin();
+		c.getUserAccount().setIsBanned(false);
+		this.chorbiService.save(c);
+
 	}
 
 }

@@ -25,6 +25,16 @@
 		<put-attribute name="title" value="Chorbis" />
 		<put-attribute name="body" value="/views/chorbi/list.jsp" />
 	</definition>
+	
+	<definition name="chorbi/listChorbiNotBanned" extends="master.page">	
+		<put-attribute name="title" value="Chorbis no baneados" />
+		<put-attribute name="body" value="/views/chorbi/list.jsp" />
+	</definition>
+	
+	<definition name="chorbi/listChorbiBanned" extends="master.page">	
+		<put-attribute name="title" value="Chorbis baneados" />
+		<put-attribute name="body" value="/views/chorbi/list.jsp" />
+	</definition>
 
 	
 </tiles-definitions>

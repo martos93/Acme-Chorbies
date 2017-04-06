@@ -12,15 +12,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import repositories.ChorbiRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 import domain.Chirp;
 import domain.Chorbi;
 import domain.Coordinates;
 import domain.Love;
 import domain.Template;
-import repositories.ChorbiRepository;
-import security.Authority;
-import security.LoginService;
-import security.UserAccount;
 
 @Service
 @Transactional
@@ -190,5 +190,13 @@ public class ChorbiService {
 				res.add(chorbi);
 		return res;
 
+	}
+
+	public Collection<Chorbi> findAllNotBanned() {
+		return this.chorbiRepository.findAllNotBanned();
+	}
+
+	public Collection<Chorbi> findAllBanned() {
+		return this.chorbiRepository.findAllBanned();
 	}
 }

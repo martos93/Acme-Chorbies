@@ -21,35 +21,59 @@
 
 <display:table name="chorbi" id="row" requestURI="${requestUri}"
 	class="displaytag" keepStatus="true" pagesize="5">
-
-	<spring:message code="chorbi.name" var="titleColumn" />
-	<display:column property="name" title="${titleColumn}" />
-
-	<spring:message code="chorbi.email" var="titleColumn" />
-	<display:column property="email" title="${titleColumn}" />
-
-	<spring:message code="chorbi.genre" var="titleColumn" />
-	<display:column property="genre" title="${titleColumn}" />
-
-	<spring:message code="chorbi.love" var="titleColumn" />
-	<display:column title="${titleColumn}">
-		<input
-			onclick="javascript: window.location.replace('chorbi/listByLikes.do?chorbi=${row.id}');"
-			value="<spring:message code="chorbi.love" />" type="button" />
-	</display:column>
-
-	<jstl:if test="${!row.equals(chorb)}">
-
-		<spring:message code="chorbi.like" var="titleColumn" />
+	
+	<security:authorize access="hasRole('CHORBI')">
+		<spring:message code="chorbi.name" var="titleColumn" />
+		<display:column property="name" title="${titleColumn}" />
+	
+		<spring:message code="chorbi.email" var="titleColumn" />
+		<display:column property="email" title="${titleColumn}" />
+	
+		<spring:message code="chorbi.genre" var="titleColumn" />
+		<display:column property="genre" title="${titleColumn}" />
+	
+		<spring:message code="chorbi.love" var="titleColumn" />
 		<display:column title="${titleColumn}">
 			<input
-				onclick="javascript: window.location.replace('like/chorbi/create.do?id=${row.id}');"
-				value="<spring:message code="chorbi.like" />" type="button" />
+				onclick="javascript: window.location.replace('chorbi/listByLikes.do?chorbi=${row.id}');"
+				value="<spring:message code="chorbi.love" />" type="button" />
 		</display:column>
-
-
-	</jstl:if>
-
+	
+		<jstl:if test="${!row.equals(chorb)}">
+	
+			<spring:message code="chorbi.like" var="titleColumn" />
+			<display:column title="${titleColumn}">
+				<input
+					onclick="javascript: window.location.replace('like/chorbi/create.do?id=${row.id}');"
+					value="<spring:message code="chorbi.like" />" type="button" />
+			</display:column>
+	
+	
+		</jstl:if>
+	</security:authorize>
+	
+	<security:authorize access="hasRole('ADMIN')">
+		<spring:message code="chorbi.username" var="titleColumn" />
+		<display:column property="userAccount.username" title="${titleColumn}" />
+		
+		<jstl:if test="${ban }">
+			<spring:message code="chorbi.ban" var="titleColumn" />
+			<display:column title="${titleColumn}">
+				<input
+					onclick="javascript: window.location.replace('administrator/banChorbi.do?chorbi=${row.id}');"
+					value="<spring:message code="chorbi.ban" />" type="button" />
+			</display:column>
+		</jstl:if>
+		
+		<jstl:if test="${unban }">
+			<spring:message code="chorbi.unban" var="titleColumn" />
+			<display:column title="${titleColumn}">
+				<input
+					onclick="javascript: window.location.replace('administrator/unBanChorbi.do?chorbi=${row.id}');"
+					value="<spring:message code="chorbi.unban" />" type="button" />
+			</display:column>
+		</jstl:if>
+	</security:authorize>
 
 
 </display:table>

@@ -10,13 +10,28 @@
 
 package controllers;
 
+import java.util.Collection;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import services.AdministratorService;
+import services.ChorbiService;
+import domain.Chorbi;
 
 @Controller
 @RequestMapping("/administrator")
 public class AdministratorController extends AbstractController {
+
+	@Autowired
+	private ChorbiService			chorbiService;
+
+	@Autowired
+	private AdministratorService	administratorService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -24,26 +39,66 @@ public class AdministratorController extends AbstractController {
 		super();
 	}
 
-	// Action-1 ---------------------------------------------------------------		
+	@RequestMapping("/listChorbiNotBanned")
+	public ModelAndView listChorbiNotBanned() {
+		ModelAndView res;
 
-	@RequestMapping("/action-1")
-	public ModelAndView action1() {
-		ModelAndView result;
+		res = new ModelAndView("chorbi/listChorbiNotBanned");
+		final Collection<Chorbi> all = this.chorbiService.findAllNotBanned();
+		res.addObject("chorbi", all);
+		res.addObject("requestUri", "administrator/listChorbiBanned.do");
+		res.addObject("ban", true);
+		return res;
+	}
 
-		result = new ModelAndView("administrator/action-1");
+	@RequestMapping("/listChorbiBanned")
+	public ModelAndView listChorbiBanned() {
+		ModelAndView res;
+
+		res = new ModelAndView("chorbi/listChorbiBanned");
+		final Collection<Chorbi> all = this.chorbiService.findAllBanned();
+		res.addObject("chorbi", all);
+		res.addObject("requestUri", "administrator/listChorbiBanned.do");
+		res.addObject("unban", true);
+
+		return res;
+	}
+
+	@RequestMapping("/banChorbi")
+	public ModelAndView banChorbi(@RequestParam final int chorbi) {
+		final ModelAndView result;
+		result = new ModelAndView("chorbi/listChorbiBanned");
+
+		try {
+			final Chorbi c = this.chorbiService.findOne(chorbi);
+			this.administratorService.banChorbi(c);
+			result.addObject("message", "master.page.bannSuccess");
+		} catch (final Exception oops) {
+			result.addObject("message", "master.page.bannUnSuccess");
+		}
+
+		final Collection<Chorbi> all = this.chorbiService.findAllBanned();
+		result.addObject("chorbi", all);
 
 		return result;
 	}
 
-	// Action-2 ---------------------------------------------------------------
+	@RequestMapping("/unBanChorbi")
+	public ModelAndView unBanChorbi(@RequestParam final int chorbi) {
+		final ModelAndView result;
+		result = new ModelAndView("chorbi/listChorbiNotBanned");
 
-	@RequestMapping("/action-2")
-	public ModelAndView action2() {
-		ModelAndView result;
+		try {
+			final Chorbi c = this.chorbiService.findOne(chorbi);
+			this.administratorService.unBanChorbi(c);
+			result.addObject("message", "master.page.unBannSuccess");
+		} catch (final Exception oops) {
+			result.addObject("message", "master.page.unBannUnSuccess");
+		}
 
-		result = new ModelAndView("administrator/action-2");
+		final Collection<Chorbi> all = this.chorbiService.findAllNotBanned();
+		result.addObject("chorbi", all);
 
 		return result;
 	}
-
 }

@@ -15,6 +15,7 @@
 	<bean id="userAccount1" class="security.UserAccount">
 		<property name="username" value="admin" />
 		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="isBanned" value="false"/>
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -25,12 +26,10 @@
 	</bean>
 
 
-
-
-
 	<bean id="userAccount2" class="security.UserAccount">
 		<property name="username" value="chorbi1" />
 		<property name="password" value="3daa859a294cdefb20a84840240a76f5" />
+		<property name="isBanned" value="false"/>
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -42,6 +41,7 @@
 	<bean id="userAccount3" class="security.UserAccount">
 		<property name="username" value="chorbi2" />
 		<property name="password" value="0c8746de81268518ff83490301db8652" />
+		<property name="isBanned" value="false"/>
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -78,8 +78,6 @@
 		<property name="birthDate" value="1993/03/12" />
 		<property name="location">
 			<bean class="domain.Coordinates">
-				<property name="longitude" value="43535345.345345" />
-				<property name="latitude" value="345435.345435" />
 				<property name="country" value="Spain" />
 				<property name="state" value="Andalucía" />
 				<property name="province" value="Sevilla" />
@@ -135,8 +133,6 @@
 		<property name="birthDate" value="1995/03/12" />
 		<property name="location">
 			<bean class="domain.Coordinates">
-				<property name="longitude" value="436635345.345345" />
-				<property name="latitude" value="3456565.345435" />
 				<property name="country" value="Spain" />
 				<property name="state" value="Andalucía" />
 				<property name="province" value="Sevilla" />
@@ -270,8 +266,6 @@
 
 	<!-- Coordinates -->
 	<bean id="coordinate1" class="domain.Coordinates">
-		<property name="longitude" value="436635345.345345" />
-		<property name="latitude" value="3456565.345435" />
 		<property name="country" value="Spain" />
 		<property name="state" value="Andalucía" />
 		<property name="province" value="Sevilla" />
@@ -279,8 +273,6 @@
 	</bean>
 
 	<bean id="coordinate2" class="domain.Coordinates">
-		<property name="longitude" value="436635345.345345" />
-		<property name="latitude" value="3456565.345435" />
 		<property name="country" value="Spain" />
 		<property name="state" value="Barcelona" />
 		<property name="province" value="Barcelona" />
