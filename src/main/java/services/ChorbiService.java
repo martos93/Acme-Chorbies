@@ -8,14 +8,15 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
+import domain.Chirp;
+import domain.Chorbi;
+import domain.Love;
 import repositories.ChorbiRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
-import domain.Chirp;
-import domain.Chorbi;
-import domain.Love;
 
 @Service
 @Transactional
@@ -98,15 +99,13 @@ public class ChorbiService {
 		return res;
 	}
 
-	/*
-	 * public Chorbi findByPrincipal() {
-	 * final UserAccount userAccount = LoginService.getPrincipal();
-	 * final Chorbi chorbi = this.chorbiRepository.findByPrincipal(userAccount.getId());
-	 * 
-	 * Assert.isTrue(chorbi.getUserAccount().equals(userAccount));
-	 * return chorbi;
-	 * }
-	 */
+	public Chorbi findByPrincipal() {
+		final UserAccount userAccount = LoginService.getPrincipal();
+		final Chorbi chorbi = this.chorbiRepository.findByPrincipal(userAccount.getId());
+
+		Assert.isTrue(chorbi.getUserAccount().equals(userAccount));
+		return chorbi;
+	}
 
 	public Collection<Chorbi> getLikersByChorbiId(final int id) {
 
