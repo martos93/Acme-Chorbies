@@ -95,9 +95,11 @@ public class ChorbiController extends AbstractController {
 				if (bindingResult.hasErrors()) {
 					System.out.println(bindingResult.getAllErrors());
 					res.addObject("requestUri", "chorbi/register.do");
+					res.addObject("edit", false);
 					res.addObject("chorbiForm", chorbiForm);
 				} else if (chorbiForm.isAcceptTerms() != true) {
 					res.addObject("chorbiForm", chorbiForm);
+					res.addObject("edit", false);
 					res.addObject("requestUri", "chorbi/register.do");
 					res.addObject("message", "chorbi.acceptTerms.error");
 				} else {
@@ -109,16 +111,19 @@ public class ChorbiController extends AbstractController {
 
 				res = new ModelAndView("chorbi/register");
 				res.addObject("chorbiForm", chorbiForm);
+				res.addObject("edit", false);
 				res.addObject("message", "chorbi.error.exists");
 
-			} catch (final Exception e) {
+			} catch (final Throwable e) {
 
-				System.out.println(e.getLocalizedMessage());
+				System.out.println(e.getMessage());
+				res.addObject("edit", false);
 				res.addObject("message", "chorbi.commit.error");
 
 			}
 		else {
 			res.addObject("chorbiForm", chorbiForm);
+			res.addObject("edit", false);
 			res.addObject("message", "chorbi.password.error");
 		}
 		return res;
