@@ -12,6 +12,7 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <form:form action="${requestUri}" modelAttribute="chorbiForm">
+	<form:hidden path="chorbiId"/>
 	
 	<jstl:if test="${edit==false}">
 	<fieldset>
@@ -27,8 +28,10 @@
 	<legend><spring:message code="chorbi.account"/></legend>
 	<acme:textbox readonly="true" code="chorbi.username" path="username"/>
 	<acme:password code="chorbi.current.password" path="password"/><b><spring:message code="chorbi.passwordinfo"/></b>
-	<acme:password code="chorbi.newpassword" path="newpassword"/><b><spring:message code="chorbi.passwordinfo2"/></b>
-	<acme:password code="chorbi.confirmPassword" path="confirmPassword"/><b><spring:message code="chorbi.passwordinfo2"/></b>
+	<acme:password code="chorbi.newpassword" path="newpassword"/>
+	<acme:password code="chorbi.confirmPassword" path="repeatnewpassword"/>
+	<b><spring:message code="chorbi.passwordinfo2"/></b>	
+	
 	</fieldset>
 	</jstl:if>
 	
@@ -44,9 +47,9 @@
 		<spring:message code="chorbi.kindRelationship" />
 	</form:label>	
 	<form:select path="kindRelationship">
-		<form:option value="LOVE">LOVE</form:option>
-		<form:option value="FRIENDSHIP">FRIENDSHIP</form:option>
-		<form:option value="ACTIVITIES">ACTIVITIES</form:option>
+		<form:option value="LOVE"><spring:message code="chorbi.love2"/></form:option>
+		<form:option value="FRIENDSHIP"><spring:message code="chorbi.friendship"/></form:option>
+		<form:option value="ACTIVITIES"><spring:message code="chorbi.activities"/></form:option>
 		
 		
 	</form:select>
@@ -57,8 +60,8 @@
 		<spring:message code="chorbi.genre" />
 	</form:label>	
 	<form:select path="genre">
-		<form:option value="MAN">MAN</form:option>
-		<form:option value="WOMAN">WOMAN</form:option>
+		<form:option value="MAN"><spring:message code="chorbi.man"/></form:option>
+		<form:option value="WOMAN"><spring:message code="chorbi.woman"/></form:option>
 		
 		
 	</form:select>
@@ -80,7 +83,23 @@
 	<fieldset>
 	<legend><spring:message code="chorbi.creditcard"/></legend>
 	<acme:textbox code="chorbi.holderName" path="holderName"/>
-	<acme:textbox code="chorbi.brandName" path="brandName"/>
+	
+	<form:label path="brandName">
+		<spring:message code="chorbi.brandName" />
+	</form:label>	
+	<form:select path="brandName">
+		<form:option value="VISA">VISA</form:option>
+		<form:option value="MASTERCARD">MASTERCARD</form:option>
+		<form:option value="DISCOVER">DISCOVER</form:option>
+		<form:option value="DINNERS">DINNERS</form:option>
+		<form:option value="AMEX">AMEX</form:option>
+		
+		
+	</form:select>
+	<form:errors path="brandName" cssClass="error" />
+	<br>
+	
+	
 	<acme:textbox code="chorbi.number" path="number"/>
 	<acme:textbox code="chorbi.expirationMonth" path="expirationMonth"/>
 	<acme:textbox code="chorbi.expirationYear" path="expirationYear"/>

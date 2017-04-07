@@ -218,6 +218,7 @@ public class ChorbiService {
 
 	public ChorbiForm reconstructForm(final Chorbi chorbi) {
 		final ChorbiForm chorbiForm = new ChorbiForm();
+		chorbiForm.setAcceptTerms(true);
 		chorbiForm.setChorbiId(chorbi.getId());
 		chorbiForm.setUsername(chorbi.getUserAccount().getUsername());
 		chorbiForm.setName(chorbi.getName());
@@ -249,10 +250,9 @@ public class ChorbiService {
 
 		chorbi.getUserAccount().setUsername(chorbiForm.getUsername());
 
-		if (chorbiForm.getNewpassword() != null && chorbiForm.getConfirmPassword() != null && chorbiForm.getNewpassword().equals(chorbiForm.getConfirmPassword())) {
-
+		if ((chorbiForm.getNewpassword().length() > 0 && chorbiForm.getRepeatnewpassword().length() > 0 && chorbiForm.getNewpassword().equals(chorbiForm.getRepeatnewpassword()))) {
 			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
-			chorbi.getUserAccount().setPassword(encoder.encodePassword(chorbiForm.getPassword(), null));
+			chorbi.getUserAccount().setPassword(encoder.encodePassword(chorbiForm.getNewpassword(), null));
 		}
 		chorbi.setName(chorbiForm.getName());
 		chorbi.setSurname(chorbiForm.getSurname());

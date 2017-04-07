@@ -31,8 +31,7 @@
 			access="permitAll" />
 		<security:intercept-url pattern="/styles/**"
 			access="permitAll" />
-		<security:intercept-url pattern="/chorbi/register.do"
-			access="permitAll" />
+		
 		<security:intercept-url pattern="/views/misc/index.jsp"
 			access="permitAll" />
 
@@ -48,7 +47,8 @@
 			access="isAuthenticated()" />
 		<security:intercept-url pattern="/chorbi/listByLikes.do"
 			access="isAuthenticated()" />
-
+<security:intercept-url pattern="/chorbi/register.do"
+			access="isAnonymous()" />
 
 		<security:intercept-url pattern="/chorbi/edit.do"
 			access="hasRole('CHORBI')" />

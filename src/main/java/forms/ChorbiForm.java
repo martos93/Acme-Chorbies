@@ -45,6 +45,7 @@ public class ChorbiForm {
 	private int		expirationYear;
 	private int		cvvCode;
 	private String	newpassword;
+	private String	repeatnewpassword;
 	private int		chorbiId;
 
 
@@ -116,7 +117,6 @@ public class ChorbiForm {
 		this.password = password;
 	}
 
-	@Size(min = 5, max = 32)
 	public String getConfirmPassword() {
 		return this.confirmPassword;
 	}
@@ -251,6 +251,12 @@ public class ChorbiForm {
 	}
 	public void setChorbiId(final int chorbiId) {
 		this.chorbiId = chorbiId;
+	}
+	public String getRepeatnewpassword() {
+		return this.repeatnewpassword;
+	}
+	public void setRepeatnewpassword(final String repeatnewpassword) {
+		this.repeatnewpassword = repeatnewpassword;
 	}
 
 }
