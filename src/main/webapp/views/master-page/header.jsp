@@ -16,7 +16,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 
 <div>
-	<img src="images/logo.png" alt="Sample Co., Inc." />
+	<img src="images/logo.jpg" alt="Acme-Chorbi" />
 </div>
 
 <div>
@@ -49,6 +49,8 @@
 		<security:authorize access="isAnonymous()">
 			<li><a class="fNiv" href="security/login.do"><spring:message
 						code="master.page.login" /></a></li>
+						<li><a class="fNiv" href="chorbi/register.do"><spring:message
+						code="master.page.register" /></a></li>
 		</security:authorize>
 
 		<security:authorize access="isAuthenticated()">

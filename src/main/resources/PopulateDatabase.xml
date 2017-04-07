@@ -223,11 +223,11 @@
 	<bean id="banners" class="domain.Banner">
 		<property name="banners">
 			<list>
-				<value>http://www.google.es/banner1.jpg</value>
+				<value>images/bannerbnb.png</value>
 
-				<value>http://www.google.es/banner2.jpg</value>
+				<value>images/bannercng.jpg</value>
 
-				<value>http://www.google.es/banner3.jpg</value>
+				<value>images/bannerpadthai.jpg</value>
 			</list>
 		</property>
 	</bean>

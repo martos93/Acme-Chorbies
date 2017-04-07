@@ -33,7 +33,6 @@ public class Chorbi extends Actor {
 	private Date		birthDate;
 	private Coordinates	location;
 	private CreditCard	creditCard;
-	private boolean		banned;
 
 
 	@NotBlank
@@ -92,13 +91,6 @@ public class Chorbi extends Actor {
 	}
 	public void setCreditCard(final CreditCard creditCard) {
 		this.creditCard = creditCard;
-	}
-
-	public boolean getBanned() {
-		return this.banned;
-	}
-	public void setBanned(final boolean banned) {
-		this.banned = banned;
 	}
 
 

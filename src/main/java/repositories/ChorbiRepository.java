@@ -23,4 +23,7 @@ public interface ChorbiRepository extends JpaRepository<Chorbi, Integer> {
 
 	@Query("select c from Chorbi c where c.userAccount.isBanned=true")
 	public Collection<Chorbi> findAllBanned();
+
+	@Query("select a from Chorbi a where a.userAccount.username=?1")
+	public Chorbi findChorbiByUsername(String username);
 }

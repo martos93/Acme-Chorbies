@@ -9,18 +9,21 @@ import java.util.Date;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import domain.Chirp;
+import domain.Chorbi;
+import domain.Coordinates;
+import domain.CreditCard;
+import domain.Love;
+import domain.Template;
+import forms.ChorbiForm;
 import repositories.ChorbiRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
-import domain.Chirp;
-import domain.Chorbi;
-import domain.Coordinates;
-import domain.Love;
-import domain.Template;
 
 @Service
 @Transactional
@@ -44,10 +47,10 @@ public class ChorbiService {
 		final Collection<Authority> authorities = userAccount.getAuthorities();
 		authorities.add(aut);
 		userAccount.setAuthorities(authorities);
+		userAccount.setIsBanned(false);
 
 		final Chorbi res = new Chorbi();
 		res.setUserAccount(userAccount);
-		res.setBanned(false);
 		res.setSended(new ArrayList<Chirp>());
 		res.setReceived(new ArrayList<Chirp>());
 		res.setLove(new ArrayList<Love>());
@@ -198,5 +201,130 @@ public class ChorbiService {
 
 	public Collection<Chorbi> findAllBanned() {
 		return this.chorbiRepository.findAllBanned();
+	}
+
+	// Other business methods
+
+	public Chorbi getLoggedChorbi() {
+		Chorbi result;
+		UserAccount user;
+		if (this.isAuthenticated() == true) {
+			user = LoginService.getPrincipal();
+			result = this.chorbiRepository.findChorbiByUsername(user.getUsername());
+		} else
+			result = null;
+		return result;
+	}
+
+	public ChorbiForm reconstructForm(final Chorbi chorbi) {
+		final ChorbiForm chorbiForm = new ChorbiForm();
+		chorbiForm.setChorbiId(chorbi.getId());
+		chorbiForm.setUsername(chorbi.getUserAccount().getUsername());
+		chorbiForm.setName(chorbi.getName());
+		chorbiForm.setSurname(chorbi.getSurname());
+		chorbiForm.setEmail(chorbi.getEmail());
+		chorbiForm.setPhoneNumber(chorbi.getPhoneNumber());
+		chorbiForm.setPicture(chorbi.getPicture());
+		chorbiForm.setDescription(chorbi.getDescription());
+		chorbiForm.setKindRelationship(chorbi.getKindRelationship());
+		chorbiForm.setGenre(chorbi.getGenre());
+		chorbiForm.setBirthDate(chorbi.getBirthDate());
+
+		chorbiForm.setCity(chorbi.getLocation().getCity());
+		chorbiForm.setCountry(chorbi.getLocation().getCountry());
+		chorbiForm.setProvince(chorbi.getLocation().getProvince());
+		chorbiForm.setState(chorbi.getLocation().getState());
+
+		chorbiForm.setBrandName(chorbi.getCreditCard().getBrandName());
+		chorbiForm.setCvvCode(chorbi.getCreditCard().getCvvCode());
+		chorbiForm.setExpirationMonth(chorbi.getCreditCard().getExpirationMonth());
+		chorbiForm.setExpirationYear(chorbi.getCreditCard().getExpirationYear());
+		chorbiForm.setHolderName(chorbi.getCreditCard().getHolderName());
+		chorbiForm.setNumber(chorbi.getCreditCard().getNumber());
+
+		return chorbiForm;
+	}
+
+	public Chorbi reconstructEdit(final ChorbiForm chorbiForm, final Chorbi chorbi) {
+
+		chorbi.getUserAccount().setUsername(chorbiForm.getUsername());
+
+		if (chorbiForm.getNewpassword() != null && chorbiForm.getConfirmPassword() != null && chorbiForm.getNewpassword().equals(chorbiForm.getConfirmPassword())) {
+
+			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
+			chorbi.getUserAccount().setPassword(encoder.encodePassword(chorbiForm.getPassword(), null));
+		}
+		chorbi.setName(chorbiForm.getName());
+		chorbi.setSurname(chorbiForm.getSurname());
+		chorbi.setEmail(chorbiForm.getEmail());
+		chorbi.setPhoneNumber(chorbiForm.getPhoneNumber());
+		chorbi.setPicture(chorbiForm.getPicture());
+		chorbi.setDescription(chorbiForm.getDescription());
+		chorbi.setKindRelationship(chorbiForm.getKindRelationship());
+		chorbi.setGenre(chorbiForm.getGenre());
+		chorbi.setBirthDate(chorbiForm.getBirthDate());
+
+		final Coordinates location = new Coordinates();
+		location.setCity(chorbiForm.getCity());
+		location.setCountry(chorbiForm.getCountry());
+		location.setProvince(chorbiForm.getProvince());
+		location.setState(chorbiForm.getState());
+
+		chorbi.setLocation(location);
+
+		final CreditCard creditcard = new CreditCard();
+		creditcard.setBrandName(chorbiForm.getBrandName());
+		creditcard.setCvvCode(chorbiForm.getCvvCode());
+		creditcard.setExpirationMonth(chorbiForm.getExpirationMonth());
+		creditcard.setExpirationYear(chorbiForm.getExpirationYear());
+		creditcard.setHolderName(chorbiForm.getHolderName());
+		creditcard.setNumber(chorbiForm.getNumber());
+
+		chorbi.setCreditCard(creditcard);
+		return chorbi;
+	}
+
+	public Chorbi reconstruct(final ChorbiForm chorbiForm) {
+		final Chorbi chorbi = this.create();
+		chorbi.getUserAccount().setUsername(chorbiForm.getUsername());
+		chorbi.getUserAccount().setPassword(chorbiForm.getPassword());
+		chorbi.setName(chorbiForm.getName());
+		chorbi.setSurname(chorbiForm.getSurname());
+		chorbi.setEmail(chorbiForm.getEmail());
+		chorbi.setPhoneNumber(chorbiForm.getPhoneNumber());
+		chorbi.setPicture(chorbiForm.getPicture());
+		chorbi.setDescription(chorbiForm.getDescription());
+		chorbi.setKindRelationship(chorbiForm.getKindRelationship());
+		chorbi.setGenre(chorbiForm.getGenre());
+		chorbi.setBirthDate(chorbiForm.getBirthDate());
+
+		final Coordinates location = new Coordinates();
+		location.setCity(chorbiForm.getCity());
+		location.setCountry(chorbiForm.getCountry());
+		location.setProvince(chorbiForm.getProvince());
+		location.setState(chorbiForm.getState());
+
+		chorbi.setLocation(location);
+
+		final CreditCard creditcard = new CreditCard();
+		creditcard.setBrandName(chorbiForm.getBrandName());
+		creditcard.setCvvCode(chorbiForm.getCvvCode());
+		creditcard.setExpirationMonth(chorbiForm.getExpirationMonth());
+		creditcard.setExpirationYear(chorbiForm.getExpirationYear());
+		creditcard.setHolderName(chorbiForm.getHolderName());
+		creditcard.setNumber(chorbiForm.getNumber());
+
+		chorbi.setCreditCard(creditcard);
+		return chorbi;
+	}
+
+	public void register(final Chorbi chorbi) {
+		Assert.notNull(chorbi);
+		UserAccount userAccount;
+		final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
+		userAccount = chorbi.getUserAccount();
+		userAccount.setPassword(encoder.encodePassword(userAccount.getPassword(), null));
+		chorbi.setUserAccount(userAccount);
+		this.save(chorbi);
 	}
 }
