@@ -94,7 +94,7 @@
 				<property name="cvvCode" value="982" />
 			</bean>
 		</property>
-		<property name="banned" value="false" />
+	
 		<property name="love">
 			<list>
 				<ref bean="love1" />
@@ -149,7 +149,7 @@
 				<property name="cvvCode" value="518" />
 			</bean>
 		</property>
-		<property name="banned" value="false" />
+		
 		<property name="love">
 			<list>
 			</list>
