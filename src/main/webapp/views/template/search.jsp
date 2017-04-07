@@ -14,8 +14,26 @@
 	<form:hidden path="id"/>
 	<form:hidden path="moment"/>
 
-
-	<acme:select items="'ACME''ACME2'" itemLabel="template.kindRelationship" code="message.receiver" path="receiver" />
+	<form:label path="kindRelationship">
+		<spring:message code="chorbi.kindRelationship" />
+	</form:label>
+	<form:select path="kindRelationship">
+		<form:option value="LOVE"><spring:message code="chorbi.love2"/></form:option>
+		<form:option value="FRIENDSHIP"><spring:message code="chorbi.friendship"/></form:option>
+		<form:option value="ACTIVITIES"><spring:message code="chorbi.activities"/></form:option>
+	</form:select>
+	<form:errors path="kindRelationship" cssClass="error" />
+	
+	<br>
+	<form:label path="genre">
+		<spring:message code="chorbi.genre" />
+	</form:label>	
+	<form:select path="genre">
+		<form:option value="MAN"><spring:message code="chorbi.man"/></form:option>
+		<form:option value="WOMAN"><spring:message code="chorbi.woman"/></form:option>
+	</form:select>
+	<form:errors path="genre" cssClass="error" />
+	
 	<acme:textbox code="template.aproxAge" path="aproxAge" />
 	<acme:textbox code="template.keyword" path="keyword" />
 	<acme:textbox code="template.location.state" path="location.state" />

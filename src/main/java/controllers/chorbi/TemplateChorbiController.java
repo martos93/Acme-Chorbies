@@ -76,12 +76,12 @@ public class TemplateChorbiController {
 
 				final Collection<Chorbi> res = this.chorbiService.getChorbiesByTemplate(template);
 				template.setResults(res);
-				t.setMoment(new Date(System.currentTimeMillis() - 10000));
+				t.setMoment(new Date(System.currentTimeMillis()));
 				this.templateService.save(t);
 
-				result = new ModelAndView("chorbi/results");
-				result.addObject("chorbies", res);
-				result.addObject("requestURI", "template/chorbi/results.do");
+				result = new ModelAndView("chorbi/list");
+				result.addObject("chorbi", res);
+				result.addObject("requestURI", "chorbi/list.do");
 			}
 		} catch (final Throwable oops) {
 			result = this.createEditModelAndView(template, "template.commit.error");
