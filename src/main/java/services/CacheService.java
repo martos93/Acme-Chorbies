@@ -37,7 +37,9 @@ public class CacheService {
 		this.administratorService.checkLoggedIsAdmin();
 		final Cache res = new Cache();
 		//HAY QUE CAMBIAR EL PATRON
-		res.setTime("12");
+		res.setHours("12");
+		res.setMinutes("0");
+		res.setSeconds("0");
 		return res;
 	}
 
@@ -55,6 +57,14 @@ public class CacheService {
 
 	public Collection<Cache> findAll() {
 		return this.cacheRepository.findAll();
+	}
+
+	//other methods
+	public Cache selectCache() {
+		Cache cache;
+		cache = this.cacheRepository.findAll().get(0);
+		Assert.notNull(cache);
+		return cache;
 	}
 
 }

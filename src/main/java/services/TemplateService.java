@@ -13,6 +13,7 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+import domain.Cache;
 import domain.Chorbi;
 import domain.Template;
 import repositories.TemplateRepository;
@@ -31,6 +32,9 @@ public class TemplateService {
 	//Services-----------------------------------------------------------
 	@Autowired
 	private ChorbiService		chorbiService;
+
+	@Autowired
+	private CacheService		cacheService;
 
 
 	//Constructor--------------------------------------------------------
@@ -74,6 +78,20 @@ public class TemplateService {
 	}
 
 	// Other business methods
+
+	public Date timeToLive(final Template template) {
+
+		final Cache cache = this.cacheService.selectCache();
+		final int hours = Integer.parseInt(cache.getHours());
+		final int minutes = Integer.parseInt(cache.getMinutes());
+		final int seconds = Integer.parseInt(cache.getSeconds());
+		final long hoursToMil = hours * 3600 * 1000;
+		final long minutesToMil = minutes * 60 * 1000;
+		final long secondsToMil = seconds * 1000;
+		final long millisecondsToAdd = hoursToMil + minutesToMil + secondsToMil;
+		final Date res = new Date(template.getMoment().getTime() + millisecondsToAdd);
+		return res;
+	}
 
 	public Template reconstruct(final Template template, final BindingResult binding) {
 

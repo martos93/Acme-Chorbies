@@ -9,14 +9,33 @@ import javax.persistence.Entity;
 @Access(AccessType.PROPERTY)
 public class Cache extends DomainEntity {
 
-	private String time;
+	private String	hours;
+	private String	minutes;
+	private String	seconds;
 
 
-	public String getTime() {
-		return this.time;
+	public String getHours() {
+		return this.hours;
 	}
-	public void setTime(final String time) {
-		this.time = time;
+
+	public void setHours(final String hours) {
+		this.hours = hours;
+	}
+
+	public String getMinutes() {
+		return this.minutes;
+	}
+
+	public void setMinutes(final String minutes) {
+		this.minutes = minutes;
+	}
+
+	public String getSeconds() {
+		return this.seconds;
+	}
+
+	public void setSeconds(final String seconds) {
+		this.seconds = seconds;
 	}
 
 }

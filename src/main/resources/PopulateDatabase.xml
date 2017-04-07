@@ -234,7 +234,9 @@
 
 	<!-- Cache -->
 	<bean id="cache" class="domain.Cache">
-		<property name="time" value="200" />
+		<property name="hours" value="12" />
+		<property name="minutes" value="0" />
+		<property name="seconds" value="0" />
 	</bean>
 
 	<!-- Templates -->

@@ -17,12 +17,12 @@
 		<value>/views/security/messages</value>
 		<value>/views/welcome/messages</value>
 		<value>/views/chorbi/messages</value>
-
-
 		<value>/views/administrator/messages</value>
 		<value>/views/customer/messages</value>
 		<value>/views/profile/messages</value>
 		<value>/views/love/messages</value>
+		<value>/views/template/messages</value>
+		<value>/views/cache/messages</value>
 	</util:list>
 
 </beans>
