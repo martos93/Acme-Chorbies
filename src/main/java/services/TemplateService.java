@@ -93,6 +93,13 @@ public class TemplateService {
 		return res;
 	}
 
+	public boolean isCached(final Template template) {
+		boolean res = false;
+		if (this.timeToLive(template).getTime() > template.getMoment().getTime())
+			res = true;
+		return res;
+	}
+
 	public Template reconstruct(final Template template, final BindingResult binding) {
 
 		Template res;
