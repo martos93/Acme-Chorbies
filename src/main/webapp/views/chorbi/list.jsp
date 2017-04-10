@@ -26,6 +26,36 @@
 		<spring:message code="chorbi.name" var="titleColumn" />
 		<display:column property="name" title="${titleColumn}" />
 	
+		<spring:message code="chorbi.surname" var="titleColumn" />
+		<display:column property="surname" title="${titleColumn}" />
+		
+		<spring:message code="chorbi.phoneNumber" var="titleColumn" />
+		<display:column property="phoneNumber" title="${titleColumn}" />
+		
+			<spring:message code="chorbi.picture" var="titleColumn" />
+		<display:column title="${titleColumn}">
+		<img src="${row.picture}">
+		</display:column>
+		
+		<spring:message code="chorbi.description" var="titleColumn" />
+		<display:column property="description" title="${titleColumn}" />
+		
+
+		<spring:message code="chorbi.birthDate" var="titleColumn" />
+		<display:column property="birthDate" title="${titleColumn}" />
+		
+		<spring:message code="chorbi.country" var="titleColumn" />
+		<display:column property="location.country" title="${titleColumn}" />
+		
+		<spring:message code="chorbi.state" var="titleColumn" />
+		<display:column property="location.state" title="${titleColumn}" />
+		
+		<spring:message code="chorbi.province" var="titleColumn" />
+		<display:column property="location.province" title="${titleColumn}" />
+		
+		<spring:message code="chorbi.city" var="titleColumn" />
+		<display:column property="location.city" title="${titleColumn}" />
+		
 		<spring:message code="chorbi.email" var="titleColumn" />
 		<display:column property="email" title="${titleColumn}" />
 	

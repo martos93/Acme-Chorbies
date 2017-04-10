@@ -71,9 +71,9 @@ public class TemplateService {
 	public Template save(final Template template) {
 
 		Assert.notNull(template);
-		Assert.isTrue(this.chorbiService.findByPrincipal().equals(template.getSearcher()));
+		//		Assert.isTrue(this.chorbiService.findByPrincipal().getId() == (template.getSearcher().getId()));
 		Template res;
-		res = this.templateRepository.save(template);
+		res = this.templateRepository.saveAndFlush(template);
 		return res;
 	}
 
@@ -87,6 +87,15 @@ public class TemplateService {
 
 	// Other business methods
 
+	public boolean sameTemplate(final Template template1, final Template template2) {
+		boolean res = false;
+		if (template1.getAproxAge() == template2.getAproxAge() && template1.getGenre() == template2.getGenre() && template1.getKeyword() == template2.getKeyword() && template1.getKindRelationship() == template2.getKindRelationship()
+			&& template1.getLocation().getCity() == template2.getLocation().getCity() && template1.getLocation().getCountry() == template2.getLocation().getCountry() && template1.getLocation().getProvince() == template2.getLocation().getProvince()
+			&& template1.getLocation().getState() == template2.getLocation().getState())
+			res = true;
+
+		return res;
+	}
 	public Date timeToLive(final Template template) {
 
 		final Cache cache = this.cacheService.selectCache();

@@ -67,13 +67,13 @@ public class TemplateChorbiController {
 
 		ModelAndView result;
 		try {
-			final Template t = this.templateService.reconstruct(template, binding);
+			//final Template t = this.templateService.reconstruct(template, binding);
 			final Template template2 = this.chorbiService.getLoggedChorbi().getTemplate();
 
 			if (binding.hasErrors()) {
 				result = this.createEditModelAndView(template);
 				System.out.println(binding.getAllErrors());
-			} else if (template.equals(template2) && this.templateService.isCached(template)) {
+			} else if (this.templateService.sameTemplate(template, template2) == true && this.templateService.isCached(template) == true) {
 				final Collection<Chorbi> res = template.getResults();
 
 				result = new ModelAndView("chorbi/list");
@@ -81,16 +81,23 @@ public class TemplateChorbiController {
 				result.addObject("requestURI", "chorbi/list.do");
 			} else {
 
-				final Collection<Chorbi> res = this.chorbiService.getChorbiesByTemplate(t);
-				template.setResults(res);
-				template.setMoment(new Date(System.currentTimeMillis()));
-				this.templateService.save(template);
+				final Collection<Chorbi> res = this.chorbiService.getChorbiesByTemplate(template);
+				Template temp = this.templateService.findOne(template.getId());
+				temp.setResults(res);
+				temp.setMoment(new Date(System.currentTimeMillis()));
+				temp.setAproxAge(template.getAproxAge());
+				temp.setGenre(template.getGenre());
+				temp.setKeyword(template.getKeyword());
+				temp.setKindRelationship(template.getKindRelationship());
+				temp.setLocation(template.getLocation());
+				temp = this.templateService.save(temp);
 
 				result = new ModelAndView("chorbi/list");
 				result.addObject("chorbi", res);
-				result.addObject("requestURI", "chorbi/list.do");
+				result.addObject("requestUri", "chorbi/list.do");
 			}
 		} catch (final Throwable oops) {
+			System.out.println(oops.getMessage());
 			result = this.createEditModelAndView(template, "template.commit.error");
 
 		}

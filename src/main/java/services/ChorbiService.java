@@ -131,11 +131,11 @@ public class ChorbiService {
 		boolean res = false;
 		if (chorbi.getLocation().getCity().equals(coor.getCity()))
 			res = true;
-		else if (chorbi.getLocation().getCountry().equals(coor.getCountry()))
+		if (chorbi.getLocation().getCountry().equals(coor.getCountry()))
 			res = true;
-		else if (chorbi.getLocation().getProvince().equals(coor.getProvince()))
+		if (chorbi.getLocation().getProvince().equals(coor.getProvince()))
 			res = true;
-		else if (chorbi.getLocation().getState().equals(coor.getState()))
+		if (chorbi.getLocation().getState().equals(coor.getState()))
 			res = true;
 		return res;
 	}
@@ -182,17 +182,26 @@ public class ChorbiService {
 		final String kind = template.getKindRelationship();
 		final String key = template.getKeyword();
 		final Coordinates coor = template.getLocation();
-		for (final Chorbi chorbi : this.findAll())
-			if (genre == null || chorbi.getGenre().equals(genre))
-				res.add(chorbi);
-			else if (kind == null || chorbi.getKindRelationship().equals(kind))
-				res.add(chorbi);
-			else if (key == null || chorbi.getDescription().contains(key))
-				res.add(chorbi);
-			else if (coor == null || this.hasAnyCoordinates(coor, chorbi))
-				res.add(chorbi);
-			else if (aproxAge == null || this.ageEqualsUnderOverFive(aproxAge, ChorbiService.getAge(chorbi.getBirthDate())))
-				res.add(chorbi);
+		final Collection<Chorbi> allChorbies = this.findAll();
+		allChorbies.remove(this.findOne(this.findByPrincipal().getId()));
+
+		for (final Chorbi chorbi : allChorbies) {
+			if (genre == null || genre.length() == 0 || chorbi.getGenre().equals(genre))
+				if (!res.contains(chorbi))
+					res.add(chorbi);
+			if (kind == null || kind.length() == 0 || chorbi.getKindRelationship().equals(kind))
+				if (!res.contains(chorbi))
+					res.add(chorbi);
+			if (key == null || key.length() == 0 || chorbi.getDescription().contains(key))
+				if (!res.contains(chorbi))
+					res.add(chorbi);
+			if (coor == null || this.hasAnyCoordinates(coor, chorbi))
+				if (!res.contains(chorbi))
+					res.add(chorbi);
+			if (aproxAge == null || this.ageEqualsUnderOverFive(aproxAge, ChorbiService.getAge(chorbi.getBirthDate())))
+				if (!res.contains(chorbi))
+					res.add(chorbi);
+		}
 		return res;
 
 	}

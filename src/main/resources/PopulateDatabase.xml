@@ -115,9 +115,8 @@
 				<ref bean="chirp3" />
 			</list>
 		</property>
-		<property name="template">
-			<null />
-		</property>
+		<property name="template" ref="template1"/>
+		
 	</bean>
 
 	<bean id="chorbi2" class="domain.Chorbi">
@@ -170,9 +169,7 @@
 				<ref bean="chirp2" />
 			</list>
 		</property>
-		<property name="template">
-			<null />
-		</property>
+		<property name="template" ref="template2"/>
 	</bean>
 
 	<!-- Chirp -->
