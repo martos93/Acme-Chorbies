@@ -52,9 +52,9 @@ public class TemplateService {
 		Assert.notNull(res);
 		return res;
 	}
-	public Template create() {
+	public Template create(final Chorbi chorbi) {
 		final Template template = new Template();
-		final Chorbi chorbi = this.chorbiService.findByPrincipal();
+
 		template.setSearcher(chorbi);
 		//Initially, every search field must be null, which means that every chorbi satisfies the corresponding search criteria;
 		template.setAproxAge(null);
@@ -72,6 +72,14 @@ public class TemplateService {
 
 		Assert.notNull(template);
 		Assert.isTrue(this.chorbiService.findByPrincipal().equals(template.getSearcher()));
+		Template res;
+		res = this.templateRepository.save(template);
+		return res;
+	}
+
+	public Template create(final Template template) {
+
+		Assert.notNull(template);
 		Template res;
 		res = this.templateRepository.save(template);
 		return res;

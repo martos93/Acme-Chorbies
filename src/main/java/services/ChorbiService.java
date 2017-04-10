@@ -37,6 +37,8 @@ public class ChorbiService {
 
 	@Autowired
 	private LoginService		loginService;
+	@Autowired
+	private TemplateService		templateService;
 
 
 	public Chorbi create() {
@@ -318,13 +320,18 @@ public class ChorbiService {
 		return chorbi;
 	}
 
-	public void register(final Chorbi chorbi) {
+	public void register(Chorbi chorbi) {
 		Assert.notNull(chorbi);
 		UserAccount userAccount;
 		final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 		userAccount = chorbi.getUserAccount();
 		userAccount.setPassword(encoder.encodePassword(userAccount.getPassword(), null));
 		chorbi.setUserAccount(userAccount);
+		chorbi = this.save(chorbi);
+
+		Template template = this.templateService.create(chorbi);
+		template = this.templateService.create(template);
+		chorbi.setTemplate(template);
 		this.save(chorbi);
 	}
 }
