@@ -50,6 +50,19 @@
 			</list>
 		</property>
 	</bean>
+	
+	<bean id="userAccount4" class="security.UserAccount">
+		<property name="username" value="chorbi3" />
+		<property name="password" value="a2da05a88eead7e64593826cafc6a7a7" />
+		<property name="isBanned" value="false"/>
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="CHORBI" />
+				</bean>
+			</list>
+		</property>
+	</bean>
 
 	<!-- Other domain beans come here -->
 
@@ -171,6 +184,55 @@
 		</property>
 		<property name="template" ref="template2"/>
 	</bean>
+	
+	<bean id="chorbi3" class="domain.Chorbi">
+		<property name="UserAccount" ref="userAccount4" />
+		<property name="name" value="chorbi3" />
+		<property name="surname" value="surnamechorbi3" />
+		<property name="email" value="chorbi3@g.com" />
+		<property name="phoneNumber" value="+34 657844536" />
+		<property name="picture" value="http:\\www.cucu.com" />
+		<property name="description" value="description3" />
+		<property name="kindRelationship" value="FRIENDSHIP" />
+		<property name="genre" value="WOMAN" />
+		<property name="birthDate" value="1992/04/02" />
+		<property name="location">
+			<bean class="domain.Coordinates">
+				<property name="country" value="Spain" />
+				<property name="state" value="Madrid" />
+				<property name="province" value="Madrid" />
+				<property name="city" value="Alcobendas" />
+			</bean>
+		</property>
+		<property name="creditCard">
+			<bean class="domain.CreditCard">
+				<property name="holderName" value="Perona Anonima" />
+				<property name="brandName" value="Mastercard" />
+				<property name="number" value="5215626318509736" />
+				<property name="expirationMonth" value="3" />
+				<property name="expirationYear" value="2020" />
+				<property name="cvvCode" value="858" />
+			</bean>
+		</property>
+		
+		<property name="love">
+			<list>
+			</list>
+		</property>
+		<property name="lovedBy">
+			<list>
+			</list>
+		</property>
+		<property name="sended">
+			<list>
+			</list>
+		</property>
+		<property name="received">
+			<list>
+			</list>
+		</property>
+		<property name="template" ref="template3"/>
+	</bean>
 
 	<!-- Chirp -->
 
@@ -262,6 +324,19 @@
 			<list></list>
 		</property>
 	</bean>
+	
+	<bean id="template3" class="domain.Template">
+		<property name="kindRelationship" value="LOVE" />
+		<property name="aproxAge" value="" />
+		<property name="genre" value="MAN" />
+		<property name="keyword" value="" />
+		<property name="location" ref="coordinate3" />
+		<property name="searcher" ref="chorbi3" />
+		<property name="moment" value="2017/04/11 00:00" />
+		<property name="results">
+			<list></list>
+		</property>
+	</bean>
 
 	<!-- Coordinates -->
 	<bean id="coordinate1" class="domain.Coordinates">
@@ -276,6 +351,13 @@
 		<property name="state" value="Barcelona" />
 		<property name="province" value="Barcelona" />
 		<property name="city" value="Sant Boi" />
+	</bean>
+	
+	<bean id="coordinate3" class="domain.Coordinates">
+		<property name="country" value="" />
+		<property name="state" value="" />
+		<property name="province" value="" />
+		<property name="city" value="" />
 	</bean>
 
 	<!-- Loves -->
