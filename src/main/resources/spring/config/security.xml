@@ -62,7 +62,8 @@
 			access="hasRole('CHORBI')" />
 		<security:intercept-url pattern="/template/chorbi/**"
 			access="hasRole('CHORBI')" />
-
+		<security:intercept-url pattern="/chirp/chorbi/**"
+			access="hasRole('CHORBI')" />	
 
 		<security:intercept-url pattern="/administrator/listChorbiNotBanned.do"
 			access="hasRole('ADMIN')" />

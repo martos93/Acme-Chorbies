@@ -345,4 +345,8 @@ public class ChorbiService {
 		chorbi.setTemplate(template);
 		this.save(chorbi);
 	}
+	
+	public Chorbi findChorbiByUsername(String username){
+		return chorbiRepository.findChorbiByUsername(username);
+	}
 }

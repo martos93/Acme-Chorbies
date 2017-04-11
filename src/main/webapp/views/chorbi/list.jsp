@@ -108,3 +108,8 @@
 
 
 </display:table>
+
+<security:authorize access="hasRole('CHORBI')">
+<a href="chirp/chorbi/send.do"> <spring:message code="chirp.send" />
+</a>
+</security:authorize>

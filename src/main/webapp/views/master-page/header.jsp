@@ -63,6 +63,8 @@
 		</li>
 		</security:authorize>
 		<security:authorize access="hasRole('CHORBI')">
+			<li><a href="chirp/chorbi/list.do"><spring:message
+								code="master.page.chirps" /></a></li>
 			<li><a class="fNiv" href="template/chorbi/search.do"><spring:message
 				code="master.page.search" /></a></li>		
 		</security:authorize>
