@@ -89,9 +89,27 @@ public class TemplateService {
 
 	public boolean sameTemplate(final Template template1, final Template template2) {
 		boolean res = false;
-		if (template1.getAproxAge() == template2.getAproxAge() && template1.getGenre() == template2.getGenre() && template1.getKeyword() == template2.getKeyword() && template1.getKindRelationship() == template2.getKindRelationship()
-			&& template1.getLocation().getCity() == template2.getLocation().getCity() && template1.getLocation().getCountry() == template2.getLocation().getCountry() && template1.getLocation().getProvince() == template2.getLocation().getProvince()
-			&& template1.getLocation().getState() == template2.getLocation().getState())
+
+		int age1;
+		int age2;
+		if (template1.getAproxAge() == null)
+			age1 = 0;
+		else
+			age1 = 1;
+		if (template2.getAproxAge() == null)
+			age2 = 0;
+		else
+			age2 = 1;
+		final boolean age = age1 == age2;
+		final boolean genre = template1.getGenre().equals(template2.getGenre());
+		final boolean keyword = template1.getKeyword().equals(template2.getKeyword());
+		final boolean relation = template1.getKindRelationship().equals(template2.getKindRelationship());
+		final boolean city = template1.getLocation().getCity().equals(template2.getLocation().getCity());
+		final boolean country = template1.getLocation().getCountry().equals(template2.getLocation().getCountry());
+		final boolean province = template1.getLocation().getProvince().equals(template2.getLocation().getProvince());
+		final boolean state = template1.getLocation().getState().equals(template2.getLocation().getState());
+
+		if (age && genre && keyword && relation && city && country && province && state)
 			res = true;
 
 		return res;
@@ -112,7 +130,14 @@ public class TemplateService {
 
 	public boolean isCached(final Template template) {
 		boolean res = false;
-		if (this.timeToLive(template).getTime() > template.getMoment().getTime())
+		if (this.timeToLive(template).getTime() > new Date(System.currentTimeMillis()).getTime())
+			res = true;
+		return res;
+	}
+
+	public boolean locationEmpty(final Template template) {
+		boolean res = false;
+		if (template.getLocation().getCity().length() == 0 && template.getLocation().getProvince().length() == 0 && template.getLocation().getCountry().length() == 0 && template.getLocation().getState().length() == 0)
 			res = true;
 		return res;
 	}

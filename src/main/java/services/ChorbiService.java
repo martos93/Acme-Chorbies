@@ -175,32 +175,34 @@ public class ChorbiService {
 
 	public Collection<Chorbi> getChorbiesByTemplate(final Template template) {
 
-		final Collection<Chorbi> res = new ArrayList<Chorbi>();
+		final Collection<Chorbi> res = this.findAll();
+		res.remove(this.findOne(this.findByPrincipal().getId()));
 
 		final Integer aproxAge = template.getAproxAge();
 		final String genre = template.getGenre();
 		final String kind = template.getKindRelationship();
 		final String key = template.getKeyword();
 		final Coordinates coor = template.getLocation();
+
 		final Collection<Chorbi> allChorbies = this.findAll();
 		allChorbies.remove(this.findOne(this.findByPrincipal().getId()));
 
 		for (final Chorbi chorbi : allChorbies) {
-			if (genre == null || genre.length() == 0 || chorbi.getGenre().equals(genre))
-				if (!res.contains(chorbi))
-					res.add(chorbi);
-			if (kind == null || kind.length() == 0 || chorbi.getKindRelationship().equals(kind))
-				if (!res.contains(chorbi))
-					res.add(chorbi);
-			if (key == null || key.length() == 0 || chorbi.getDescription().contains(key))
-				if (!res.contains(chorbi))
-					res.add(chorbi);
-			if (coor == null || this.hasAnyCoordinates(coor, chorbi))
-				if (!res.contains(chorbi))
-					res.add(chorbi);
-			if (aproxAge == null || this.ageEqualsUnderOverFive(aproxAge, ChorbiService.getAge(chorbi.getBirthDate())))
-				if (!res.contains(chorbi))
-					res.add(chorbi);
+			if (genre.length() != 0 && !chorbi.getGenre().equals(genre))
+				if (res.contains(chorbi))
+					res.remove(chorbi);
+			if (kind.length() != 0 && !chorbi.getKindRelationship().equals(kind))
+				if (res.contains(chorbi))
+					res.remove(chorbi);
+			if (key.length() != 0 && !chorbi.getDescription().equals(key))
+				if (res.contains(chorbi))
+					res.remove(chorbi);
+			if (aproxAge != null && !this.ageEqualsUnderOverFive(aproxAge, ChorbiService.getAge(chorbi.getBirthDate())))
+				if (res.contains(chorbi))
+					res.remove(chorbi);
+			if (this.templateService.locationEmpty(template) == false && !this.hasAnyCoordinates(coor, chorbi))
+				if (res.contains(chorbi))
+					res.remove(chorbi);
 		}
 		return res;
 

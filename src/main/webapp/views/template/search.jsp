@@ -18,6 +18,7 @@
 		<spring:message code="chorbi.kindRelationship" />
 	</form:label>
 	<form:select path="kindRelationship">
+		<form:option value=""><spring:message code="template.empty"/></form:option>
 		<form:option value="LOVE"><spring:message code="chorbi.love2"/></form:option>
 		<form:option value="FRIENDSHIP"><spring:message code="chorbi.friendship"/></form:option>
 		<form:option value="ACTIVITIES"><spring:message code="chorbi.activities"/></form:option>
@@ -29,6 +30,7 @@
 		<spring:message code="chorbi.genre" />
 	</form:label>	
 	<form:select path="genre">
+		<form:option value=""><spring:message code="template.empty"/></form:option>
 		<form:option value="MAN"><spring:message code="chorbi.man"/></form:option>
 		<form:option value="WOMAN"><spring:message code="chorbi.woman"/></form:option>
 	</form:select>

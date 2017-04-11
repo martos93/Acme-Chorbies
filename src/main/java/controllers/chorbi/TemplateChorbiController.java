@@ -68,20 +68,21 @@ public class TemplateChorbiController {
 		ModelAndView result;
 		try {
 			//final Template t = this.templateService.reconstruct(template, binding);
-			final Template template2 = this.chorbiService.getLoggedChorbi().getTemplate();
+			final Template lastSearch = this.chorbiService.getLoggedChorbi().getTemplate();
 
 			if (binding.hasErrors()) {
 				result = this.createEditModelAndView(template);
 				System.out.println(binding.getAllErrors());
-			} else if (this.templateService.sameTemplate(template, template2) == true && this.templateService.isCached(template) == true) {
+			} else if (this.templateService.sameTemplate(template, lastSearch) == true && this.templateService.isCached(template) == true) {
 				final Collection<Chorbi> res = template.getResults();
-
+				System.out.println("devolvemos guardado");
 				result = new ModelAndView("chorbi/list");
 				result.addObject("chorbi", res);
 				result.addObject("requestURI", "chorbi/list.do");
 			} else {
 
 				final Collection<Chorbi> res = this.chorbiService.getChorbiesByTemplate(template);
+				System.out.println("devolvemos nuevo");
 				Template temp = this.templateService.findOne(template.getId());
 				temp.setResults(res);
 				temp.setMoment(new Date(System.currentTimeMillis()));

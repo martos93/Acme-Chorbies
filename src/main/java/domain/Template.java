@@ -31,7 +31,7 @@ public class Template extends DomainEntity {
 	private Date		moment;
 
 
-	@Pattern(regexp = "^ACTIVITIES$|^FRIENDSHIP$|^LOVE$")
+	@Pattern(regexp = "^ACTIVITIES$|^FRIENDSHIP$|^LOVE$|^$")
 	public String getKindRelationship() {
 		return this.kindRelationship;
 	}
@@ -47,7 +47,7 @@ public class Template extends DomainEntity {
 		this.aproxAge = aproxAge;
 	}
 
-	@Pattern(regexp = "^MAN$|^WOMAN$")
+	@Pattern(regexp = "^MAN$|^WOMAN$|^$")
 	public String getGenre() {
 		return this.genre;
 	}
