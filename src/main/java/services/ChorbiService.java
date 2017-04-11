@@ -1,6 +1,7 @@
 
 package services;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -345,8 +346,27 @@ public class ChorbiService {
 		chorbi.setTemplate(template);
 		this.save(chorbi);
 	}
-	
-	public Chorbi findChorbiByUsername(String username){
-		return chorbiRepository.findChorbiByUsername(username);
+
+	public Chorbi findChorbiByUsername(final String username) {
+		return this.chorbiRepository.findChorbiByUsername(username);
+	}
+
+	public int edad(final Chorbi chorbi) {
+		final String fecha_nac = chorbi.getBirthDate().getYear() + 1900 + "/" + chorbi.getBirthDate().getMonth() + "/" + chorbi.getBirthDate().getDate();
+		final Date fechaActual = new Date();
+		final SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd");
+		final String hoy = formato.format(fechaActual);
+		final String[] dat1 = fecha_nac.split("/");
+		final String[] dat2 = hoy.split("/");
+		int anos = Integer.parseInt(dat2[0]) - Integer.parseInt(dat1[0]);
+		final int mes = Integer.parseInt(dat2[1]) - Integer.parseInt(dat1[1]);
+		if (mes < 2)
+			anos = anos - 1;
+		else if (mes == 0) {
+			final int dia = Integer.parseInt(dat2[2]) - Integer.parseInt(dat1[2]);
+			if (dia > 0)
+				anos = anos - 1;
+		}
+		return anos;
 	}
 }
