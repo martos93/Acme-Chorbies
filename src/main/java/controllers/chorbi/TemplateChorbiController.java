@@ -74,13 +74,15 @@ public class TemplateChorbiController {
 				result = this.createEditModelAndView(template);
 				System.out.println(binding.getAllErrors());
 			} else if (this.templateService.sameTemplate(template, lastSearch) == true && this.templateService.isCached(template) == true) {
+
+				Assert.isTrue(this.chorbiService.hasValidCreditCard(this.chorbiService.getLoggedChorbi()));
 				final Collection<Chorbi> res = template.getResults();
 				System.out.println("devolvemos guardado");
 				result = new ModelAndView("chorbi/list");
 				result.addObject("chorbi", res);
 				result.addObject("requestURI", "chorbi/list.do");
 			} else {
-
+				Assert.isTrue(this.chorbiService.hasValidCreditCard(this.chorbiService.getLoggedChorbi()));
 				final Collection<Chorbi> res = this.chorbiService.getChorbiesByTemplate(template);
 				System.out.println("devolvemos nuevo");
 				Template temp = this.templateService.findOne(template.getId());

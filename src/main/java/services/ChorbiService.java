@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.transaction.Transactional;
 
@@ -368,5 +369,14 @@ public class ChorbiService {
 				anos = anos - 1;
 		}
 		return anos;
+	}
+
+	public boolean hasValidCreditCard(final Chorbi chorbi) {
+		final CreditCard c = chorbi.getCreditCard();
+
+		final Calendar calendar = new GregorianCalendar(c.getExpirationYear(), c.getExpirationMonth(), 1);
+		final Date expiration = calendar.getTime();
+
+		return expiration.getTime() > (System.currentTimeMillis() + 86400000);
 	}
 }
