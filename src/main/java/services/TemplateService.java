@@ -30,8 +30,6 @@ public class TemplateService {
 	private TemplateRepository	templateRepository;
 
 	//Services-----------------------------------------------------------
-	@Autowired
-	private ChorbiService		chorbiService;
 
 	@Autowired
 	private CacheService		cacheService;
@@ -123,7 +121,7 @@ public class TemplateService {
 		final long hoursToMil = hours * 3600 * 1000;
 		final long minutesToMil = minutes * 60 * 1000;
 		final long secondsToMil = seconds * 1000;
-		final long millisecondsToAdd = hoursToMil + minutesToMil + secondsToMil;
+		final long millisecondsToAdd = hoursToMil + minutesToMil + secondsToMil + 10000;
 		final Date res = new Date(template.getMoment().getTime() + millisecondsToAdd);
 		return res;
 	}
