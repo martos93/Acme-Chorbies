@@ -35,9 +35,6 @@ public class ChorbiService {
 	private ChorbiRepository	chorbiRepository;
 
 	@Autowired
-	private ChorbiService		chorbiService;
-
-	@Autowired
 	private TemplateService		templateService;
 
 
@@ -175,7 +172,7 @@ public class ChorbiService {
 
 	public Collection<Chorbi> getChorbiesByTemplate(final Template template) {
 
-		Assert.isTrue(this.chorbiService.hasValidCreditCard(this.chorbiService.getLoggedChorbi()));
+		Assert.isTrue(this.hasValidCreditCard(this.getLoggedChorbi()));
 
 		final Collection<Chorbi> res = this.findAll();
 		res.remove(this.findOne(this.findByPrincipal().getId()));
