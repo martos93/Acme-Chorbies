@@ -2,7 +2,12 @@
 package services;
 
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -11,6 +16,10 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import repositories.ChorbiRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 import domain.Chirp;
 import domain.Chorbi;
 import domain.Coordinates;
@@ -18,10 +27,6 @@ import domain.CreditCard;
 import domain.Love;
 import domain.Template;
 import forms.ChorbiForm;
-import repositories.ChorbiRepository;
-import security.Authority;
-import security.LoginService;
-import security.UserAccount;
 
 @Service
 @Transactional
@@ -55,6 +60,13 @@ public class ChorbiService {
 	}
 
 	public Collection<Chorbi> findAll() {
+		Collection<Chorbi> result;
+		result = this.chorbiRepository.findAll();
+		return result;
+	}
+
+	public Collection<Chorbi> listAll() {
+		Assert.isTrue(this.isAuthenticated());
 		Collection<Chorbi> result;
 		result = this.chorbiRepository.findAll();
 		return result;
@@ -374,15 +386,15 @@ public class ChorbiService {
 	}
 
 	//Dashboard:
-    public List<Chorbi> chorbiesSortedByLikes(){
-	    return chorbiRepository.chorbiesSortedByLikes();
-    }
+	public List<Chorbi> chorbiesSortedByLikes() {
+		return this.chorbiRepository.chorbiesSortedByLikes();
+	}
 
-    public Collection<Chorbi> chorbiMoreChirpsRecieved(){
-        return chorbiRepository.chorbiMoreChirpsRecieved();
-    }
+	public Collection<Chorbi> chorbiMoreChirpsRecieved() {
+		return this.chorbiRepository.chorbiMoreChirpsRecieved();
+	}
 
-    public Collection<Chorbi> chorbiMoreChirpsSended(){
-        return chorbiRepository.chorbiMoreChirpsSended();
-    }
+	public Collection<Chorbi> chorbiMoreChirpsSended() {
+		return this.chorbiRepository.chorbiMoreChirpsSended();
+	}
 }

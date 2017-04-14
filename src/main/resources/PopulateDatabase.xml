@@ -63,6 +63,19 @@
 			</list>
 		</property>
 	</bean>
+	
+	<bean id="userAccount5" class="security.UserAccount">
+		<property name="username" value="chorbi4" />
+		<property name="password" value="a09dd233386632e297a7f4f461989563" />
+		<property name="isBanned" value="true"/>
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="CHORBI" />
+				</bean>
+			</list>
+		</property>
+	</bean>
 
 	<!-- Other domain beans come here -->
 
@@ -232,6 +245,46 @@
 			</list>
 		</property>
 		<property name="template" ref="template3"/>
+	</bean>
+	
+	<bean id="chorbi4" class="domain.Chorbi">
+		<property name="UserAccount" ref="userAccount5" />
+		<property name="name" value="chorbi4" />
+		<property name="surname" value="surnamechorbi4" />
+		<property name="email" value="chorbi4@g.com" />
+		<property name="phoneNumber" value="+34 657844536" />
+		<property name="picture" value="http:\\www.cucu.com" />
+		<property name="description" value="description4" />
+		<property name="kindRelationship" value="FRIENDSHIP" />
+		<property name="genre" value="WOMAN" />
+		<property name="birthDate" value="1992/04/02" />
+		
+		<property name="love">
+			<list>
+			</list>
+		</property>
+		<property name="lovedBy">
+			<list>
+			</list>
+		</property>
+		<property name="sended">
+			<list>
+			</list>
+		</property>
+		<property name="received">
+			<list>
+			</list>
+		</property>
+		<property name="creditCard">
+			<bean class="domain.CreditCard">
+				<property name="holderName" value="Perona Anonima" />
+				<property name="brandName" value="Mastercard" />
+				<property name="number" value="5215626318509736" />
+				<property name="expirationMonth" value="3" />
+				<property name="expirationYear" value="2017" />
+				<property name="cvvCode" value="858" />
+			</bean>
+		</property>
 	</bean>
 
 	<!-- Chirp -->

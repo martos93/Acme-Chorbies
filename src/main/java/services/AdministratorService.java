@@ -1,6 +1,10 @@
 
 package services;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +16,6 @@ import security.Authority;
 import security.LoginService;
 import domain.Administrator;
 import domain.Chorbi;
-
-import java.util.*;
 
 @Service
 @Transactional
@@ -53,6 +55,7 @@ public class AdministratorService {
 	public void banChorbi(final Chorbi c) {
 		Assert.isTrue(this.actorService.isAuthenticated());
 		this.checkLoggedIsAdmin();
+
 		c.getUserAccount().setIsBanned(true);
 		this.chorbiService.save(c);
 
@@ -66,74 +69,74 @@ public class AdministratorService {
 
 	}
 
-    public Set<String> cities(){return administratorRepository.cities();}
+	public Set<String> cities() {
+		return this.administratorRepository.cities();
+	}
 
-    public Set<String> countries(){
-        return administratorRepository.countries();
-    }
+	public Set<String> countries() {
+		return this.administratorRepository.countries();
+	}
 
 	//Dashboard
-    public List<String> chorbiesByCity(){
-        checkLoggedIsAdmin();
-        Set<String> cities = cities();
-        List<String> result = new ArrayList<String>();
+	public List<String> chorbiesByCity() {
+		this.checkLoggedIsAdmin();
+		final Set<String> cities = this.cities();
+		final List<String> result = new ArrayList<String>();
 
-        for(String c:cities){
-            result.add(administratorRepository.chorbiesByCity(c)[0]+": "+administratorRepository.chorbiesByCity(c)[1]);
-        }
+		for (final String c : cities)
+			result.add(this.administratorRepository.chorbiesByCity(c)[0] + ": " + this.administratorRepository.chorbiesByCity(c)[1]);
 
-	    return result;
-    }
+		return result;
+	}
 
-    public List<String> chorbiesByCountry(){
-        checkLoggedIsAdmin();
-        Set<String> countries = countries();
-        List<String> result = new ArrayList<String>();
+	public List<String> chorbiesByCountry() {
+		this.checkLoggedIsAdmin();
+		final Set<String> countries = this.countries();
+		final List<String> result = new ArrayList<String>();
 
-        for(String c:countries){
-            result.add(administratorRepository.chorbiesByCountry(c)[0]+": "+administratorRepository.chorbiesByCountry(c)[1]);
-        }
-        return result;
-    }
+		for (final String c : countries)
+			result.add(this.administratorRepository.chorbiesByCountry(c)[0] + ": " + this.administratorRepository.chorbiesByCountry(c)[1]);
+		return result;
+	}
 
-    public Object[] minMaxAvgAgesChorbies(){
-        checkLoggedIsAdmin();
-        return administratorRepository.minMaxAvgAgesChorbies();
-    }
+	public Object[] minMaxAvgAgesChorbies() {
+		this.checkLoggedIsAdmin();
+		return this.administratorRepository.minMaxAvgAgesChorbies();
+	}
 
-    public Double ratioChorbiesInvalidCreditCard(){
-        checkLoggedIsAdmin();
-        return administratorRepository.ratioChorbiesInvalidCreditCard();
-    }
+	public Double ratioChorbiesInvalidCreditCard() {
+		this.checkLoggedIsAdmin();
+		return this.administratorRepository.ratioChorbiesInvalidCreditCard();
+	}
 
-    public Double ratioChorbiesSearchActivites(){
-        checkLoggedIsAdmin();
-        return administratorRepository.ratioChorbiesSearchActivites();
-    }
+	public Double ratioChorbiesSearchActivites() {
+		this.checkLoggedIsAdmin();
+		return this.administratorRepository.ratioChorbiesSearchActivites();
+	}
 
-    public Double ratioChorbiesSearchFriendShip(){
-        checkLoggedIsAdmin();
-        return administratorRepository.ratioChorbiesSearchFriendShip();
-    }
+	public Double ratioChorbiesSearchFriendShip() {
+		this.checkLoggedIsAdmin();
+		return this.administratorRepository.ratioChorbiesSearchFriendShip();
+	}
 
-    public Double ratioChorbiesSearchLove(){
-        checkLoggedIsAdmin();
-        return administratorRepository.ratioChorbiesSearchLove();
-    }
+	public Double ratioChorbiesSearchLove() {
+		this.checkLoggedIsAdmin();
+		return this.administratorRepository.ratioChorbiesSearchLove();
+	}
 
-    public  Object[] minMaxAvgLikesPerChorbi(){
-        checkLoggedIsAdmin();
-        return administratorRepository.minMaxAvgLikesPerChorbi();
-    }
+	public Object[] minMaxAvgLikesPerChorbi() {
+		this.checkLoggedIsAdmin();
+		return this.administratorRepository.minMaxAvgLikesPerChorbi();
+	}
 
-    public  Object[] minMaxAvgChirpsRecieved(){
-        checkLoggedIsAdmin();
-        return administratorRepository.minMaxAvgChirpsRecieved();
-    }
+	public Object[] minMaxAvgChirpsRecieved() {
+		this.checkLoggedIsAdmin();
+		return this.administratorRepository.minMaxAvgChirpsRecieved();
+	}
 
-    public  Object[] minMaxAvgChirpsSended(){
-        checkLoggedIsAdmin();
-        return administratorRepository.minMaxAvgChirpsSended();
-    }
+	public Object[] minMaxAvgChirpsSended() {
+		this.checkLoggedIsAdmin();
+		return this.administratorRepository.minMaxAvgChirpsSended();
+	}
 
 }

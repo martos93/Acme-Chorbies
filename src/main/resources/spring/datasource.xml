@@ -32,6 +32,8 @@
 		<property name="persistenceUnitName" ref="persistenceUnit" />
 		<property name="jpaProperties" ref="jpaProperties" />
 	</bean>
+	
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
 
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />

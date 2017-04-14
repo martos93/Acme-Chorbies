@@ -16,23 +16,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ChorbiService;
 import domain.Chorbi;
 import forms.ChorbiForm;
-import services.ChorbiService;
 
 @Controller
 @RequestMapping("/chorbi")
 public class ChorbiController extends AbstractController {
 
 	@Autowired
-	private ChorbiService chorbiService;
+	private ChorbiService	chorbiService;
 
 
 	@RequestMapping("/list")
 	public ModelAndView list() {
 		final ModelAndView res = new ModelAndView();
 
-		final Collection<Chorbi> all = this.chorbiService.findAll();
+		final Collection<Chorbi> all = this.chorbiService.listAll();
 
 		res.addObject("chorbi", all);
 		res.addObject("requestUri", "chorbi/list.do");
