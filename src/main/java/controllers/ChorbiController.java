@@ -152,6 +152,7 @@ public class ChorbiController extends AbstractController {
 					res.addObject("chorbiForm", chorbiForm);
 					res.addObject("edit", true);
 				} else {
+					Assert.isTrue(this.chorbiService.edad(chorbi) >= 18);
 
 					this.chorbiService.save(chorbi);
 					res = new ModelAndView("redirect:../welcome/index.do");
