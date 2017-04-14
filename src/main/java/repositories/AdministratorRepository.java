@@ -7,24 +7,32 @@ import org.springframework.stereotype.Repository;
 
 import domain.Administrator;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface AdministratorRepository extends JpaRepository<Administrator, Integer> {
+
+    @Query("select c.location.city from Chorbi c")
+    public Set<String> cities();
+
+    @Query("select c.location.country from Chorbi c")
+    public Set<String> countries();
 
     //Dashboard
 
     //A listing with the number of chorbies per country and city:
         //Country:
     @Query("select c.location.country, count(c) from Chorbi c where c.location.country = ?1")
-    public List<Object> chorbiesByCountry(String country);
+    public Object[]  chorbiesByCountry(String country);
         //City
     @Query("select c.location.city, count(c) from Chorbi c where c.location.city = ?1")
-    public List<Object> chorbiesByCity(String city);
+    public Object[] chorbiesByCity(String city);
 
     //The minimum, the maximum, and the average ages of the chorbies:
     @Query("select min(YEAR(CURRENT_DATE)-YEAR(c.birthDate)), max(YEAR(CURRENT_DATE)-Year(c.birthDate)), avg(YEAR(CURRENT_DATE)-YEAR(c.birthDate)) from Chorbi c")
-    public List<Object> minMaxAvgAgesChorbies();
+    public Object[] minMaxAvgAgesChorbies();
 
     //The ratio of chorbies who have not registered a credit card or have registered an invalid credit card:
     @Query("select (count(c)*1.0)/(select count(cc) from Chorbi cc) from Chorbi c where c.creditCard is null OR(c.creditCard.expirationMonth<=MONTH(CURRENT_DATE) AND(c.creditCard.expirationYear<=YEAR(CURRENT_DATE)))")
@@ -43,13 +51,13 @@ public interface AdministratorRepository extends JpaRepository<Administrator, In
 
     //The minimum, the maximum, and the average number of likes per chorbi:
     @Query("select min(c.lovedBy.size), max(c.lovedBy.size), avg(c.lovedBy.size) from Chorbi c")
-    public List<Object> minMaxAvgLikesPerChorbi();
+    public  Object[] minMaxAvgLikesPerChorbi();
 
     //The minimum, the maximum, and the average number of chirps that a chorbi receives from other chorbies:
     @Query("select min(c.received.size), max(c.received.size), avg(c.received.size) from Chorbi c")
-    public List<Object> minMaxAvgChirpsRecieved();
+    public  Object[] minMaxAvgChirpsRecieved();
 
     //The minimum, the maximum, and the average number of chirps that a chorbi sends to other chorbies:
     @Query("select min(c.sended.size), max(c.sended.size), avg(c.sended.size) from Chorbi c")
-    public List<Object> minMaxAvgChirpsSended();
+    public  Object[] minMaxAvgChirpsSended();
 }

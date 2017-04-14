@@ -2,11 +2,7 @@
 package services;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.*;
 
 import javax.transaction.Transactional;
 
@@ -376,4 +372,17 @@ public class ChorbiService {
 
 		return expiration.getTime() > (System.currentTimeMillis() + 86400000);
 	}
+
+	//Dashboard:
+    public List<Chorbi> chorbiesSortedByLikes(){
+	    return chorbiRepository.chorbiesSortedByLikes();
+    }
+
+    public Collection<Chorbi> chorbiMoreChirpsRecieved(){
+        return chorbiRepository.chorbiMoreChirpsRecieved();
+    }
+
+    public Collection<Chorbi> chorbiMoreChirpsSended(){
+        return chorbiRepository.chorbiMoreChirpsSended();
+    }
 }

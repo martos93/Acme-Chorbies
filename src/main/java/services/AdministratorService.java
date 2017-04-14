@@ -13,6 +13,8 @@ import security.LoginService;
 import domain.Administrator;
 import domain.Chorbi;
 
+import java.util.*;
+
 @Service
 @Transactional
 public class AdministratorService {
@@ -63,5 +65,75 @@ public class AdministratorService {
 		this.chorbiService.save(c);
 
 	}
+
+    public Set<String> cities(){return administratorRepository.cities();}
+
+    public Set<String> countries(){
+        return administratorRepository.countries();
+    }
+
+	//Dashboard
+    public List<String> chorbiesByCity(){
+        checkLoggedIsAdmin();
+        Set<String> cities = cities();
+        List<String> result = new ArrayList<String>();
+
+        for(String c:cities){
+            result.add(administratorRepository.chorbiesByCity(c)[0]+": "+administratorRepository.chorbiesByCity(c)[1]);
+        }
+
+	    return result;
+    }
+
+    public List<String> chorbiesByCountry(){
+        checkLoggedIsAdmin();
+        Set<String> countries = countries();
+        List<String> result = new ArrayList<String>();
+
+        for(String c:countries){
+            result.add(administratorRepository.chorbiesByCountry(c)[0]+": "+administratorRepository.chorbiesByCountry(c)[1]);
+        }
+        return result;
+    }
+
+    public Object[] minMaxAvgAgesChorbies(){
+        checkLoggedIsAdmin();
+        return administratorRepository.minMaxAvgAgesChorbies();
+    }
+
+    public Double ratioChorbiesInvalidCreditCard(){
+        checkLoggedIsAdmin();
+        return administratorRepository.ratioChorbiesInvalidCreditCard();
+    }
+
+    public Double ratioChorbiesSearchActivites(){
+        checkLoggedIsAdmin();
+        return administratorRepository.ratioChorbiesSearchActivites();
+    }
+
+    public Double ratioChorbiesSearchFriendShip(){
+        checkLoggedIsAdmin();
+        return administratorRepository.ratioChorbiesSearchFriendShip();
+    }
+
+    public Double ratioChorbiesSearchLove(){
+        checkLoggedIsAdmin();
+        return administratorRepository.ratioChorbiesSearchLove();
+    }
+
+    public  Object[] minMaxAvgLikesPerChorbi(){
+        checkLoggedIsAdmin();
+        return administratorRepository.minMaxAvgLikesPerChorbi();
+    }
+
+    public  Object[] minMaxAvgChirpsRecieved(){
+        checkLoggedIsAdmin();
+        return administratorRepository.minMaxAvgChirpsRecieved();
+    }
+
+    public  Object[] minMaxAvgChirpsSended(){
+        checkLoggedIsAdmin();
+        return administratorRepository.minMaxAvgChirpsSended();
+    }
 
 }
