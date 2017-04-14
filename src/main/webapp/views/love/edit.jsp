@@ -15,10 +15,10 @@
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 	<form:hidden path="lover" />
+	<form:hidden path="loved" />
 	<form:hidden path="moment" />
 
 
-	<acme:textbox code="love.loved" path="loved.name" readonly="true" />
 	<acme:textarea code="love.comment" path="comment" />
 
 	<acme:submit name="save" code="love.save" />

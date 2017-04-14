@@ -37,9 +37,6 @@ public class ChorbiController extends AbstractController {
 		res.addObject("chorbi", all);
 		res.addObject("requestUri", "chorbi/list.do");
 
-		if (this.chorbiService.isChorbi())
-			res.addObject("chorb", this.chorbiService.findByPrincipal());
-
 		return res;
 
 	}

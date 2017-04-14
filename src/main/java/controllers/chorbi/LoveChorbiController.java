@@ -86,13 +86,16 @@ public class LoveChorbiController extends AbstractController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create(@RequestParam final int id) {
 		ModelAndView modelAndView;
+
 		final Love love = this.loveService.create();
 		final Chorbi loved = this.chorbiService.findOne(id);
 		love.setLoved(loved);
 
 		Assert.notNull(love);
-		modelAndView = this.createEditModelAndView(love);
-
+		if (!love.getLover().equals(loved))
+			modelAndView = this.createEditModelAndView(love);
+		else
+			modelAndView = new ModelAndView("redirect:/chorbi/list.do");
 		return modelAndView;
 
 	}
@@ -103,7 +106,7 @@ public class LoveChorbiController extends AbstractController {
 
 		try {
 			this.loveService.removeLove(id);
-			modelAndView = new ModelAndView("redirect:welcome/index.do");
+			modelAndView = new ModelAndView("redirect:/welcome/index.do");
 		} catch (final Throwable oops) {
 			modelAndView = this.createEditModelAndView(this.loveService.findOne(id), "message.commit.error");
 		}
@@ -115,12 +118,19 @@ public class LoveChorbiController extends AbstractController {
 	public ModelAndView save(@Valid final Love love, final BindingResult bindingResult) {
 		ModelAndView modelAndView;
 
-		try {
-			this.loveService.addLove(love);
-			modelAndView = new ModelAndView("redirect:listLikes.do");
-		} catch (final Throwable oops) {
-			modelAndView = this.createEditModelAndView(love, "love.commit.error");
-		}
+		if (bindingResult.hasErrors())
+			modelAndView = this.createEditModelAndView(love);
+		else
+			try {
+				if (!love.getLoved().equals(love.getLover())) {
+					this.loveService.addLove(love);
+					modelAndView = new ModelAndView("redirect:/welcome/index.do");
+				} else
+					modelAndView = this.createEditModelAndView(love, "love.commit.error");
+
+			} catch (final Throwable oops) {
+				modelAndView = this.createEditModelAndView(love, "love.commit.error");
+			}
 		return modelAndView;
 
 	}
