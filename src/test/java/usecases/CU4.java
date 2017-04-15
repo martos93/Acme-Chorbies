@@ -47,7 +47,7 @@ public class CU4 extends AbstractTest {
 			{
 				null, "Brenes", IllegalArgumentException.class
 			}, {
-				"admin", "Brenes", IllegalArgumentException.class
+				"admin", "Brenes", NullPointerException.class
 			}, {
 				"chorbi1", "Brenes", null
 			}, {
@@ -58,7 +58,7 @@ public class CU4 extends AbstractTest {
 		};
 
 		for (int i = 0; i < testingData.length; i++)
-			this.searchChorbies((String) testingData[i][0], (String) testingData[i][1], (Class<?>) testingData[i][1]);
+			this.searchChorbies((String) testingData[i][0], (String) testingData[i][1], (Class<?>) testingData[i][2]);
 	}
 
 	protected void searchChorbies(final String username, final String keyword, final Class<?> expected) {
