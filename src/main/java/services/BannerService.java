@@ -20,6 +20,9 @@ public class BannerService {
 	private BannerRepository	bannerRepository;
 
 	@Autowired
+	private AdministratorService administratorService;
+
+	@Autowired
 	private Validator			validator;
 
 
@@ -43,6 +46,19 @@ public class BannerService {
 	public Banner save(final Banner banner) {
 
 		return this.bannerRepository.save(banner);
+	}
+
+	public void addBanner(String url){
+		administratorService.checkLoggedIsAdmin();
+		Banner banner = bannerRepository.findAll().get(0);
+		banner.getBanners().add(url);
+	}
+
+
+	public void deleteBanner(String url){
+		administratorService.checkLoggedIsAdmin();
+		Banner banner = bannerRepository.findAll().get(0);
+		banner.getBanners().remove(url);
 	}
 
 }

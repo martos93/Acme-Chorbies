@@ -24,6 +24,7 @@
 		<value>/views/chirp/tiles.xml</value>
 		<value>/views/template/tiles.xml</value>
 		<value>/views/cache/tiles.xml</value>
+		<value>/views/banner/tiles.xml</value>
 	</util:list>
 
 </beans>

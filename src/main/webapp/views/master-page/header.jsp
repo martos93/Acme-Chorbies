@@ -38,6 +38,8 @@
 				code="master.page.cache" /></a></li>
             <li><a class="fNiv" href="dashboard/administrator.do"><spring:message
                     code="master.page.dashboard" /></a></li>
+			<li><a class="fNiv" href="banner/administrator/list.do"><spring:message
+					code="master.page.banner" /></a></li>
 		</security:authorize>
 
 		<security:authorize access="isAnonymous()">
