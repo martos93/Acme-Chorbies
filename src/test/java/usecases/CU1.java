@@ -38,7 +38,7 @@ public class CU1 extends AbstractTest {
 
 
 	//CU 1 - Un usuario mayor de edad no logueado ve un banner aleatorio en la main page y se registra como nuevo chorbi, después se loguea con esta cuenta.
-	//RF A user who is not authenticated must be able to:
+	//RF: A user who is not authenticated must be able to:
 	//	- See a welcome page with a banner that advertises Acme projects, including Acme
 	//	  Pad-Thai, Acme BnB, and Acme Car’n go! The banners must be selected randomly.
 	//	- Login to the system using his or her credentials.

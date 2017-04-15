@@ -32,6 +32,9 @@ public class CU3 extends AbstractTest {
 	private ChorbiRepository	chorbiRepository;
 
 
+	//CU3 - Un usuario logueado como chorbi modifica su perfil, introduciendo los datos de una tarjeta de crédito válida entre otros datos de usuario
+	//RF: An actor who is authenticated as a chorbi must be able to:
+	//  -Change his or her profile
 	@Test
 	public void editChorbi() {
 		final Object[][] testingData = {
