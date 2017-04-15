@@ -38,6 +38,9 @@ public class ChorbiService {
 	@Autowired
 	private TemplateService		templateService;
 
+	@Autowired
+	private AdministratorService administratorService;
+
 
 	public Chorbi create() {
 
@@ -387,14 +390,17 @@ public class ChorbiService {
 
 	//Dashboard:
 	public List<Chorbi> chorbiesSortedByLikes() {
+		administratorService.checkLoggedIsAdmin();
 		return this.chorbiRepository.chorbiesSortedByLikes();
 	}
 
 	public Collection<Chorbi> chorbiMoreChirpsRecieved() {
+		administratorService.checkLoggedIsAdmin();
 		return this.chorbiRepository.chorbiMoreChirpsRecieved();
 	}
 
 	public Collection<Chorbi> chorbiMoreChirpsSended() {
+		administratorService.checkLoggedIsAdmin();
 		return this.chorbiRepository.chorbiMoreChirpsSended();
 	}
 }
