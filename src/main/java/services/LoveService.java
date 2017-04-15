@@ -42,7 +42,7 @@ public class LoveService {
 		love.setLover(this.chorbiService.findByPrincipal());
 		love.setLoved(new Chorbi());
 		love.setMoment(new Date(System.currentTimeMillis() - 10000));
-		love.setComment("");
+		love.setComment(new String());
 		return love;
 
 	}
