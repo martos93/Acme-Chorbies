@@ -81,8 +81,13 @@ public class ChorbiService {
 		return result;
 	}
 
-	public Chorbi save(final Chorbi chorbi) {
+	public Chorbi modify(final Chorbi chorbi) {
 		Assert.isTrue(chorbi.getId() == this.getLoggedChorbi().getId());
+		return this.chorbiRepository.saveAndFlush(chorbi);
+	}
+
+	public Chorbi save(final Chorbi chorbi) {
+
 		return this.chorbiRepository.saveAndFlush(chorbi);
 	}
 

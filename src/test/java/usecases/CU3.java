@@ -103,7 +103,7 @@ public class CU3 extends AbstractTest {
 
 				chorbi.setBirthDate(a);
 
-			this.chorbiService.save(chorbi);
+			this.chorbiService.modify(chorbi);
 			this.chorbiRepository.flush();
 
 		} catch (final Throwable oops) {

@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
@@ -51,8 +52,11 @@ public class CU1 extends AbstractTest {
 			{
 				null, null, "manolay"
 			}, {
-				"chorbi1", IllegalArgumentException.class, "pepito22"
+				null, DataIntegrityViolationException.class, "chorbi1"
+			}, {
+				null, DataIntegrityViolationException.class, ""
 			},
+
 		};
 
 		for (int i = 0; i < testingData.length; i++)
@@ -65,7 +69,7 @@ public class CU1 extends AbstractTest {
 		try {
 			this.authenticate(username);
 			final Chorbi chorbi = this.chorbiService.create();
-			Assert.isTrue(username == null);
+
 			chorbi.getUserAccount().setUsername(useraccount);
 			chorbi.getUserAccount().setPassword(useraccount);
 
