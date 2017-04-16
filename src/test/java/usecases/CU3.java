@@ -1,6 +1,8 @@
 
 package usecases;
 
+import java.util.Date;
+
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolationException;
 
@@ -39,9 +41,25 @@ public class CU3 extends AbstractTest {
 	public void editChorbi() {
 		final Object[][] testingData = {
 			{
-				"chorbi1", null, "4556327836268273"
+				"chorbi1", null, "4556327836268273" //Positive
 			}, {
-				"chorbi1", ConstraintViolationException.class, "aaaaa"
+				"chorbi1", null, "http://www.foto.com/a.jpg" //Positive
+			}, {
+				"chorbi1", null, "WOMAN" //Positive
+			}, {
+				"chorbi1", null, "DESCRIPTION" //Positive
+			}, {
+				"chorbi1", null, "Andalucia" //Positive
+			}, {
+				"chorbi2", IllegalArgumentException.class, "MAN" //Negative
+			}, {
+				"chorbi1", ConstraintViolationException.class, "NONE" //Negative
+			}, {
+				"chorbi1", ConstraintViolationException.class, "aaaaa" //Negative
+			}, {
+				"chorbi1", ConstraintViolationException.class, "ENEMY" //Negative
+			}, {
+				"chorbi1", ConstraintViolationException.class, "date" //Negative
 			},
 		};
 
@@ -52,13 +70,39 @@ public class CU3 extends AbstractTest {
 	protected void template(final String username, final Class<?> expected, final String arg) {
 		Class<?> caught;
 		caught = null;
+		final Date a = null;
 		try {
 			this.authenticate(username);
-			final Chorbi chorbi = this.chorbiService.getLoggedChorbi();
+			Chorbi chorbi = this.chorbiService.getLoggedChorbi();
+			//Positives
 			if (arg == "4556327836268273")
 				chorbi.getCreditCard().setNumber(arg);
-			else
+			if (arg == "http://www.foto.com/a.jpg")
 				chorbi.setPicture(arg);
+			if (arg == "WOMAN")
+				chorbi.setGenre(arg);
+			if (arg == "DESCRIPTION")
+				chorbi.setDescription(arg);
+			if (arg == "Andalucia")
+				chorbi.getLocation().setState(arg);
+
+			//Negatives
+
+			if (arg == "MAN") {
+				chorbi = this.chorbiService.findOne(23);
+				chorbi.setGenre(arg);
+			}
+			if (arg == "NONE")
+				chorbi.setGenre(arg);
+			if (arg == "aaaaa")
+				chorbi.setPicture(arg);
+			if (arg == "ENEMY")
+				chorbi.setKindRelationship(arg);
+
+			if (arg == "date")
+
+				chorbi.setBirthDate(a);
+
 			this.chorbiService.save(chorbi);
 			this.chorbiRepository.flush();
 

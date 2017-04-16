@@ -16,10 +16,6 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import repositories.ChorbiRepository;
-import security.Authority;
-import security.LoginService;
-import security.UserAccount;
 import domain.Chirp;
 import domain.Chorbi;
 import domain.Coordinates;
@@ -27,19 +23,23 @@ import domain.CreditCard;
 import domain.Love;
 import domain.Template;
 import forms.ChorbiForm;
+import repositories.ChorbiRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 
 @Service
 @Transactional
 public class ChorbiService {
 
 	@Autowired
-	private ChorbiRepository	chorbiRepository;
+	private ChorbiRepository		chorbiRepository;
 
 	@Autowired
-	private TemplateService		templateService;
+	private TemplateService			templateService;
 
 	@Autowired
-	private AdministratorService administratorService;
+	private AdministratorService	administratorService;
 
 
 	public Chorbi create() {
@@ -82,6 +82,7 @@ public class ChorbiService {
 	}
 
 	public Chorbi save(final Chorbi chorbi) {
+		Assert.isTrue(chorbi.getId() == this.getLoggedChorbi().getId());
 		return this.chorbiRepository.saveAndFlush(chorbi);
 	}
 
@@ -390,17 +391,17 @@ public class ChorbiService {
 
 	//Dashboard:
 	public List<Chorbi> chorbiesSortedByLikes() {
-		administratorService.checkLoggedIsAdmin();
+		this.administratorService.checkLoggedIsAdmin();
 		return this.chorbiRepository.chorbiesSortedByLikes();
 	}
 
 	public Collection<Chorbi> chorbiMoreChirpsRecieved() {
-		administratorService.checkLoggedIsAdmin();
+		this.administratorService.checkLoggedIsAdmin();
 		return this.chorbiRepository.chorbiMoreChirpsRecieved();
 	}
 
 	public Collection<Chorbi> chorbiMoreChirpsSended() {
-		administratorService.checkLoggedIsAdmin();
+		this.administratorService.checkLoggedIsAdmin();
 		return this.chorbiRepository.chorbiMoreChirpsSended();
 	}
 }
