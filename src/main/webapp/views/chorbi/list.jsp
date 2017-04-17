@@ -10,7 +10,8 @@
 
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -24,13 +25,32 @@
 
 	<security:authorize access="isAuthenticated()">
 		<spring:message code="chorbi.name" var="titleColumn" />
-		<display:column property="name" title="${titleColumn}" />
+		<display:column title="${titleColumn}">
+		
+			<c:choose>
+				<c:when test="${fn:contains(row.name, '@')}">
+    ${fn:replace(row.name,row.name,"*******@*****.***")}
+  </c:when>
+
+				<c:otherwise>
+   ${row.name }
+  </c:otherwise>
+			</c:choose>
+			</display:column>
 
 		<spring:message code="chorbi.surname" var="titleColumn" />
-		<display:column property="surname" title="${titleColumn}" />
+		<display:column title="${titleColumn}">
+		
+			<c:choose>
+				<c:when test="${fn:contains(row.surname, '@')}">
+    ${fn:replace(row.surname,row.surname,"*******@*****.***")}
+  </c:when>
 
-		<spring:message code="chorbi.phoneNumber" var="titleColumn" />
-		<display:column property="phoneNumber" title="${titleColumn}" />
+				<c:otherwise>
+   ${row.surname }
+  </c:otherwise>
+			</c:choose>
+		</display:column>
 
 		<spring:message code="chorbi.picture" var="titleColumn" />
 		<display:column title="${titleColumn}">
@@ -38,26 +58,78 @@
 		</display:column>
 
 		<spring:message code="chorbi.description" var="titleColumn" />
-		<display:column property="description" title="${titleColumn}" />
+		<display:column title="${titleColumn}">
+		
+			<c:choose>
+				<c:when test="${fn:contains(row.description, '@')}">
+    ${fn:replace(row.description,row.description,"*******@*****.***")}
+  </c:when>
+
+				<c:otherwise>
+   ${row.description }
+  </c:otherwise>
+			</c:choose>
+		</display:column>
 
 
 		<spring:message code="chorbi.birthDate" var="titleColumn" />
 		<display:column property="birthDate" title="${titleColumn}" />
 
 		<spring:message code="chorbi.country" var="titleColumn" />
-		<display:column property="location.country" title="${titleColumn}" />
+		<display:column title="${titleColumn}">
+		
+			<c:choose>
+				<c:when test="${fn:contains(row.location.country, '@')}">
+    ${fn:replace(row.location.country,row.location.country,"*******@*****.***")}
+  </c:when>
+
+				<c:otherwise>
+   ${row.location.country }
+  </c:otherwise>
+			</c:choose>
+		</display:column>
 
 		<spring:message code="chorbi.state" var="titleColumn" />
-		<display:column property="location.state" title="${titleColumn}" />
+		<display:column title="${titleColumn}">
+		
+			<c:choose>
+				<c:when test="${fn:contains(row.location.state, '@')}">
+    ${fn:replace(row.location.state,row.location.state,"*******@*****.***")}
+  </c:when>
 
-		<spring:message code="chorbi.province" var="titleColumn" />
-		<display:column property="location.province" title="${titleColumn}" />
+				<c:otherwise>
+   ${row.location.state }
+  </c:otherwise>
+			</c:choose>
+		</display:column>
+
+		<spring:message code="chorbi.province" var="titleColumn"/>	
+		<display:column title="${titleColumn}">
+			<c:choose>
+				<c:when test="${fn:contains(row.location.province, '@')}">
+    ${fn:replace(row.location.province,row.location.province,"*******@*****.***")}
+  </c:when>
+
+				<c:otherwise>
+   ${row.location.province }
+  </c:otherwise>
+			</c:choose>
+		</display:column>
 
 		<spring:message code="chorbi.city" var="titleColumn" />
-		<display:column property="location.city" title="${titleColumn}" />
+		<display:column property="location.city" title="${titleColumn}">
+			<c:choose>
+				<c:when test="${fn:contains(row.location.city, '@')}">
+    ${fn:replace(row.location.city,row.location.city,"*******@*****.***")}
+  </c:when>
 
-		<spring:message code="chorbi.email" var="titleColumn" />
-		<display:column property="email" title="${titleColumn}" />
+				<c:otherwise>
+   ${row.location.province }
+  </c:otherwise>
+			</c:choose>
+		</display:column>
+
+		
 
 		<spring:message code="chorbi.genre" var="titleColumn" />
 		<display:column property="genre" title="${titleColumn}" />
@@ -116,3 +188,6 @@
 	<a href="chirp/chorbi/send.do"> <spring:message code="chirp.send" />
 	</a>
 </security:authorize>
+
+<br>
+<b><spring:message code="chorbi.information"/></b>
