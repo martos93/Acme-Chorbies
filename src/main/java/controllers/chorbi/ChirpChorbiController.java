@@ -71,18 +71,13 @@ public class ChirpChorbiController extends AbstractController{
 
 		if (binding.hasErrors()) {
 			result = this.createEditModelAndView(chirpForm);
-			System.out.println("1");
 		} else
 			try {
-				System.out.println("bien");
 				final Chirp chirp = this.chirpService.reconstruct(chirpForm, binding);
-				Assert.isTrue(chirp.getReceiver().getId() != this.chorbiService.getLoggedChorbi().getId());
-				this.chirpService.save(chirp);
+				chirpService.sendChirp(chirp);
 				result = new ModelAndView("redirect:list.do");
-				System.out.println("perfecto");
 
 			} catch (final Throwable oops) {
-				System.out.println("2");
 				result = this.createEditModelAndView(chirpForm, "chirp.commit.error");
 
 				final Chorbi chorbi = this.chorbiService.getLoggedChorbi();
@@ -204,8 +199,7 @@ public class ChirpChorbiController extends AbstractController{
 
 			try {
 				final Chirp chirp = this.chirpService.reconstruct(chirpForm, binding);
-				Assert.isTrue(chirp.getReceiver().getId() != this.chorbiService.getLoggedChorbi().getId());
-				this.chirpService.save(chirp);
+				chirpService.forwardChirp(chirp);
 				result = new ModelAndView("redirect:list.do");
 
 			} catch (final Throwable oops) {
@@ -231,8 +225,7 @@ public class ChirpChorbiController extends AbstractController{
 
 			try {
 				final Chirp chirp = this.chirpService.reconstruct(chirpForm, binding);
-				Assert.isTrue(chirp.getReceiver().getId() != this.chorbiService.getLoggedChorbi().getId());
-				this.chirpService.save(chirp);
+				chirpService.replyChirp(chirp);
 				result = new ModelAndView("redirect:list.do");
 
 			} catch (final Throwable oops) {

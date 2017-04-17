@@ -91,19 +91,6 @@ public class ChorbiService {
 		return this.chorbiRepository.saveAndFlush(chorbi);
 	}
 
-	/*
-	 * public Chorbi getLoggedChorbi() {
-	 * Chorbi result;
-	 * UserAccount user;
-	 * if (this.isAuthenticated() == true) {
-	 * user = LoginService.getPrincipal();
-	 * result = this.chorbiRepository.findChorbiByUsername(user.getUsername());
-	 * } else
-	 * result = null;
-	 * return result;
-	 * }
-	 */
-
 	public Boolean isAuthenticated() {
 		Boolean res = true;
 		try {
