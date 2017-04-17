@@ -89,7 +89,7 @@ public class CU3 extends AbstractTest {
 			//Negatives
 
 			if (arg == "MAN") {
-				chorbi = this.chorbiService.findOne(23);
+				chorbi = this.chorbiService.findOne(26);
 				chorbi.setGenre(arg);
 			}
 			if (arg == "NONE")
