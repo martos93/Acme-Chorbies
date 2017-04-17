@@ -258,7 +258,14 @@
 		<property name="kindRelationship" value="FRIENDSHIP" />
 		<property name="genre" value="WOMAN" />
 		<property name="birthDate" value="1992/04/02" />
-		
+		<property name="location">
+			<bean class="domain.Coordinates">
+				<property name="country" value="Spain" />
+				<property name="state" value="Galicia" />
+				<property name="province" value="Oviedo" />
+				<property name="city" value="VillaBorrico" />
+			</bean>
+		</property>
 		<property name="love">
 			<list>
 			</list>
