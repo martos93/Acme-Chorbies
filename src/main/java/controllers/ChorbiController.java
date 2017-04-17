@@ -35,6 +35,7 @@ public class ChorbiController extends AbstractController {
 		final Collection<Chorbi> all = this.chorbiService.listAll();
 
 		res.addObject("chorbi", all);
+		res.addObject("logged", this.chorbiService.getLoggedChorbi());
 		res.addObject("requestUri", "chorbi/list.do");
 
 		return res;

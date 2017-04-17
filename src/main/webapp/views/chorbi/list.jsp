@@ -150,9 +150,11 @@
 
 		<spring:message code="chorbi.like" var="titleColumn" />
 		<display:column title="${titleColumn}">
+			<jstl:if test="${row.id!=logged.id }">
 			<input
 				onclick="javascript: window.location.replace('like/chorbi/create.do?id=${row.id}');"
 				value="<spring:message code="chorbi.like" />" type="button" />
+			</jstl:if>
 		</display:column>
 
 
