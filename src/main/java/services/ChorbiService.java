@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.ChorbiRepository;
 import security.Authority;
@@ -40,6 +42,9 @@ public class ChorbiService {
 
 	@Autowired
 	private AdministratorService	administratorService;
+
+	@Autowired
+	private Validator				validator;
 
 
 	public Chorbi create() {
@@ -300,7 +305,7 @@ public class ChorbiService {
 		return chorbi;
 	}
 
-	public Chorbi reconstruct(final ChorbiForm chorbiForm) {
+	public Chorbi reconstruct(final ChorbiForm chorbiForm, final BindingResult binding) {
 		final Chorbi chorbi = this.create();
 		chorbi.getUserAccount().setUsername(chorbiForm.getUsername());
 		chorbi.getUserAccount().setPassword(chorbiForm.getPassword());
@@ -331,6 +336,8 @@ public class ChorbiService {
 		creditcard.setNumber(chorbiForm.getNumber());
 
 		chorbi.setCreditCard(creditcard);
+
+		this.validator.validate(chorbi, binding);
 		return chorbi;
 	}
 

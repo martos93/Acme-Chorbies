@@ -13,11 +13,8 @@
 
 <form:form action="${requestURI}" modelAttribute="love">
 	<form:hidden path="id" />
-	<form:hidden path="version" />
-	<form:hidden path="lover" />
-	<form:hidden path="loved" />
-	<form:hidden path="moment" />
-
+	<form:hidden path="loved"/>
+	<form:hidden path="lover"/>
 
 	<acme:textarea code="love.comment" path="comment" />
 

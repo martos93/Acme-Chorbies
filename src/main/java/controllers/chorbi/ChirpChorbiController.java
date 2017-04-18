@@ -1,3 +1,4 @@
+
 package controllers.chorbi;
 
 import java.util.ArrayList;
@@ -14,23 +15,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ChirpService;
+import services.ChorbiService;
 import controllers.AbstractController;
 import domain.Chirp;
 import domain.Chorbi;
 import forms.ChirpForm;
-import services.ChirpService;
-import services.ChorbiService;
 
 @Controller
 @RequestMapping("/chirp/chorbi")
-public class ChirpChorbiController extends AbstractController{
-	
+public class ChirpChorbiController extends AbstractController {
+
 	@Autowired
-	private ChirpService chirpService;
-	
+	private ChirpService	chirpService;
+
 	@Autowired
-	private ChorbiService chorbiService;
-	
+	private ChorbiService	chorbiService;
+
+
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView result;
@@ -43,16 +45,16 @@ public class ChirpChorbiController extends AbstractController{
 
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/send", method = RequestMethod.GET)
 	public ModelAndView send() {
 		ModelAndView result;
 		final ChirpForm chirpForm = new ChirpForm();
 
 		Assert.notNull(chirpForm);
-		
-		result = createSendModelAndView(chirpForm);
-		
+
+		result = this.createSendModelAndView(chirpForm);
+
 		result.addObject("chirpForm", chirpForm);
 		final Chorbi chorbi = this.chorbiService.findByPrincipal();
 		final Collection<Chorbi> chorbies = this.chorbiService.findAll();
@@ -63,18 +65,18 @@ public class ChirpChorbiController extends AbstractController{
 		result.addObject("reply", false);
 		return result;
 	}
-	
+
 	// Send --------------------------------------------------------
 	@RequestMapping(value = "/send", method = RequestMethod.POST, params = "save")
-	public ModelAndView send(@Valid final ChirpForm chirpForm, final BindingResult binding) {
+	public ModelAndView send(final ChirpForm chirpForm, final BindingResult binding) {
 		ModelAndView result;
 
-		if (binding.hasErrors()) {
+		final Chirp chirp = this.chirpService.reconstruct(chirpForm, binding);
+		if (binding.hasErrors())
 			result = this.createEditModelAndView(chirpForm);
-		} else
+		else
 			try {
-				final Chirp chirp = this.chirpService.reconstruct(chirpForm, binding);
-				chirpService.sendChirp(chirp);
+				this.chirpService.sendChirp(chirp);
 				result = new ModelAndView("redirect:list.do");
 
 			} catch (final Throwable oops) {
@@ -193,13 +195,13 @@ public class ChirpChorbiController extends AbstractController{
 
 		ModelAndView result;
 
-		if (binding.hasErrors()) {
+		if (binding.hasErrors())
 			result = this.createEditModelAndView(chirpForm);
-		} else
+		else
 
 			try {
 				final Chirp chirp = this.chirpService.reconstruct(chirpForm, binding);
-				chirpService.forwardChirp(chirp);
+				this.chirpService.forwardChirp(chirp);
 				result = new ModelAndView("redirect:list.do");
 
 			} catch (final Throwable oops) {
@@ -219,13 +221,13 @@ public class ChirpChorbiController extends AbstractController{
 
 		ModelAndView result;
 
-		if (binding.hasErrors()) {
+		if (binding.hasErrors())
 			result = this.replyModelAndView(chirpForm);
-		} else
+		else
 
 			try {
 				final Chirp chirp = this.chirpService.reconstruct(chirpForm, binding);
-				chirpService.replyChirp(chirp);
+				this.chirpService.replyChirp(chirp);
 				result = new ModelAndView("redirect:list.do");
 
 			} catch (final Throwable oops) {
@@ -303,16 +305,16 @@ public class ChirpChorbiController extends AbstractController{
 		return result;
 
 	}
-	
+
 	protected ModelAndView createSendModelAndView(final ChirpForm chirpForm) {
 		ModelAndView result;
 
 		result = this.forwardModelAndView(chirpForm, null);
-		
+
 		final Chorbi chorbi = this.chorbiService.getLoggedChorbi();
 		final Collection<Chorbi> chorbies = this.chorbiService.findAll();
 		chorbies.remove(chorbi);
-		
+
 		result.addObject("chorbies", chorbies);
 		result.addObject("forward", false);
 		result.addObject("reply", false);
@@ -321,18 +323,18 @@ public class ChirpChorbiController extends AbstractController{
 	}
 
 	protected ModelAndView createSendModelAndView(final ChirpForm chirpForm, final String chirp) {
-		ModelAndView result=new ModelAndView("chirp/send");
+		final ModelAndView result = new ModelAndView("chirp/send");
 		result.addObject("chirpForm", chirpForm);
 
 		final Chorbi chorbi = this.chorbiService.getLoggedChorbi();
 		final Collection<Chorbi> chorbies = this.chorbiService.findAll();
 		chorbies.remove(chorbi);
-		
+
 		result.addObject("chorbies", chorbies);
 		result.addObject("chirp", chirp);
 		result.addObject("forward", false);
 		result.addObject("reply", false);
-		
+
 		return result;
 	}
 

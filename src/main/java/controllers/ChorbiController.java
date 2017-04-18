@@ -16,16 +16,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ChorbiService;
 import domain.Chorbi;
 import forms.ChorbiForm;
-import services.ChorbiService;
 
 @Controller
 @RequestMapping("/chorbi")
 public class ChorbiController extends AbstractController {
 
 	@Autowired
-	private ChorbiService chorbiService;
+	private ChorbiService	chorbiService;
 
 
 	@RequestMapping("/list")
@@ -88,40 +88,42 @@ public class ChorbiController extends AbstractController {
 	public ModelAndView register(@Valid final ChorbiForm chorbiForm, final BindingResult bindingResult) {
 		ModelAndView res = new ModelAndView("chorbi/register");
 
-		if (chorbiForm.getPassword().equals(chorbiForm.getConfirmPassword()))
-			try {
-				final Chorbi chorbi = this.chorbiService.reconstruct(chorbiForm);
+		if (chorbiForm.getPassword().equals(chorbiForm.getConfirmPassword())) {
 
-				if (bindingResult.hasErrors()) {
-					System.out.println(bindingResult.getAllErrors());
-					res.addObject("requestUri", "chorbi/register.do");
-					res.addObject("edit", false);
-					res.addObject("chorbiForm", chorbiForm);
-				} else if (chorbiForm.isAcceptTerms() != true) {
-					res.addObject("chorbiForm", chorbiForm);
-					res.addObject("edit", false);
-					res.addObject("requestUri", "chorbi/register.do");
-					res.addObject("message", "chorbi.acceptTerms.error");
-				} else {
+			final Chorbi chorbi = this.chorbiService.reconstruct(chorbiForm, bindingResult);
+
+			if (bindingResult.hasErrors()) {
+				System.out.println(bindingResult.getAllErrors());
+				res.addObject("requestUri", "chorbi/register.do");
+				res.addObject("edit", false);
+				res.addObject("chorbiForm", chorbiForm);
+			} else if (chorbiForm.isAcceptTerms() != true) {
+				res.addObject("chorbiForm", chorbiForm);
+				res.addObject("edit", false);
+				res.addObject("requestUri", "chorbi/register.do");
+				res.addObject("message", "chorbi.acceptTerms.error");
+			} else
+				try {
 					Assert.isTrue(this.chorbiService.edad(chorbi) >= 18);
 					this.chorbiService.register(chorbi);
 					res = new ModelAndView("redirect:../welcome/index.do");
+
+				} catch (final DataIntegrityViolationException oops) {
+
+					res = new ModelAndView("chorbi/register");
+					res.addObject("chorbiForm", chorbiForm);
+					res.addObject("edit", false);
+					res.addObject("message", "chorbi.error.exists");
+
+				} catch (final Throwable e) {
+
+					System.out.println(e.getMessage());
+					res.addObject("edit", false);
+					res.addObject("message", "chorbi.commit.error");
+
 				}
-			} catch (final DataIntegrityViolationException oops) {
 
-				res = new ModelAndView("chorbi/register");
-				res.addObject("chorbiForm", chorbiForm);
-				res.addObject("edit", false);
-				res.addObject("message", "chorbi.error.exists");
-
-			} catch (final Throwable e) {
-
-				System.out.println(e.getMessage());
-				res.addObject("edit", false);
-				res.addObject("message", "chorbi.commit.error");
-
-			}
-		else {
+		} else {
 			res.addObject("chorbiForm", chorbiForm);
 			res.addObject("edit", false);
 			res.addObject("message", "chorbi.password.error");
@@ -129,7 +131,6 @@ public class ChorbiController extends AbstractController {
 		return res;
 
 	}
-
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView edit(@Valid final ChorbiForm chorbiForm, final BindingResult bindingResult) {
 		ModelAndView res = new ModelAndView("chorbi/edit");

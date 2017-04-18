@@ -3,8 +3,6 @@ package controllers.chorbi;
 
 import java.util.Collection;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -14,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ChorbiService;
+import services.LoveService;
 import controllers.AbstractController;
 import domain.Chorbi;
 import domain.Love;
-import services.ChorbiService;
-import services.LoveService;
 
 @Component
 @RequestMapping("like/chorbi")
@@ -108,16 +106,17 @@ public class LoveChorbiController extends AbstractController {
 			this.loveService.removeLove(id);
 			modelAndView = new ModelAndView("redirect:/welcome/index.do");
 		} catch (final Throwable oops) {
-			modelAndView = this.createEditModelAndView(this.loveService.findOne(id), "message.commit.error");
+			modelAndView = this.createEditModelAndView(this.loveService.findOne(id), "love.commit.error");
 		}
 		return modelAndView;
 
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final Love love, final BindingResult bindingResult) {
+	public ModelAndView save(Love love, final BindingResult bindingResult) {
 		ModelAndView modelAndView;
 
+		love = this.loveService.reconstruct(love, bindingResult);
 		if (bindingResult.hasErrors())
 			modelAndView = this.createEditModelAndView(love);
 		else

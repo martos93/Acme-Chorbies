@@ -9,10 +9,12 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
+import repositories.LoveRepository;
 import domain.Chorbi;
 import domain.Love;
-import repositories.LoveRepository;
 
 @Service
 @Transactional
@@ -25,6 +27,9 @@ public class LoveService {
 	//Services-----------------------------------------------------------
 	@Autowired
 	private ChorbiService	chorbiService;
+
+	@Autowired
+	private Validator		validator;
 
 
 	//Constructor--------------------------------------------------------
@@ -40,8 +45,6 @@ public class LoveService {
 		love = new Love();
 
 		love.setLover(this.chorbiService.findByPrincipal());
-		love.setLoved(new Chorbi());
-		love.setMoment(new Date(System.currentTimeMillis() - 10000));
 		love.setComment(new String());
 		return love;
 
@@ -95,21 +98,29 @@ public class LoveService {
 	}
 
 	public void removeLove(final int loveId) {
-		Chorbi loved;
-		Chorbi lover;
 
 		final Love love = this.findOne(loveId);
-
-		loved = love.getLoved();
-		Assert.notNull(loved);
-		lover = love.getLover();
-		lover.getLove().remove(love);
-		loved.getLovedBy().remove(love);
+		Assert.isTrue(this.chorbiService.isAuthenticated());
+		Assert.isTrue(this.chorbiService.findByPrincipal().equals(love.getLover()));
 
 		this.loveRepository.delete(love);
 
-		this.chorbiService.save(lover);
-		this.chorbiService.save(loved);
+	}
+
+	public Love reconstruct(final Love love, final BindingResult binding) {
+		Love res;
+
+		love.setMoment(new Date(System.currentTimeMillis() - 10000));
+		if (love.getId() == 0)
+			res = love;
+		else {
+			res = this.loveRepository.findOne(love.getId());
+			res.setComment(love.getComment());
+
+			this.validator.validate(res, binding);
+		}
+
+		return res;
 	}
 
 }
