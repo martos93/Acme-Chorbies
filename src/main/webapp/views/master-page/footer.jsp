@@ -17,6 +17,7 @@
 <hr />
 
 <b>Copyright &copy; <fmt:formatDate value="${date}" pattern="yyyy" />Acme-Chorbies, Inc.</b>
-
+<br>
 <b><a href="welcome/privacy.do"><spring:message code="footer.privacy" /></a></b><br>
+
 <b><a href="welcome/terms.do"><spring:message code="footer.terms" /></a></b><br>

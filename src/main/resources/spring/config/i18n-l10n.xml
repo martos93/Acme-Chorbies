@@ -26,6 +26,7 @@
 		<value>/views/cache/messages</value>
 		<value>/views/banner/messages</value>
 		<value>/views/terms/messages</value>
+		<value>/views/privacy/messages</value>
 		
 	</util:list>
 
