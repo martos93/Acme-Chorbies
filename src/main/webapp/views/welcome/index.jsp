@@ -20,3 +20,19 @@
 <p><spring:message code="welcome.greeting.prefix" /> ${name}<spring:message code="welcome.greeting.suffix" /></p>
 
 <p><spring:message code="welcome.greeting.current.time" /> ${moment}</p> 
+
+<jstl:if test="${!existCookie}">
+<table class="cookiesStyle">
+		<tr>
+			<th>
+				<spring:message code="cookie.politics" />&nbsp;
+				<a class = "cookies" href="welcome/privacy.do#cookies"><spring:message code = "cookie.consult" /></a>
+				<br />
+				<spring:message code="privacity.politics" />&nbsp;
+				<a class = "cookies" href="welcome/privacy.do"><spring:message code = "privacity.consult" /></a>&nbsp;
+				<spring:message code="term.politics" />&nbsp;
+				<a class = "cookies" href="welcome/terms.do"><spring:message code = "term.consult" /></a>
+			</th>
+		</tr>
+</table>
+</jstl:if>

@@ -25,6 +25,9 @@
 		<value>/views/template/tiles.xml</value>
 		<value>/views/cache/tiles.xml</value>
 		<value>/views/banner/tiles.xml</value>
+		<value>/views/terms/tiles.xml</value>
+		<value>/views/privacy/tiles.xml</value>
+		
 	</util:list>
 
 </beans>

@@ -17,7 +17,9 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -40,7 +42,8 @@ public class WelcomeController extends AbstractController {
 	// Index ------------------------------------------------------------------
 
 	@RequestMapping(value = "/index")
-	public ModelAndView index(@RequestParam(required = false, defaultValue = "John Doe") final String name) {
+	public ModelAndView index(@RequestParam(required = false, defaultValue = "John Doe") final String name, @CookieValue(value = "JSESSIONID", defaultValue = "default") final String sessionCookie,
+		@CookieValue(value = "language", defaultValue = "default") final String languageCookie) {
 		ModelAndView result;
 		SimpleDateFormat formatter;
 		String moment;
@@ -57,6 +60,11 @@ public class WelcomeController extends AbstractController {
 			finalbanners.add(s);
 		final String url = finalbanners.get(valorEntero);
 
+		//Mira si ya existe cookie
+		boolean existCookie = false;
+		if (!sessionCookie.equals("default") || !languageCookie.equals("default"))
+			existCookie = true;
+
 		formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		moment = formatter.format(new Date());
 
@@ -64,7 +72,19 @@ public class WelcomeController extends AbstractController {
 		result.addObject("name", name);
 		result.addObject("moment", moment);
 		result.addObject("url", url);
-
+		result.addObject("existCookie", existCookie);
 		return result;
+	}
+
+	@RequestMapping(value = "/privacy", method = RequestMethod.GET)
+	public ModelAndView privacy() {
+		final ModelAndView res = new ModelAndView("privacy/privacy");
+		return res;
+	}
+
+	@RequestMapping(value = "/terms", method = RequestMethod.GET)
+	public ModelAndView terms() {
+		final ModelAndView res = new ModelAndView("terms/terms");
+		return res;
 	}
 }

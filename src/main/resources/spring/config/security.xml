@@ -42,6 +42,10 @@
 
 		<security:intercept-url pattern="/welcome/index.do"
 			access="permitAll" />
+			<security:intercept-url pattern="/welcome/privacy.do"
+			access="permitAll" />
+				<security:intercept-url pattern="/welcome/terms.do"
+			access="permitAll" />
 
 		<security:intercept-url pattern="/chorbi/list.do"
 			access="isAuthenticated()" />
