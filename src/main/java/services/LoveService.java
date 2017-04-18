@@ -44,6 +44,7 @@ public class LoveService {
 		Love love;
 		love = new Love();
 
+		love.setMoment(new Date(System.currentTimeMillis() - 10000));
 		love.setLover(this.chorbiService.findByPrincipal());
 		love.setComment(new String());
 		return love;
@@ -110,7 +111,6 @@ public class LoveService {
 	public Love reconstruct(final Love love, final BindingResult binding) {
 		Love res;
 
-		love.setMoment(new Date(System.currentTimeMillis() - 10000));
 		if (love.getId() == 0)
 			res = love;
 		else {

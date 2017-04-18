@@ -15,6 +15,7 @@
 	<form:hidden path="id" />
 	<form:hidden path="loved"/>
 	<form:hidden path="lover"/>
+	<form:hidden path="moment"/>
 
 	<acme:textarea code="love.comment" path="comment" />
 
