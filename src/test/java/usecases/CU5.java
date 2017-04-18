@@ -9,11 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import domain.Love;
 import repositories.LoveRepository;
 import services.ChorbiService;
 import services.LoveService;
 import utilities.AbstractTest;
-import domain.Love;
 
 @ContextConfiguration(locations = {
 	"classpath:spring/junit.xml"
@@ -32,14 +32,14 @@ public class CU5 extends AbstractTest {
 	@Autowired
 	private LoveRepository	loveRepository;
 
-
 	//Tests-----------------------------------------------------------------------
+
 
 	//CU5: Un usuario logueado como chorbi da like a otro chorbi.
 	//RF: Like another chorbi; a like may be cancelled at any time.
 
 	@Test
-	public void searchChorbies() {
+	public void giveLove() {
 		final Object[][] testingData = {
 			{
 				"chorbi1", "chorbi2", "hola", null
@@ -55,10 +55,10 @@ public class CU5 extends AbstractTest {
 		};
 
 		for (int i = 0; i < testingData.length; i++)
-			this.searchChorbies((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (Class<?>) testingData[i][3]);
+			this.giveLove((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (Class<?>) testingData[i][3]);
 	}
 
-	protected void searchChorbies(final String username, final String string, final String string2, final Class<?> expected) {
+	protected void giveLove(final String username, final String string, final String string2, final Class<?> expected) {
 		Class<?> caught;
 		caught = null;
 		try {

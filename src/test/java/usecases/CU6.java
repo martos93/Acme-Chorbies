@@ -29,7 +29,7 @@ public class CU6 extends AbstractTest {
 	//RF: Like another chorbi; a like may be cancelled at any time.
 
 	@Test
-	public void searchChorbies() {
+	public void removeLove() {
 		final Object[][] testingData = {
 			{
 				"chorbi1", 32768, NullPointerException.class
@@ -45,10 +45,10 @@ public class CU6 extends AbstractTest {
 		};
 
 		for (int i = 0; i < testingData.length; i++)
-			this.searchChorbies((String) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
+			this.removeLove((String) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
 	}
 
-	protected void searchChorbies(final String username, final int id, final Class<?> expected) {
+	protected void removeLove(final String username, final int id, final Class<?> expected) {
 		Class<?> caught;
 		caught = null;
 		try {
