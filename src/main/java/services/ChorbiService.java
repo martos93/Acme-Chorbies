@@ -16,6 +16,10 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import repositories.ChorbiRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 import domain.Chirp;
 import domain.Chorbi;
 import domain.Coordinates;
@@ -23,10 +27,6 @@ import domain.CreditCard;
 import domain.Love;
 import domain.Template;
 import forms.ChorbiForm;
-import repositories.ChorbiRepository;
-import security.Authority;
-import security.LoginService;
-import security.UserAccount;
 
 @Service
 @Transactional
@@ -50,7 +50,7 @@ public class ChorbiService {
 		final Collection<Authority> authorities = userAccount.getAuthorities();
 		authorities.add(aut);
 		userAccount.setAuthorities(authorities);
-		userAccount.setIsBanned(false);
+		userAccount.setEnabled(true);
 
 		final Chorbi res = new Chorbi();
 		res.setUserAccount(userAccount);

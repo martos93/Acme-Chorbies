@@ -64,7 +64,7 @@ public class CU11 extends AbstractTest {
 			final Chorbi c = this.chorbiService.findChorbiByUsername(chorbi);
 			this.administratorService.banChorbi(c);
 
-			Assert.isTrue(c.getUserAccount().getIsBanned() == true);
+			Assert.isTrue(c.getUserAccount().isEnabled() == false);
 
 			this.chorbiRepository.flush();
 

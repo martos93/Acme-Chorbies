@@ -7,23 +7,19 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.Validator;
 
-import domain.Banner;
 import repositories.BannerRepository;
+import domain.Banner;
 
 @Service
 @Transactional
 public class BannerService {
 
 	@Autowired
-	private BannerRepository	bannerRepository;
+	private BannerRepository		bannerRepository;
 
 	@Autowired
-	private AdministratorService administratorService;
-
-	@Autowired
-	private Validator			validator;
+	private AdministratorService	administratorService;
 
 
 	// Constructor
@@ -48,16 +44,15 @@ public class BannerService {
 		return this.bannerRepository.save(banner);
 	}
 
-	public void addBanner(String url){
-		administratorService.checkLoggedIsAdmin();
-		Banner banner = bannerRepository.findAll().get(0);
+	public void addBanner(final String url) {
+		this.administratorService.checkLoggedIsAdmin();
+		final Banner banner = this.bannerRepository.findAll().get(0);
 		banner.getBanners().add(url);
 	}
 
-
-	public void deleteBanner(String url){
-		administratorService.checkLoggedIsAdmin();
-		Banner banner = bannerRepository.findAll().get(0);
+	public void deleteBanner(final String url) {
+		this.administratorService.checkLoggedIsAdmin();
+		final Banner banner = this.bannerRepository.findAll().get(0);
 		banner.getBanners().remove(url);
 	}
 

@@ -56,7 +56,7 @@ public class AdministratorService {
 		Assert.isTrue(this.actorService.isAuthenticated());
 		this.checkLoggedIsAdmin();
 
-		c.getUserAccount().setIsBanned(true);
+		c.getUserAccount().setEnabled(false);
 		this.chorbiService.save(c);
 
 	}
@@ -64,7 +64,7 @@ public class AdministratorService {
 	public void unBanChorbi(final Chorbi c) {
 		Assert.isTrue(this.actorService.isAuthenticated());
 		this.checkLoggedIsAdmin();
-		c.getUserAccount().setIsBanned(false);
+		c.getUserAccount().setEnabled(true);
 		this.chorbiService.save(c);
 
 	}

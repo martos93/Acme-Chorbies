@@ -14,13 +14,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
+import repositories.ChorbiRepository;
+import services.ChorbiService;
+import utilities.AbstractTest;
 import domain.Chorbi;
 import domain.Coordinates;
 import domain.CreditCard;
-import repositories.ChorbiRepository;
-import services.ActorService;
-import services.ChorbiService;
-import utilities.AbstractTest;
 
 @ContextConfiguration(locations = {
 	"classpath:spring/junit.xml"
@@ -31,8 +30,6 @@ public class CU1 extends AbstractTest {
 
 	@Autowired
 	private ChorbiService		chorbiService;
-	@Autowired
-	private ActorService		actorService;
 
 	@Autowired
 	private ChorbiRepository	chorbiRepository;

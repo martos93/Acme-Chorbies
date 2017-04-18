@@ -34,7 +34,7 @@ import domain.DomainEntity;
 @Entity
 @Access(AccessType.PROPERTY)
 @Table(indexes = {
-	@Index(columnList = "isBanned")
+	@Index(columnList = "enabled")
 }, uniqueConstraints = {
 	@UniqueConstraint(columnNames = "username")
 })
@@ -59,7 +59,7 @@ public class UserAccount extends DomainEntity implements UserDetails {
 	private String					username;
 	private String					password;
 	private Collection<Authority>	authorities;
-	private boolean					isBanned;
+	private boolean					enabled;
 
 
 	@Size(min = 5, max = 32)
@@ -119,10 +119,7 @@ public class UserAccount extends DomainEntity implements UserDetails {
 	@Transient
 	@Override
 	public boolean isAccountNonLocked() {
-		boolean res = true;
-		if (this.isBanned)
-			res = false;
-		return res;
+		return true;
 	}
 
 	@Transient
@@ -131,18 +128,13 @@ public class UserAccount extends DomainEntity implements UserDetails {
 		return true;
 	}
 
-	@Transient
 	@Override
 	public boolean isEnabled() {
-		return true;
+		return this.enabled;
 	}
 
-	public boolean getIsBanned() {
-		return this.isBanned;
-	}
-
-	public void setIsBanned(final boolean enabled) {
-		this.isBanned = enabled;
+	public void setEnabled(final boolean en) {
+		this.enabled = en;
 	}
 
 }
