@@ -93,7 +93,7 @@ public class ChorbiService {
 
 	public Chorbi save(final Chorbi chorbi) {
 
-		return this.chorbiRepository.saveAndFlush(chorbi);
+		return this.chorbiRepository.save(chorbi);
 	}
 
 	public Boolean isAuthenticated() {

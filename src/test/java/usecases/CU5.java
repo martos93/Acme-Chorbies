@@ -9,11 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import domain.Love;
-import repositories.LoveRepository;
 import services.ChorbiService;
 import services.LoveService;
 import utilities.AbstractTest;
+import domain.Love;
 
 @ContextConfiguration(locations = {
 	"classpath:spring/junit.xml"
@@ -28,15 +27,13 @@ public class CU5 extends AbstractTest {
 	@Autowired
 	private LoveService		loveService;
 
+
 	//Repositories----------------------------------------------------------------
-	@Autowired
-	private LoveRepository	loveRepository;
 
 	//Tests-----------------------------------------------------------------------
 
 	//CU5: Un usuario logueado como chorbi da like a otro chorbi.
 	//RF: Like another chorbi; a like may be cancelled at any time.
-
 
 	@Test
 	public void searchChorbies() {
@@ -67,7 +64,6 @@ public class CU5 extends AbstractTest {
 			love.setLoved(this.chorbiService.findChorbiByUsername(string));
 			love.setComment(string2);
 			this.loveService.addLove(love);
-
 			this.unauthenticate();
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
