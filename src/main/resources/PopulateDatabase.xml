@@ -76,6 +76,45 @@
 			</list>
 		</property>
 	</bean>
+	
+	<bean id="userAccount6" class="security.UserAccount">
+		<property name="username" value="manager1" />
+		<property name="password" value="c240642ddef994358c96da82c0361a58" />
+		<property name="enabled" value="true"/>
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="MANAGER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount7" class="security.UserAccount">
+		<property name="username" value="manager2" />
+		<property name="password" value="8df5127cd164b5bc2d2b78410a7eea0c" />
+		<property name="enabled" value="true"/>
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="MANAGER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+		<bean id="userAccount8" class="security.UserAccount">
+		<property name="username" value="manager3" />
+		<property name="password" value="2d3a5db4a2a9717b43698520a8de57d0" />
+		<property name="enabled" value="true"/>
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="MANAGER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
 
 	<!-- Other domain beans come here -->
 
@@ -113,7 +152,7 @@
 		<property name="creditCard">
 			<bean class="domain.CreditCard">
 				<property name="holderName" value="Cordelia Amaya Fernández" />
-				<property name="brandName" value="Visa" />
+				<property name="brandName" value="VISA" />
 				<property name="number" value="4958903707661558" />
 				<property name="expirationMonth" value="10" />
 				<property name="expirationYear" value="2020" />
@@ -142,6 +181,18 @@
 			</list>
 		</property>
 		<property name="template" ref="template1"/>
+		<property name="events">
+			<list>
+			
+			</list>
+		</property>
+		
+		<property name="amountDue">
+			<bean class="domain.Money">
+				<property name="amount" value="5.50" />
+				<property name="currency" value="€" />
+			</bean>
+		</property>
 		
 	</bean>
 
@@ -167,7 +218,7 @@
 		<property name="creditCard">
 			<bean class="domain.CreditCard">
 				<property name="holderName" value="Sereno Tijerina Soliz" />
-				<property name="brandName" value="Visa" />
+				<property name="brandName" value="VISA" />
 				<property name="number" value="4916999030816597" />
 				<property name="expirationMonth" value="11" />
 				<property name="expirationYear" value="2018" />
@@ -196,6 +247,17 @@
 			</list>
 		</property>
 		<property name="template" ref="template2"/>
+		<property name="events">
+			<list>
+				<ref bean="event2"/>
+			</list>
+		</property>
+		<property name="amountDue">
+			<bean class="domain.Money">
+				<property name="amount" value="0" />
+				<property name="currency" value="€" />
+			</bean>
+		</property>
 	</bean>
 	
 	<bean id="chorbi3" class="domain.Chorbi">
@@ -220,7 +282,7 @@
 		<property name="creditCard">
 			<bean class="domain.CreditCard">
 				<property name="holderName" value="Perona Anonima" />
-				<property name="brandName" value="Mastercard" />
+				<property name="brandName" value="MASTERCARD" />
 				<property name="number" value="5215626318509736" />
 				<property name="expirationMonth" value="3" />
 				<property name="expirationYear" value="2017" />
@@ -245,6 +307,18 @@
 			</list>
 		</property>
 		<property name="template" ref="template3"/>
+		<property name="events">
+			<list>
+				<ref bean="event2"/>
+				<ref bean="event3"/>
+			</list>
+		</property>
+		<property name="amountDue">
+			<bean class="domain.Money">
+				<property name="amount" value="100.50" />
+				<property name="currency" value="€" />
+			</bean>
+		</property>
 	</bean>
 	
 	<bean id="chorbi4" class="domain.Chorbi">
@@ -285,12 +359,126 @@
 		<property name="creditCard">
 			<bean class="domain.CreditCard">
 				<property name="holderName" value="Perona Anonima" />
-				<property name="brandName" value="Mastercard" />
+				<property name="brandName" value="MASTERCARD" />
 				<property name="number" value="5215626318509736" />
 				<property name="expirationMonth" value="3" />
 				<property name="expirationYear" value="2017" />
 				<property name="cvvCode" value="858" />
 			</bean>
+		</property>
+		<property name="events">
+			<list>
+			
+			</list>
+		</property>
+		<property name="amountDue">
+			<bean class="domain.Money">
+				<property name="amount" value="0.5" />
+				<property name="currency" value="€" />
+			</bean>
+		</property>
+	</bean>
+
+	<!-- Manager -->
+
+	<bean id="manager1" class="domain.Manager">
+		<property name="UserAccount" ref="userAccount6" />
+		<property name="name" value="manager1" />
+		<property name="surname" value="surnameManager1" />
+		<property name="email" value="manager1@g.com" />
+		<property name="phoneNumber" value="+34 955844532" />
+		<property name="company" value="manager1Company" />
+		<property name="VAT" value="VATmanager1" />
+		<property name="creditCard">
+			<bean class="domain.CreditCard">
+				<property name="holderName" value="Manager1" />
+				<property name="brandName" value="VISA" />
+				<property name="number" value="4916999030816597" />
+				<property name="expirationMonth" value="11" />
+				<property name="expirationYear" value="2018" />
+				<property name="cvvCode" value="518" />
+			</bean>
+		</property>
+		<property name="events">
+			<list>
+				<ref bean="event1"/>
+			</list>
+		</property>
+		<property name="amountDue">
+			<bean class="domain.Money">
+				<property name="amount" value="1" />
+				<property name="currency" value="€" />
+			</bean>
+		</property>
+		<property name="sended">
+			<list></list>
+		</property>
+	</bean>
+	
+	<bean id="manager2" class="domain.Manager">
+		<property name="UserAccount" ref="userAccount7" />
+		<property name="name" value="manager2" />
+		<property name="surname" value="surnameManager2" />
+		<property name="email" value="manager2@g.com" />
+		<property name="phoneNumber" value="+34 955844532" />
+		<property name="company" value="manager2Company" />
+		<property name="VAT" value="VATmanager2" />
+		<property name="creditCard">
+			<bean class="domain.CreditCard">
+				<property name="holderName" value="Manager2" />
+				<property name="brandName" value="VISA" />
+				<property name="number" value="4916999030816597" />
+				<property name="expirationMonth" value="11" />
+				<property name="expirationYear" value="2018" />
+				<property name="cvvCode" value="518" />
+			</bean>
+		</property>
+		<property name="events">
+			<list></list>
+		</property>
+		<property name="amountDue">
+			<bean class="domain.Money">
+				<property name="amount" value="0" />
+				<property name="currency" value="€" />
+			</bean>
+		</property>
+		<property name="sended">
+			<list></list>
+		</property>
+	</bean>
+	
+	<bean id="manager3" class="domain.Manager">
+		<property name="UserAccount" ref="userAccount8" />
+		<property name="name" value="manager3" />
+		<property name="surname" value="surnameManager3" />
+		<property name="email" value="manager3@g.com" />
+		<property name="phoneNumber" value="+34 955844532" />
+		<property name="company" value="manager3Company" />
+		<property name="VAT" value="VATmanager3" />
+		<property name="creditCard">
+			<bean class="domain.CreditCard">
+				<property name="holderName" value="Manager3" />
+				<property name="brandName" value="VISA" />
+				<property name="number" value="4916999030816597" />
+				<property name="expirationMonth" value="11" />
+				<property name="expirationYear" value="2018" />
+				<property name="cvvCode" value="518" />
+			</bean>
+		</property>
+		<property name="events">
+			<list>
+				<ref bean="event2"/>
+				<ref bean="event3"/>
+			</list>
+		</property>
+		<property name="amountDue">
+			<bean class="domain.Money">
+				<property name="amount" value="10.5" />
+				<property name="currency" value="€" />
+			</bean>
+		</property>
+		<property name="sended">
+			<list></list>
 		</property>
 	</bean>
 
@@ -306,7 +494,7 @@
 				<value>http://www.google.es/asdf.jpg</value>
 			</list>
 		</property>
-		<property name="sender" ref="chorbi1" />
+		<property name="senderC" ref="chorbi1" />
 		<property name="receiver" ref="chorbi2" />
 	</bean>
 
@@ -320,7 +508,7 @@
 				<value>http://www.asdf.es/asdf.jpg</value>
 			</list>
 		</property>
-		<property name="sender" ref="chorbi1" />
+		<property name="senderC" ref="chorbi1" />
 		<property name="receiver" ref="chorbi2" />
 	</bean>
 
@@ -334,7 +522,7 @@
 				<value>http://www.asdf.es/asdf.jpg</value>
 			</list>
 		</property>
-		<property name="sender" ref="chorbi2" />
+		<property name="senderC" ref="chorbi2" />
 		<property name="receiver" ref="chorbi1" />
 	</bean>
 
@@ -350,7 +538,24 @@
 			</list>
 		</property>
 	</bean>
+	
+	
 
+	<!-- <bean id="fee" class="domain.Fee">
+		<property name="adminAmount">
+			<bean class="domain.Money">
+				<property name="amount" value="1" />
+				<property name="currency" value="€" />
+			</bean>
+		</property>
+		<property name="chorbiAmount">
+			<bean class="domain.Money">
+				<property name="amount" value="1" />
+				<property name="currency" value="€" />
+			</bean>
+		</property>
+	</bean>
+ -->
 	<!-- Cache -->
 	<bean id="cache" class="domain.Cache">
 		<property name="hours" value="12" />
@@ -427,7 +632,54 @@
 		<property name="comment" value="So beautiful" />
 		<property name="lover" ref="chorbi1" />
 		<property name="loved" ref="chorbi2" />
+		<property name="stars" value="3"/>
 
 	</bean>
+	
+	<!-- Events -->
+	
+	<bean id="event1" class="domain.Event">
+		<property name="title" value="event1" />		
+		<property name="description" value="Event1 description" />
+		<property name="picture" value="http:\\event1.com" />
+		<property name="seatsOffered" value="4" />
+		<property name="moment" value="2017/05/18" />
+		<property name="manager" ref="manager1"/>
+		<property name="chorbies">
+			<list></list>
+		</property>
+	</bean>
+	
+	<bean id="event2" class="domain.Event">
+		<property name="title" value="event2" />		
+		<property name="description" value="Event2 description" />
+		<property name="picture" value="http:\\event2.com" />
+		<property name="seatsOffered" value="0" />
+		<property name="moment" value="2015/02/05" />
+		<property name="manager" ref="manager3"/>
+		<property name="chorbies">
+			<list>
+				<ref bean="chorbi2"/>
+				<ref bean="chorbi3"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="event3" class="domain.Event">
+		<property name="title" value="event3" />		
+		<property name="description" value="Event3 description" />
+		<property name="picture" value="http:\\event3.com" />
+		<property name="seatsOffered" value="2" />
+		<property name="moment" value="2018/02/05" />
+		<property name="manager" ref="manager3"/>
+		<property name="chorbies">
+			<list>
+				<ref bean="chorbi3"/>
+			</list>
+		</property>
+	</bean>
+	
+	
+
 
 </beans>

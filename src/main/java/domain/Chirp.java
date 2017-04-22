@@ -27,6 +27,7 @@ public class Chirp extends DomainEntity {
 	private String				subject;
 	private Collection<String>	attachments;
 
+
 	@NotNull
 	@Past
 	@Temporal(TemporalType.TIMESTAMP)
@@ -37,7 +38,7 @@ public class Chirp extends DomainEntity {
 	public void setMoment(final Date moment) {
 		this.moment = moment;
 	}
-	
+
 	@NotBlank
 	public String getText() {
 		return this.text;
@@ -62,31 +63,41 @@ public class Chirp extends DomainEntity {
 		this.attachments = attachments;
 	}
 
+
 	//Relationships--------------------------------------------------------
 
-
-	private Chorbi	sender;
+	private Chorbi	senderC;
 	private Chorbi	receiver;
+	private Manager	senderM;
 
 
 	@Valid
 	@ManyToOne(optional = true)
-	public Chorbi getSender() {
-		return this.sender;
+	public Chorbi getSenderC() {
+		return this.senderC;
 	}
 
-	public void setSender(final Chorbi sender) {
-		this.sender = sender;
+	public void setSenderC(final Chorbi senderC) {
+		this.senderC = senderC;
 	}
 
 	@Valid
-	@ManyToOne(optional = true)
+	@ManyToOne(optional = false)
 	public Chorbi getReceiver() {
 		return this.receiver;
 	}
 
 	public void setReceiver(final Chorbi receiver) {
 		this.receiver = receiver;
+	}
+
+	@Valid
+	@ManyToOne(optional = true)
+	public Manager getSenderM() {
+		return this.senderM;
+	}
+	public void setSenderM(final Manager senderM) {
+		this.senderM = senderM;
 	}
 
 }

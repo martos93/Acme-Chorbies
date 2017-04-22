@@ -7,6 +7,7 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -33,6 +34,7 @@ public class Chorbi extends Actor {
 	private Date		birthDate;
 	private Coordinates	location;
 	private CreditCard	creditCard;
+	private Money		amountDue;
 
 
 	@NotBlank
@@ -93,6 +95,15 @@ public class Chorbi extends Actor {
 		this.creditCard = creditCard;
 	}
 
+	@Valid
+	@NotNull
+	public Money getAmountDue() {
+		return this.amountDue;
+	}
+	public void setAmountDue(final Money amountDue) {
+		this.amountDue = amountDue;
+	}
+
 
 	//Relationships----------------------------------------------------------------
 	private Template			template;
@@ -100,11 +111,12 @@ public class Chorbi extends Actor {
 	private Collection<Chirp>	received;
 	private Collection<Love>	love;
 	private Collection<Love>	lovedBy;
+	private Collection<Event>	events;
 
 
 	@NotNull
 	@Valid
-	@OneToMany(mappedBy = "sender")
+	@OneToMany(mappedBy = "senderC")
 	public Collection<Chirp> getSended() {
 		return this.sended;
 	}
@@ -149,6 +161,15 @@ public class Chorbi extends Actor {
 	}
 	public void setLovedBy(final Collection<Love> lovedBy) {
 		this.lovedBy = lovedBy;
+	}
+
+	@NotNull
+	@ManyToMany(mappedBy = "chorbies")
+	public Collection<Event> getEvents() {
+		return this.events;
+	}
+	public void setEvents(final Collection<Event> events) {
+		this.events = events;
 	}
 
 }

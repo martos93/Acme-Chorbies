@@ -63,7 +63,7 @@ public class ChirpService {
 		final Collection<String> atch = new ArrayList<String>();
 		res.setAttachments(atch);
 		res.setMoment(new Date(System.currentTimeMillis() - 1000));
-		res.setSender(this.chorbiService.findByPrincipal());
+		res.setSenderC(this.chorbiService.findByPrincipal());
 		return res;
 	}
 
@@ -77,99 +77,97 @@ public class ChirpService {
 		this.validator.validate(chirp, binding);
 		return chirp;
 	}
-	 
 
 	public void deleteChirp(final int chirpId) {
 		final Chirp chirp = this.findOne(chirpId);
 		if (chirp.getReceiver() != null && chirp.getReceiver().getId() == this.chorbiService.findByPrincipal().getId())
 			chirp.setReceiver(null);
-		if (chirp.getSender() != null && chirp.getSender().getId() == this.chorbiService.findByPrincipal().getId())
-			chirp.setSender(null);
+		if (chirp.getSenderC() != null && chirp.getSenderC().getId() == this.chorbiService.findByPrincipal().getId())
+			chirp.setSenderC(null);
 
 		final Authority aut = new Authority();
 		aut.setAuthority(Authority.CHORBI);
-		
-		
+
 		try {
 			Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(aut));
 		} catch (final Exception e) {
-		
+
 		}
-		
+
 		if (chirp.getReceiver() == null)
-			if (chirp.getSender() == null)
+			if (chirp.getSenderC() == null)
 				this.delete(chirp);
 
 	}
-	
-	public void sendChirp(Chirp chirp){
+
+	public void sendChirp(final Chirp chirp) {
 		final Authority aut = new Authority();
 		aut.setAuthority(Authority.CHORBI);
-		
-		Chorbi receiverChorbi=chirp.getReceiver();
-		
-		try {
-			Assert.isTrue(receiverChorbi.getUserAccount().getAuthorities().contains(aut)&&LoginService.getPrincipal().getAuthorities().contains(aut));
-		} catch (final Exception e) {
-		
-		}
-		
-		receiverChorbi.getReceived().add(chirp);
-		chorbiService.save(receiverChorbi);
-		
-		Chorbi senderChorbi=chorbiService.findByPrincipal();
-		senderChorbi.getSended().add(chirp);
-		chorbiService.save(senderChorbi);
 
-		save(chirp);
+		final Chorbi receiverChorbi = chirp.getReceiver();
+
+		try {
+			Assert.isTrue(receiverChorbi.getUserAccount().getAuthorities().contains(aut) && LoginService.getPrincipal().getAuthorities().contains(aut));
+		} catch (final Exception e) {
+
+		}
+
+		receiverChorbi.getReceived().add(chirp);
+		this.chorbiService.save(receiverChorbi);
+
+		final Chorbi senderChorbi = this.chorbiService.findByPrincipal();
+		senderChorbi.getSended().add(chirp);
+		this.chorbiService.save(senderChorbi);
+
+		this.save(chirp);
 
 	}
-	
-	public void replyChirp(Chirp chirp){
+
+	public void replyChirp(final Chirp chirp) {
 		final Authority aut = new Authority();
 		aut.setAuthority(Authority.CHORBI);
-		
-		Chorbi receiverChorbi=chirp.getReceiver();
-		
+
+		final Chorbi receiverChorbi = chirp.getReceiver();
+
 		try {
-			Assert.isTrue(receiverChorbi.getUserAccount().getAuthorities().contains(aut)&&LoginService.getPrincipal().getAuthorities().contains(aut));
+			Assert.isTrue(receiverChorbi.getUserAccount().getAuthorities().contains(aut) && LoginService.getPrincipal().getAuthorities().contains(aut));
 			Assert.isTrue(chirp.getReceiver().getId() != this.chorbiService.getLoggedChorbi().getId());
 		} catch (final Exception e) {
-		
-		}
-		
-		receiverChorbi.getReceived().add(chirp);
-		chorbiService.save(receiverChorbi);
-		
-		Chorbi senderChorbi=chorbiService.findByPrincipal();
-		senderChorbi.getSended().add(chirp);
-		chorbiService.save(senderChorbi);
 
-		save(chirp);
+		}
+
+		receiverChorbi.getReceived().add(chirp);
+		this.chorbiService.save(receiverChorbi);
+
+		final Chorbi senderChorbi = this.chorbiService.findByPrincipal();
+		senderChorbi.getSended().add(chirp);
+		this.chorbiService.save(senderChorbi);
+
+		this.save(chirp);
 
 	}
-	
-	public void forwardChirp(Chirp chirp){
+
+	public void forwardChirp(final Chirp chirp) {
 		final Authority aut = new Authority();
 		aut.setAuthority(Authority.CHORBI);
-		
-		Chorbi receiverChorbi=chirp.getReceiver();
-		
+
+		final Chorbi receiverChorbi = chirp.getReceiver();
+
 		try {
-			Assert.isTrue(receiverChorbi.getUserAccount().getAuthorities().contains(aut)&&LoginService.getPrincipal().getAuthorities().contains(aut));
+			Assert.isTrue(receiverChorbi.getUserAccount().getAuthorities().contains(aut) && LoginService.getPrincipal().getAuthorities().contains(aut));
 			Assert.isTrue(chirp.getReceiver().getId() != this.chorbiService.getLoggedChorbi().getId());
 		} catch (final Exception e) {
-		
-		}
-		
-		receiverChorbi.getReceived().add(chirp);
-		chorbiService.save(receiverChorbi);
-		
-		Chorbi senderChorbi=chorbiService.findByPrincipal();
-		senderChorbi.getSended().add(chirp);
-		chorbiService.save(senderChorbi);
 
-		save(chirp);
+		}
+
+		receiverChorbi.getReceived().add(chirp);
+		this.chorbiService.save(receiverChorbi);
+
+		final Chorbi senderChorbi = this.chorbiService.findByPrincipal();
+		senderChorbi.getSended().add(chirp);
+		this.chorbiService.save(senderChorbi);
+
+		this.save(chirp);
 
 	}
 }
