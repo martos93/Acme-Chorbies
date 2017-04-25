@@ -469,6 +469,7 @@
 			<list>
 				<ref bean="event2"/>
 				<ref bean="event3"/>
+				<ref bean="event4"/>
 			</list>
 		</property>
 		<property name="amountDue">
@@ -676,6 +677,18 @@
 			<list>
 				<ref bean="chorbi3"/>
 			</list>
+		</property>
+	</bean>
+	
+	<bean id="event4" class="domain.Event">
+		<property name="title" value="event4" />		
+		<property name="description" value="Event4 description" />
+		<property name="picture" value="http:\\event4.com" />
+		<property name="seatsOffered" value="0" />
+		<property name="moment" value="2017/05/18" />
+		<property name="manager" ref="manager3"/>
+		<property name="chorbies">
+			<list></list>
 		</property>
 	</bean>
 	

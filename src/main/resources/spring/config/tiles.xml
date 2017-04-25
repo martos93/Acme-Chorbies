@@ -27,6 +27,8 @@
 		<value>/views/banner/tiles.xml</value>
 		<value>/views/terms/tiles.xml</value>
 		<value>/views/privacy/tiles.xml</value>
+		<value>/views/event/tiles.xml</value>
+		
 		
 	</util:list>
 

@@ -27,7 +27,7 @@
 		<value>/views/banner/messages</value>
 		<value>/views/terms/messages</value>
 		<value>/views/privacy/messages</value>
-		
+		<value>/views/event/messages</value>
 	</util:list>
 
 </beans>
