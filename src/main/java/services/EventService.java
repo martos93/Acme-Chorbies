@@ -9,15 +9,15 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import repositories.EventRepository;
 import domain.Event;
+import repositories.EventRepository;
 
 @Service
 @Transactional
 public class EventService {
 
 	@Autowired
-	private EventRepository	eventRepository;
+	private EventRepository eventRepository;
 
 
 	public Collection<Event> findAll() {
