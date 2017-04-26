@@ -16,14 +16,30 @@ import repositories.EventRepository;
 @Transactional
 public class EventService {
 
+	//Repository--------------------------------------------------------------------
 	@Autowired
-	private EventRepository eventRepository;
+	private EventRepository	eventRepository;
 
+	//Service-----------------------------------------------------------------------
+	@Autowired
+	private ManagerService	managerService;
+
+
+	//CRUD Methods------------------------------------------------------------------
+
+	public Event findOne(final int id) {
+		return this.eventRepository.findOne(id);
+	}
 
 	public Collection<Event> findAll() {
 		return this.eventRepository.findAll();
 	}
 
+	public void delete(final Event event) {
+
+	}
+
+	//Other Methods------------------------------------------------------------
 	@SuppressWarnings("deprecation")
 	public Collection<Event> findByMonthToStartAndSeats() {
 		final Date now = new Date(System.currentTimeMillis() - 1000);
@@ -49,4 +65,5 @@ public class EventService {
 			now.setMonth(now.getMonth() + 1);
 		return this.eventRepository.findFutureEvents(now);
 	}
+
 }

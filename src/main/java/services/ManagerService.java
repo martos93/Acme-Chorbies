@@ -9,6 +9,7 @@ import org.springframework.util.Assert;
 
 import domain.Manager;
 import repositories.ManagerRepository;
+import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 
@@ -32,5 +33,11 @@ public class ManagerService {
 		System.out.println();
 		Assert.isTrue(manager.getUserAccount().equals(userAccount));
 		return manager;
+	}
+
+	public void checkLoggedIsManager() {
+		final Authority aut = new Authority();
+		aut.setAuthority(Authority.MANAGER);
+		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(aut));
 	}
 }
