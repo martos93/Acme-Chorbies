@@ -3,6 +3,7 @@ package services;
 
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -16,7 +17,7 @@ import security.UserAccount;
 public class ManagerService {
 
 	//Repository------------------------------------------------------------
-
+	@Autowired
 	private ManagerRepository managerRepository;
 
 	//CRUD Methods----------------------------------------------------------

@@ -21,7 +21,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class Event extends DomainEntity {
+public class Event extends DomainEntity implements Comparable<Event> {
 
 	private String	title;
 	private String	description;
@@ -70,6 +70,16 @@ public class Event extends DomainEntity {
 	}
 	public void setMoment(final Date moment) {
 		this.moment = moment;
+	}
+
+	@Override
+	public int compareTo(final Event o) {
+		if (this.seatsOffered < o.seatsOffered)
+			return -1;
+		if (this.seatsOffered > o.seatsOffered)
+			return 1;
+		return 0;
+
 	}
 
 

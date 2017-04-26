@@ -32,50 +32,55 @@
 					<li><a href="administrator/listChorbiBanned.do"><spring:message
 								code="master.page.chorbiUnban" /></a></li>
 				</ul></li>
-				
-				
+
+
 			<li><a class="fNiv" href="cache/administrator/edit.do"><spring:message
-				code="master.page.cache" /></a></li>
-            <li><a class="fNiv" href="dashboard/administrator.do"><spring:message
-                    code="master.page.dashboard" /></a></li>
+						code="master.page.cache" /></a></li>
+			<li><a class="fNiv" href="dashboard/administrator.do"><spring:message
+						code="master.page.dashboard" /></a></li>
 			<li><a class="fNiv" href="banner/administrator/list.do"><spring:message
-					code="master.page.banner" /></a></li>
+						code="master.page.banner" /></a></li>
 		</security:authorize>
 
 		<security:authorize access="isAnonymous()">
 			<li><a class="fNiv" href="security/login.do"><spring:message
 						code="master.page.login" /></a></li>
-						<li><a class="fNiv" href="event/list.do"><spring:message
+			<li><a class="fNiv" href="event/list.do"><spring:message
 						code="master.page.listEvents" /></a></li>
-						<li><a class="fNiv" href="chorbi/register.do"><spring:message
+			<li><a class="fNiv" href="chorbi/register.do"><spring:message
 						code="master.page.register" /></a></li>
 		</security:authorize>
 
 		<security:authorize access="isAuthenticated()">
 
-		<li><a class="fNiv"><spring:message
+			<li><a class="fNiv"><spring:message
 						code="master.page.chorbi" /></a>
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="chorbi/list.do"><spring:message
-						code="master.page.chorbiList" /></a></li>
+								code="master.page.chorbiList" /></a></li>
 					<security:authorize access="hasRole('CHORBI')">
 						<li><a href="like/chorbi/listLikes.do"><spring:message
-								code="master.page.chorbi.likes" /></a></li>
+									code="master.page.chorbi.likes" /></a></li>
 						<li><a href="like/chorbi/listLikedBy.do"><spring:message
-								code="master.page.chorbi.likedBy" /></a></li>
+									code="master.page.chorbi.likedBy" /></a></li>
 					</security:authorize>
-				</ul>
-		</li>
+				</ul></li>
 		</security:authorize>
 		<security:authorize access="hasRole('CHORBI')">
 			<li><a href="chirp/chorbi/list.do"><spring:message
-								code="master.page.chirps" /></a></li>
+						code="master.page.chirps" /></a></li>
 			<li><a class="fNiv" href="template/chorbi/search.do"><spring:message
-				code="master.page.search" /></a></li>		
+						code="master.page.search" /></a></li>
 		</security:authorize>
 
-		
+
+		<security:authorize access="hasRole('MANAGER')">
+			<li><a href="event/manager/listevents.do"><spring:message
+						code="master.page.listEvents" /></a></li>
+		</security:authorize>
+
+
 		<security:authorize access="isAuthenticated()">
 			<li><a class="fNiv"> <spring:message
 						code="master.page.profile" /> (<security:authentication
@@ -84,8 +89,8 @@
 				<ul>
 					<li class="arrow"></li>
 					<security:authorize access="hasRole('CHORBI')">
-					<li><a href="chorbi/edit.do"><spring:message
-								code="master.page.profile.edit" /></a></li>
+						<li><a href="chorbi/edit.do"><spring:message
+									code="master.page.profile.edit" /></a></li>
 					</security:authorize>
 					<li><a href="j_spring_security_logout"><spring:message
 								code="master.page.logout" /> </a></li>
