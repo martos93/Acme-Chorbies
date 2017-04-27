@@ -21,8 +21,14 @@ public class ManagerService {
 	@Autowired
 	private ManagerRepository managerRepository;
 
+
 	//CRUD Methods----------------------------------------------------------
 
+	public Manager save(final Manager manager) {
+		Assert.notNull(manager);
+		final Manager managerSaved = this.managerRepository.save(manager);
+		return managerSaved;
+	}
 
 	//Other Methods---------------------------------------------------------
 

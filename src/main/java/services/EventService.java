@@ -1,7 +1,6 @@
 
 package services;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -10,10 +9,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import domain.Chirp;
-import domain.Chorbi;
 import domain.Event;
-import domain.Manager;
 import repositories.EventRepository;
 
 @Service
@@ -31,6 +27,9 @@ public class EventService {
 	@Autowired
 	private ChirpService	chirpService;
 
+	@Autowired
+	private ChorbiService	chorbiService;
+
 
 	//CRUD Methods------------------------------------------------------------------
 
@@ -43,24 +42,23 @@ public class EventService {
 	}
 
 	public void delete(final Event event) {
-		final Manager manager = this.managerService.findByPrincipal();
 
 		this.managerService.checkLoggedIsManager();
 
-		final ArrayList<Chorbi> chorbis = new ArrayList<>(event.getChorbies());
-
-		final Chirp chirp = this.chirpService.create();
-		chirp.setSenderM(manager);
-		chirp.setSubject("Deleted Event:" + event.getTitle());
-
-		for (final Chorbi chorbi : chorbis) {
-			chirp.setText("Sorry " + chorbi.getName() + ", but this event has been deleted!");
-			chirp.setReceiver(chorbi);
-			chorbi.getEvents().remove(event);
-			this.chirpService.sendChirp(chirp);
-		}
-
-		manager.getEvents().remove(event);
+		//		final ArrayList<Chorbi> chorbis = new ArrayList<>(event.getChorbies());
+		//
+		//		final Chirp chirp = this.chirpService.create();
+		//		chirp.setSubject("Deleted Event:" + event.getTitle());
+		//
+		//		for (final Chorbi chorbi : chorbis) {
+		//			chirp.setText("Sorry " + chorbi.getName() + ", but this event has been deleted!");
+		//			chirp.setReceiver(chorbi);
+		//			chorbi.getEvents().remove(event);
+		//			chorbi.getReceived().add(chirp);
+		//			chirp.setSenderC(chorbi);
+		//			this.chorbiService.save(chorbi);
+		//			this.chirpService.save(chirp);
+		//		}
 
 		this.eventRepository.delete(event);
 
