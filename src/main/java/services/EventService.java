@@ -8,6 +8,9 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import domain.Event;
 import repositories.EventRepository;
@@ -30,6 +33,9 @@ public class EventService {
 	@Autowired
 	private ChorbiService	chorbiService;
 
+	@Autowired
+	private Validator		validator;
+
 
 	//CRUD Methods------------------------------------------------------------------
 
@@ -39,6 +45,12 @@ public class EventService {
 
 	public Collection<Event> findAll() {
 		return this.eventRepository.findAll();
+	}
+
+	public Event save(final Event event) {
+		Assert.notNull(event);
+		final Event eventSaved = this.eventRepository.save(event);
+		return eventSaved;
 	}
 
 	public void delete(final Event event) {
@@ -89,6 +101,25 @@ public class EventService {
 		} else
 			now.setMonth(now.getMonth() + 1);
 		return this.eventRepository.findFutureEvents(now);
+	}
+
+	public Event reconstruct(final Event event, final BindingResult binding) {
+		Event res;
+
+		if (event.getId() == 0)
+			res = event;
+		else {
+			res = this.eventRepository.findOne(event.getId());
+			res.setTitle(event.getTitle());
+			res.setDescription(event.getDescription());
+			res.setPicture(event.getPicture());
+			res.setSeatsOffered(event.getSeatsOffered());
+
+			this.validator.validate(res, binding);
+		}
+
+		return res;
+
 	}
 
 }

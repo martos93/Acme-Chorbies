@@ -53,4 +53,12 @@
 
 	</display:table>
 
+	<div>
+		<input
+			onclick="javascript: window.location.replace('event/manager/create.do');"
+			value="<spring:message code="event.create" />" type="button"
+			name="create" />
+
+	</div>
+
 </security:authorize>
