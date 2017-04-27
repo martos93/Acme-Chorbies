@@ -1,6 +1,8 @@
 
 package services;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import repositories.EventRepository;
+import domain.Chorbi;
 import domain.Event;
 
 @Service
@@ -19,19 +22,34 @@ public class EventService {
 	@Autowired
 	private EventRepository	eventRepository;
 
+	@Autowired
+	private ActorService	actorService;
+
+	@Autowired
+	private ManagerService	managerService;
+
+
+	public Event create() {
+		final Event res = new Event();
+		res.setManager(this.managerService.getLoggedManager());
+		res.setChorbies(new ArrayList<Chorbi>());
+
+		return res;
+
+	}
+
+	public Event save(final Event event) {
+		return this.eventRepository.save(event);
+	}
 
 	public Collection<Event> findAll() {
 		return this.eventRepository.findAll();
 	}
 
-	@SuppressWarnings("deprecation")
 	public Collection<Event> findByMonthToStartAndSeats() {
-		final Date now = new Date(System.currentTimeMillis() - 1000);
-		if (now.getMonth() == 12) {
-			now.setMonth(1);
-			now.setYear(now.getYear() + 1);
-		} else
-			now.setMonth(now.getMonth() + 1);
+		final Calendar t = Calendar.getInstance();
+		t.add(Calendar.MONTH, 1);
+		final Date now = t.getTime();
 
 		return this.eventRepository.findByMonthToStartAndSeats(now);
 	}
@@ -39,14 +57,11 @@ public class EventService {
 		return this.eventRepository.findByPastEvents();
 	}
 
-	@SuppressWarnings("deprecation")
 	public Collection<Event> findFutureEvents() {
-		final Date now = new Date(System.currentTimeMillis() - 1000);
-		if (now.getMonth() == 12) {
-			now.setMonth(1);
-			now.setYear(now.getYear() + 1);
-		} else
-			now.setMonth(now.getMonth() + 1);
+		final Calendar t = Calendar.getInstance();
+		t.add(Calendar.MONTH, 1);
+		final Date now = t.getTime();
+
 		return this.eventRepository.findFutureEvents(now);
 	}
 }
