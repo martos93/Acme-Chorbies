@@ -19,6 +19,7 @@ import domain.Event;
 @Transactional
 public class EventService {
 
+	//Repository--------------------------------------------------------------------
 	@Autowired
 	private EventRepository	eventRepository;
 
@@ -42,10 +43,40 @@ public class EventService {
 		return this.eventRepository.save(event);
 	}
 
+	//CRUD Methods------------------------------------------------------------------
+
+	public Event findOne(final int id) {
+		return this.eventRepository.findOne(id);
+	}
+
 	public Collection<Event> findAll() {
 		return this.eventRepository.findAll();
 	}
 
+	public void delete(final Event event) {
+
+		this.managerService.checkLoggedIsManager();
+
+		//		final ArrayList<Chorbi> chorbis = new ArrayList<>(event.getChorbies());
+		//
+		//		final Chirp chirp = this.chirpService.create();
+		//		chirp.setSubject("Deleted Event:" + event.getTitle());
+		//
+		//		for (final Chorbi chorbi : chorbis) {
+		//			chirp.setText("Sorry " + chorbi.getName() + ", but this event has been deleted!");
+		//			chirp.setReceiver(chorbi);
+		//			chorbi.getEvents().remove(event);
+		//			chorbi.getReceived().add(chirp);
+		//			chirp.setSenderC(chorbi);
+		//			this.chorbiService.save(chorbi);
+		//			this.chirpService.save(chirp);
+		//		}
+
+		this.eventRepository.delete(event);
+
+	}
+
+	//Other Methods------------------------------------------------------------
 	public Collection<Event> findByMonthToStartAndSeats() {
 		final Calendar t = Calendar.getInstance();
 		t.add(Calendar.MONTH, 1);
@@ -64,4 +95,5 @@ public class EventService {
 
 		return this.eventRepository.findFutureEvents(now);
 	}
+
 }

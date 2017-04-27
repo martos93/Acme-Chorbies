@@ -12,12 +12,12 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import repositories.ChirpRepository;
-import security.Authority;
-import security.LoginService;
 import domain.Chirp;
 import domain.Chorbi;
 import forms.ChirpForm;
+import repositories.ChirpRepository;
+import security.Authority;
+import security.LoginService;
 
 @Service
 @Transactional
@@ -34,6 +34,9 @@ public class ChirpService {
 
 	@Autowired
 	private Validator		validator;
+
+	@Autowired
+	private ManagerService	managerService;
 
 
 	public ChirpService() {
@@ -64,6 +67,7 @@ public class ChirpService {
 		res.setAttachments(atch);
 		res.setMoment(new Date(System.currentTimeMillis() - 1000));
 		res.setSenderC(this.chorbiService.findByPrincipal());
+		res.setSenderM(this.managerService.findByPrincipal());
 		return res;
 	}
 
