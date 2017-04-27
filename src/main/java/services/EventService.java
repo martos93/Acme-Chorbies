@@ -1,6 +1,8 @@
 
 package services;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 
@@ -12,6 +14,7 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+import domain.Chorbi;
 import domain.Event;
 import repositories.EventRepository;
 
@@ -23,19 +26,24 @@ public class EventService {
 	@Autowired
 	private EventRepository	eventRepository;
 
-	//Service-----------------------------------------------------------------------
+	@Autowired
+	private ActorService	actorService;
+
 	@Autowired
 	private ManagerService	managerService;
 
 	@Autowired
-	private ChirpService	chirpService;
-
-	@Autowired
-	private ChorbiService	chorbiService;
-
-	@Autowired
 	private Validator		validator;
 
+
+	public Event create() {
+		final Event res = new Event();
+		res.setManager(this.managerService.getLoggedManager());
+		res.setChorbies(new ArrayList<Chorbi>());
+
+		return res;
+
+	}
 
 	//CRUD Methods------------------------------------------------------------------
 
@@ -77,14 +85,10 @@ public class EventService {
 	}
 
 	//Other Methods------------------------------------------------------------
-	@SuppressWarnings("deprecation")
 	public Collection<Event> findByMonthToStartAndSeats() {
-		final Date now = new Date(System.currentTimeMillis() - 1000);
-		if (now.getMonth() == 12) {
-			now.setMonth(1);
-			now.setYear(now.getYear() + 1);
-		} else
-			now.setMonth(now.getMonth() + 1);
+		final Calendar t = Calendar.getInstance();
+		t.add(Calendar.MONTH, 1);
+		final Date now = t.getTime();
 
 		return this.eventRepository.findByMonthToStartAndSeats(now);
 	}
@@ -92,14 +96,11 @@ public class EventService {
 		return this.eventRepository.findByPastEvents();
 	}
 
-	@SuppressWarnings("deprecation")
 	public Collection<Event> findFutureEvents() {
-		final Date now = new Date(System.currentTimeMillis() - 1000);
-		if (now.getMonth() == 12) {
-			now.setMonth(1);
-			now.setYear(now.getYear() + 1);
-		} else
-			now.setMonth(now.getMonth() + 1);
+		final Calendar t = Calendar.getInstance();
+		t.add(Calendar.MONTH, 1);
+		final Date now = t.getTime();
+
 		return this.eventRepository.findFutureEvents(now);
 	}
 

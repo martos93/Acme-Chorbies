@@ -7,20 +7,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import domain.Manager;
 import repositories.ManagerRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.Manager;
 
 @Service
 @Transactional
 public class ManagerService {
 
-	//Repository------------------------------------------------------------
 	@Autowired
-	private ManagerRepository managerRepository;
+	private ManagerRepository	managerRepository;
 
+	@Autowired
+	private ActorService		actorService;
+
+
+	public Manager getLoggedManager() {
+		Manager res = null;
+		if (this.actorService.isAuthenticated())
+			res = this.managerRepository.managerByUsername(LoginService.getPrincipal().getUsername());
+
+		return res;
+	}
 
 	//CRUD Methods----------------------------------------------------------
 

@@ -65,7 +65,7 @@ public class EventManagerController extends AbstractController {
 	public ModelAndView createEditModelAndView(final Event event, final String string) {
 		ModelAndView modelAndView;
 
-		modelAndView = new ModelAndView("event/edit");
+		modelAndView = new ModelAndView("event/editm");
 		modelAndView.addObject("requestURI", "event/manager/edit.do");
 		modelAndView.addObject("event", event);
 		modelAndView.addObject("message", string);
@@ -89,16 +89,16 @@ public class EventManagerController extends AbstractController {
 		ModelAndView modelAndView;
 
 		event = this.eventService.reconstruct(event, bindingResult);
-		if (bindingResult.hasErrors()){
-			modelAndView = this.createEditModelAndView(event);}
-		else{
+		if (bindingResult.hasErrors())
+			modelAndView = this.createEditModelAndView(event);
+		else
 			try {
 				this.eventService.save(event);
 				modelAndView = this.listEvents();
 
 			} catch (final Throwable oops) {
 				modelAndView = this.createEditModelAndView(event, "event.commit.error");
-			}}
+			}
 		return modelAndView;
 
 	}

@@ -2,6 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
+<<<<<<< HEAD
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -27,4 +28,5 @@
 	<acme:submit code="event.save" name="save" />
 
 	<acme:cancel url="welcome/index.do" code="event.cancel" />
+
 </form:form>

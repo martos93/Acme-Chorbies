@@ -10,6 +10,10 @@ import domain.Manager;
 @Repository
 public interface ManagerRepository extends JpaRepository<Manager, Integer> {
 
+	@Query("select m from Manager m where m.userAccount = ?1")
+	public Manager managerByUsername(String username);
+
 	@Query("select m from Manager m where m.userAccount.id=?1")
 	public Manager findByPrincipal(int id);
+
 }
