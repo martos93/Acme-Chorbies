@@ -183,7 +183,7 @@
 		<property name="template" ref="template1"/>
 		<property name="events">
 			<list>
-			
+			<ref bean="event1" />
 			</list>
 		</property>
 		
@@ -647,7 +647,9 @@
 		<property name="moment" value="2017/05/18" />
 		<property name="manager" ref="manager1"/>
 		<property name="chorbies">
-			<list></list>
+			<list>
+			<ref bean="chorbi1"/>
+			</list>
 		</property>
 	</bean>
 	
@@ -655,7 +657,7 @@
 		<property name="title" value="event2" />		
 		<property name="description" value="Event2 description" />
 		<property name="picture" value="http:\\event2.com" />
-		<property name="seatsOffered" value="0" />
+		<property name="seatsOffered" value="10" />
 		<property name="moment" value="2015/02/05" />
 		<property name="manager" ref="manager3"/>
 		<property name="chorbies">
@@ -684,7 +686,7 @@
 		<property name="title" value="event4" />		
 		<property name="description" value="Event4 description" />
 		<property name="picture" value="http:\\event4.com" />
-		<property name="seatsOffered" value="0" />
+		<property name="seatsOffered" value="10" />
 		<property name="moment" value="2017/05/18" />
 		<property name="manager" ref="manager3"/>
 		<property name="chorbies">
