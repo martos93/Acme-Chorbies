@@ -28,6 +28,7 @@
 		<value>/views/terms/messages</value>
 		<value>/views/privacy/messages</value>
 		<value>/views/event/messages</value>
+		<value>/views/manager/messages</value>
 	</util:list>
 
 </beans>
