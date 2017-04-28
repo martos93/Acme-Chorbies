@@ -34,7 +34,7 @@ public class EventController extends AbstractController {
 		res.addObject("eventP", eventsP);
 		res.addObject("eventF", eventsF);
 		res.addObject("requestURI", "event/list.do");
-		res.addObject("chorbiId", this.chorbiService.getLoggedChorbi().getId());
+		res.addObject("chorbi", this.chorbiService.getLoggedChorbi());
 		return res;
 	}
 

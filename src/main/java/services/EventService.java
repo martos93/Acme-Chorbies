@@ -135,6 +135,8 @@ public class EventService {
 
 	public void unregisterToEvent(final Event event, final Chorbi chorbi) {
 		Assert.isTrue(this.chorbiService.getLoggedChorbi().getId() == chorbi.getId());
+		Assert.isTrue(chorbi.getEvents().contains(event) == true);
+
 		event.getChorbies().remove(chorbi);
 		this.save(event);
 	}

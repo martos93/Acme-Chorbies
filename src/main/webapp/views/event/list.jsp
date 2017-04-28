@@ -85,19 +85,28 @@
 		${row.seatsOffered - fn:length(row.chorbies) }
 		</display:column>
 	
+	
 	<spring:message code="event.moment" var="moment" />
 	<display:column property="moment" title="${moment}" />
-	
+	<security:authorize access="hasRole('CHORBI')">
 		<spring:message code="event.register" var="register" />
 		<display:column title="${register}">
-		<jstl:if test="${fn:contains(row.chorbies,chorbie)==false}">
+		<jstl:if test="${fn:contains(row.chorbies,chorbi)==false}">
 			<input
 				onclick="javascript: window.location.replace('event/chorbi/register.do?id=${row.id}');"
 				value="<spring:message code="event.register" />" type="button"
+				name="register" />
+		</jstl:if>
+		
+		<jstl:if test="${fn:contains(row.chorbies,chorbi)==true}">
+			<input
+				onclick="javascript: window.location.replace('event/chorbi/unregister.do?id=${row.id}');"
+				value="<spring:message code="event.unregister" />" type="button"
 				name="unregister" />
 		</jstl:if>
 		</display:column>
-
+	</security:authorize>
 </display:table>
+
 
 
