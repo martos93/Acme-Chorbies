@@ -10,7 +10,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <h2><spring:message code="event.pasts"/></h2>
 <display:table name="eventP" id="row" requestURI="${requestURI}"
@@ -27,6 +27,11 @@
 
 	<spring:message code="event.seatsOffered" var="seatsOffered" />
 	<display:column property="seatsOffered" title="${seatsOffered}" style="background-color:grey;"/>
+	
+	<spring:message code="event.seatsFree" var="seatsFree" />
+		<display:column title="${seatsFree}" style="background-color:grey;" sortable="true">
+		${row.seatsOffered - fn:length(row.chorbies) }
+		</display:column>
 	
 	<spring:message code="event.moment" var="moment" />
 	<display:column property="moment" title="${moment}" style="background-color:grey;"/>
@@ -49,6 +54,11 @@
 	<spring:message code="event.seatsOffered" var="seatsOffered" />
 	<display:column property="seatsOffered" title="${seatsOffered}" style="background-color:green;"/>
 	
+	<spring:message code="event.seatsFree" var="seatsFree"  />
+		<display:column title="${seatsFree}"  style="background-color:green;" sortable="true">
+		${row.seatsOffered - fn:length(row.chorbies) }
+		</display:column>
+	
 	<spring:message code="event.moment" var="moment" />
 	<display:column property="moment" title="${moment}" style="background-color:green;"/>
 
@@ -70,8 +80,23 @@
 	<spring:message code="event.seatsOffered" var="seatsOffered" />
 	<display:column property="seatsOffered" title="${seatsOffered}" />
 	
+	<spring:message code="event.seatsFree" var="seatsFree" />
+		<display:column title="${seatsFree}" sortable="true">
+		${row.seatsOffered - fn:length(row.chorbies) }
+		</display:column>
+	
 	<spring:message code="event.moment" var="moment" />
 	<display:column property="moment" title="${moment}" />
+	
+		<spring:message code="event.register" var="register" />
+		<display:column title="${register}">
+		<jstl:if test="${fn:contains(row.chorbies,chorbie)==false}">
+			<input
+				onclick="javascript: window.location.replace('event/chorbi/register.do?id=${row.id}');"
+				value="<spring:message code="event.register" />" type="button"
+				name="unregister" />
+		</jstl:if>
+		</display:column>
 
 </display:table>
 

@@ -8,8 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.EventService;
 import domain.Event;
+import services.ChorbiService;
+import services.EventService;
 
 @Controller
 @RequestMapping("/event")
@@ -17,6 +18,8 @@ public class EventController extends AbstractController {
 
 	@Autowired
 	private EventService	eventService;
+	@Autowired
+	private ChorbiService	chorbiService;
 
 
 	@RequestMapping("/list")
@@ -30,7 +33,8 @@ public class EventController extends AbstractController {
 		res.addObject("event", events);
 		res.addObject("eventP", eventsP);
 		res.addObject("eventF", eventsF);
-
+		res.addObject("requestURI", "event/list.do");
+		res.addObject("chorbiId", this.chorbiService.getLoggedChorbi().getId());
 		return res;
 	}
 

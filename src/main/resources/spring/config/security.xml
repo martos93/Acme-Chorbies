@@ -71,6 +71,8 @@
 			access="hasRole('CHORBI')" />
 		<security:intercept-url pattern="/chirp/chorbi/**"
 			access="hasRole('CHORBI')" />
+		<security:intercept-url pattern="/event/chorbi/**"
+			access="hasRole('CHORBI')" />
 
 		<security:intercept-url pattern="/event/manager/**"
 			access="hasRole('MANAGER')" />

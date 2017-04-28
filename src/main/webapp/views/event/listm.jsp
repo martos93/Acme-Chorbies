@@ -10,7 +10,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <security:authorize access="hasRole('MANAGER')">
 	<display:table name="events" id="row" requestURI="${requestURI}"
 		pagesize="10" class="displaytag">
@@ -37,6 +37,11 @@
 		<spring:message code="event.seatsOffered" var="seatsOffered" />
 		<display:column property="seatsOffered" title="${seatsOffered}" />
 
+		<spring:message code="event.seatsFree" var="seatsFree" />
+		<display:column title="${seatsFree}">
+		${row.seatsOffered - fn:length(row.chorbies) }
+		</display:column>
+		
 		<spring:message code="event.moment" var="moment" />
 		<display:column property="moment" title="${moment}" />
 
