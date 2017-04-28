@@ -56,13 +56,20 @@ public class EventChorbiController extends AbstractController {
 
 	@RequestMapping(value = "/unregister", method = RequestMethod.GET)
 	public ModelAndView unregister(@RequestParam final int id) {
-		final Event event = this.eventService.findOne(id);
-		final Chorbi chorbi = this.chorbiService.findByPrincipal();
+		try {
+			final Event event = this.eventService.findOne(id);
+			final Chorbi chorbi = this.chorbiService.findByPrincipal();
+			this.eventService.unregisterToEvent(event, chorbi);
+			final ModelAndView result = new ModelAndView("redirect:../chorbi/listMyEvents.do");
 
-		this.eventService.unregisterToEvent(event, chorbi);
-		final ModelAndView result = new ModelAndView("redirect:../chorbi/listMyEvents.do");
+			return result;
+		} catch (final Throwable oops) {
+			final ModelAndView result = new ModelAndView("event/listMyEvents");
+			result.addObject("message", "event.unregister.error");
+			final Collection<Event> events = this.chorbiService.findByPrincipal().getEvents();
 
-		return result;
-
+			result.addObject("events", events);
+			return result;
+		}
 	}
 }

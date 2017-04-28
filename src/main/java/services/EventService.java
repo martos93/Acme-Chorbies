@@ -140,7 +140,7 @@ public class EventService {
 		Assert.isTrue(this.chorbiService.getLoggedChorbi().getId() == chorbi.getId());
 		Assert.isTrue(chorbi.getEvents().contains(event) == true);
 		final Date date = new Date(System.currentTimeMillis());
-		Assert.isTrue(event.getMoment().getTime() >= date.getTime());
+		Assert.isTrue(event.getMoment().getTime() >= date.getTime(), "This is a closed event");
 
 		event.getChorbies().remove(chorbi);
 		this.save(event);

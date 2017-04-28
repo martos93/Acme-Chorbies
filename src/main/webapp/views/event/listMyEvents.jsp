@@ -45,9 +45,5 @@
 				name="unregister" />
 
 		</display:column>
-		
-
 
 	</display:table>
-
-

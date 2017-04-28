@@ -31,7 +31,7 @@ public class CU8 extends AbstractTest {
 	private ChorbiService					chorbiService;
 
 
-	//CU 7 - Un usuario logueado como chorbi se apunta a un evento, siempre y cuando tenga sitio disponible.
+	//CU 8 - Un usuario logueado como chorbi accede a una vista donde se listan los eventos a los que está apuntado. Los eventos se deben poder ordenar por el número de plazas disponibles. (Esto último es de un RNF). Selecciona uno de los eventos y se desapunta.
 	//RF:   An actor who is authenticated as a chorbi must be able to:
 	//      Register to an event as long as there are enough seats available.
 
