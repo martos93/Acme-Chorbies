@@ -127,8 +127,11 @@ public class EventService {
 	}
 
 	public void registerToEvent(final Event event, final Chorbi chorbi) {
+		Assert.isTrue(this.chorbiService.getLoggedChorbi().getId() == chorbi.getId());
 		Assert.isTrue(event.getSeatsOffered() - event.getChorbies().size() != 0);
 		Assert.isTrue(chorbi.getEvents().contains(event) == false);
+		final Date date = new Date(System.currentTimeMillis());
+		Assert.isTrue(event.getMoment().getTime() >= date.getTime());
 		event.getChorbies().add(chorbi);
 		this.save(event);
 	}
@@ -136,6 +139,8 @@ public class EventService {
 	public void unregisterToEvent(final Event event, final Chorbi chorbi) {
 		Assert.isTrue(this.chorbiService.getLoggedChorbi().getId() == chorbi.getId());
 		Assert.isTrue(chorbi.getEvents().contains(event) == true);
+		final Date date = new Date(System.currentTimeMillis());
+		Assert.isTrue(event.getMoment().getTime() >= date.getTime());
 
 		event.getChorbies().remove(chorbi);
 		this.save(event);

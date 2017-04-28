@@ -49,8 +49,6 @@ public class EventChorbiController extends AbstractController {
 			return result;
 		} catch (final Throwable oops) {
 			final ModelAndView result = new ModelAndView("redirect:../list.do");
-			final String message = "error";
-			result.addObject("message", message);
 			return result;
 		}
 
