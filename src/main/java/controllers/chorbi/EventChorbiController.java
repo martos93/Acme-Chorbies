@@ -43,10 +43,16 @@ public class EventChorbiController extends AbstractController {
 		final Event event = this.eventService.findOne(id);
 		final Chorbi chorbi = this.chorbiService.findByPrincipal();
 
-		this.eventService.registerToEvent(event, chorbi);
-		final ModelAndView result = new ModelAndView("redirect:../chorbi/listMyEvents.do");
-
-		return result;
+		try {
+			this.eventService.registerToEvent(event, chorbi);
+			final ModelAndView result = new ModelAndView("redirect:../chorbi/listMyEvents.do");
+			return result;
+		} catch (final Throwable oops) {
+			final ModelAndView result = new ModelAndView("redirect:../list.do");
+			final String message = "error";
+			result.addObject("message", message);
+			return result;
+		}
 
 	}
 

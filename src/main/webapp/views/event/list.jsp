@@ -91,7 +91,7 @@
 	<security:authorize access="hasRole('CHORBI')">
 		<spring:message code="event.register" var="register" />
 		<display:column title="${register}">
-		<jstl:if test="${fn:contains(row.chorbies,chorbi)==false}">
+		<jstl:if test="${fn:contains(row.chorbies,chorbi)==false && (row.seatsOffered - fn:length(row.chorbies) != 0)}">
 			<input
 				onclick="javascript: window.location.replace('event/chorbi/register.do?id=${row.id}');"
 				value="<spring:message code="event.register" />" type="button"
@@ -107,6 +107,4 @@
 		</display:column>
 	</security:authorize>
 </display:table>
-
-
 
