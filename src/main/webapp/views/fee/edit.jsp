@@ -13,10 +13,8 @@
 <form:form action="${requestURI}" modelAttribute="fee">
 	<form:hidden path="id"/>
 
-	<acme:textbox code="fee.managerAmount" path="managerAmount.amount" />
-	<acme:textbox code="fee.managerCurrency" path="managerAmount.currency" />
-	<acme:textbox code="fee.chorbiAmount" path="chorbiAmount.amount" />
-	<acme:textbox code="fee.chorbiCurrency" path="chorbiAmount.currency" />
+	<acme:textbox code="fee.managerAmount" path="managerAmount" />
+	<acme:textbox code="fee.chorbiAmount" path="chorbiAmount" />
 
 	<acme:submit code="fee.save" name="save" />
 

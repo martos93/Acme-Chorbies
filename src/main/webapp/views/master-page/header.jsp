@@ -38,6 +38,8 @@
 
 			<li><a class="fNiv" href="cache/administrator/edit.do"><spring:message
 						code="master.page.cache" /></a></li>
+			<li><a class="fNiv" href="fee/administrator/edit.do"><spring:message
+						code="master.page.fee" /></a></li>
 			<li><a class="fNiv" href="dashboard/administrator.do"><spring:message
 						code="master.page.dashboard" /></a></li>
 			<li><a class="fNiv" href="banner/administrator/list.do"><spring:message

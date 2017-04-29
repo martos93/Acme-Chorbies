@@ -19,7 +19,7 @@ public class Manager extends Actor {
 	private String		company;
 	private CreditCard	creditCard;
 	private String		VAT;
-	private Money		amountDue;
+	private Double		amountDue;
 
 
 	@NotBlank
@@ -48,10 +48,10 @@ public class Manager extends Actor {
 
 	@Valid
 	@NotNull
-	public Money getAmountDue() {
+	public Double getAmountDue() {
 		return this.amountDue;
 	}
-	public void setAmountDue(final Money amountDue) {
+	public void setAmountDue(final Double amountDue) {
 		this.amountDue = amountDue;
 	}
 

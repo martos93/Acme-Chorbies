@@ -10,23 +10,23 @@ import javax.persistence.Entity;
 public class Fee extends DomainEntity {
 
 	//Atributes
-	private Money	managerAmount;
-	private Money	chorbiAmount;
+	private Double	managerAmount;
+	private Double	chorbiAmount;
 
 
-	public Money getManagerAmount() {
+	public Double getManagerAmount() {
 		return this.managerAmount;
 	}
 
-	public void setManagerAmount(final Money managerAmount) {
+	public void setManagerAmount(final Double managerAmount) {
 		this.managerAmount = managerAmount;
 	}
 
-	public Money getChorbiAmount() {
+	public Double getChorbiAmount() {
 		return this.chorbiAmount;
 	}
 
-	public void setChorbiAmount(final Money chorbiAmount) {
+	public void setChorbiAmount(final Double chorbiAmount) {
 		this.chorbiAmount = chorbiAmount;
 	}
 

@@ -13,17 +13,15 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+import domain.Chirp;
+import domain.CreditCard;
+import domain.Event;
+import domain.Manager;
+import forms.ManagerForm;
 import repositories.ManagerRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
-import domain.Manager;
-import domain.Money;
-import domain.Chirp;
-import domain.Chorbi;
-import domain.CreditCard;
-import domain.Event;
-import forms.ManagerForm;
 
 @Service
 @Transactional
@@ -37,6 +35,7 @@ public class ManagerService {
 
 	@Autowired
 	private Validator			validator;
+
 
 	public Manager getLoggedManager() {
 		Manager res = null;
@@ -61,21 +60,18 @@ public class ManagerService {
 		res.setUserAccount(userAccount);
 		res.setSended(new ArrayList<Chirp>());
 		res.setEvents(new ArrayList<Event>());
-		
-		Money m= new Money();
-		m.setAmount(0.0);
-		m.setCurrency("€");
-		res.setAmountDue(m);
-		
+
+		res.setAmountDue(0.0);
+
 		return res;
 	}
-	
+
 	public Manager findOne(final int id) {
 		Manager result;
 		result = this.managerRepository.findOne(id);
 		return result;
 	}
-	
+
 	public Manager save(final Manager manager) {
 		Assert.notNull(manager);
 		final Manager managerSaved = this.managerRepository.save(manager);
@@ -98,10 +94,10 @@ public class ManagerService {
 		aut.setAuthority(Authority.MANAGER);
 		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(aut));
 	}
-	
+
 	public ManagerForm reconstructForm(final Manager manager) {
 		final ManagerForm managerForm = new ManagerForm();
-		
+
 		managerForm.setName(manager.getName());
 		managerForm.setSurname(manager.getSurname());
 		managerForm.setEmail(manager.getEmail());
@@ -134,7 +130,7 @@ public class ManagerService {
 		manager.setSurname(managerForm.getSurname());
 		manager.setEmail(managerForm.getEmail());
 		manager.setPhoneNumber(managerForm.getPhoneNumber());
-	
+
 		manager.setCompany(managerForm.getCompany());
 		final CreditCard creditcard = new CreditCard();
 		creditcard.setBrandName(managerForm.getBrandName());
@@ -183,10 +179,10 @@ public class ManagerService {
 		manager = this.save(manager);
 		this.save(manager);
 	}
-	
+
 	public Manager modify(final Manager manager) {
 		Assert.isTrue(manager.getId() == this.findByPrincipal().getId());
 		return this.managerRepository.saveAndFlush(manager);
 	}
-	
+
 }

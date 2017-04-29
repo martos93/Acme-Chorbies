@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import domain.Fee;
-import domain.Money;
 import repositories.FeeRepository;
 
 @Service
@@ -32,10 +31,9 @@ public class FeeService {
 		this.administratorService.checkLoggedIsAdmin();
 
 		final Fee res = new Fee();
-		final Money money = new Money();
-		money.setAmount(1.0);
-		money.setCurrency("EUROS");
-		res.setManagerAmount(money);
+
+		res.setManagerAmount(1.0);
+		res.setChorbiAmount(1.0);
 		return res;
 
 	}
