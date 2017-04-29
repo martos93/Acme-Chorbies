@@ -7,20 +7,20 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import domain.Event;
+import domain.Fee;
 
 @Component
 @Transactional
-public class EventToStringConverter implements Converter<Event, String> {
+public class FeeToStringConverter implements Converter<Fee, String> {
 
 	@Override
-	public String convert(final Event arg0) {
+	public String convert(final Fee arg0) {
 		Assert.notNull(arg0);
 
-		String string;
-		string = String.valueOf(arg0.getId());
+		String result;
+		result = String.valueOf(arg0.getId());
 
-		return string;
+		return result;
 	}
 
 }

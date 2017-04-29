@@ -22,11 +22,11 @@
 		<bean class="converters.ChirpToStringConverter" />
 		<bean class="converters.ChorbiToStringConverter" />
 		<bean class="converters.LoveToStringConverter" />
+		<bean class="converters.ManagerToStringConverter" />
 		<bean class="converters.TemplateToStringConverter" />
 		<bean class="converters.EventToStringConverter" />
 		<bean class="converters.ManagerToStringConverter" />
-
-	
+		<bean class="converters.FeeToStringConverter" />
 
 		<bean class="converters.StringToActorConverter" />
 		<bean class="converters.StringToAdministratorConverter" />
@@ -35,10 +35,13 @@
 		<bean class="converters.StringToChirpConverter" />
 		<bean class="converters.StringToChorbiConverter" />
 		<bean class="converters.StringToLoveConverter" />
+		<bean class="converters.StringToManagerConverter" />
 		<bean class="converters.StringToTemplateConverter" />
+
 		<bean class="converters.StringToEventConverter" />
 		<bean class="converters.StringToManagerConverter" />
-
+		<bean class="converters.StringToFeeConverter" />
+		
 
 
 

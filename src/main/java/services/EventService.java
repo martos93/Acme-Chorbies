@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
@@ -29,6 +30,9 @@ public class EventService {
 	private ActorService	actorService;
 
 	@Autowired
+	private ChorbiService	chorbiService;
+
+	@Autowired
 	private ManagerService	managerService;
 
 	@Autowired
@@ -45,10 +49,6 @@ public class EventService {
 
 	}
 
-	public Event save(final Event event) {
-		return this.eventRepository.save(event);
-	}
-
 	//CRUD Methods------------------------------------------------------------------
 
 	public Event findOne(final int id) {
@@ -57,6 +57,12 @@ public class EventService {
 
 	public Collection<Event> findAll() {
 		return this.eventRepository.findAll();
+	}
+
+	public Event save(final Event event) {
+		Assert.notNull(event);
+		final Event eventSaved = this.eventRepository.save(event);
+		return eventSaved;
 	}
 
 	public void delete(final Event event) {
@@ -120,6 +126,27 @@ public class EventService {
 		this.validator.validate(res, binding);
 
 		return res;
+
+	}
+
+	public void registerToEvent(final Event event, final Chorbi chorbi) {
+		Assert.isTrue(this.chorbiService.getLoggedChorbi().getId() == chorbi.getId());
+		Assert.isTrue(event.getSeatsOffered() - event.getChorbies().size() != 0);
+		Assert.isTrue(chorbi.getEvents().contains(event) == false);
+		final Date date = new Date(System.currentTimeMillis());
+		Assert.isTrue(event.getMoment().getTime() >= date.getTime());
+		event.getChorbies().add(chorbi);
+		this.save(event);
+	}
+
+	public void unregisterToEvent(final Event event, final Chorbi chorbi) {
+		Assert.isTrue(this.chorbiService.getLoggedChorbi().getId() == chorbi.getId());
+		Assert.isTrue(chorbi.getEvents().contains(event) == true);
+		final Date date = new Date(System.currentTimeMillis());
+		Assert.isTrue(event.getMoment().getTime() >= date.getTime(), "This is a closed event");
+
+		event.getChorbies().remove(chorbi);
+		this.save(event);
 	}
 
 }

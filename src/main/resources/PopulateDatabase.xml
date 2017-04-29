@@ -183,16 +183,12 @@
 		<property name="template" ref="template1"/>
 		<property name="events">
 			<list>
-			
+			<ref bean="event1" />
 			</list>
 		</property>
 		
-		<property name="amountDue">
-			<bean class="domain.Money">
-				<property name="amount" value="5.50" />
-				<property name="currency" value="€" />
-			</bean>
-		</property>
+		<property name="amountDue" value="5.50"/>
+			
 		
 	</bean>
 
@@ -252,12 +248,7 @@
 				<ref bean="event2"/>
 			</list>
 		</property>
-		<property name="amountDue">
-			<bean class="domain.Money">
-				<property name="amount" value="0" />
-				<property name="currency" value="€" />
-			</bean>
-		</property>
+		<property name="amountDue" value ="0" />
 	</bean>
 	
 	<bean id="chorbi3" class="domain.Chorbi">
@@ -313,12 +304,8 @@
 				<ref bean="event3"/>
 			</list>
 		</property>
-		<property name="amountDue">
-			<bean class="domain.Money">
-				<property name="amount" value="100.50" />
-				<property name="currency" value="€" />
-			</bean>
-		</property>
+		<property name="amountDue" value="100.50" />
+			
 	</bean>
 	
 	<bean id="chorbi4" class="domain.Chorbi">
@@ -371,12 +358,8 @@
 			
 			</list>
 		</property>
-		<property name="amountDue">
-			<bean class="domain.Money">
-				<property name="amount" value="0.5" />
-				<property name="currency" value="€" />
-			</bean>
-		</property>
+		<property name="amountDue" value="0.5" />
+			
 	</bean>
 
 	<!-- Manager -->
@@ -404,12 +387,8 @@
 				<ref bean="event1"/>
 			</list>
 		</property>
-		<property name="amountDue">
-			<bean class="domain.Money">
-				<property name="amount" value="1" />
-				<property name="currency" value="€" />
-			</bean>
-		</property>
+		<property name="amountDue" value="1" />
+			
 		<property name="sended">
 			<list></list>
 		</property>
@@ -436,12 +415,8 @@
 		<property name="events">
 			<list></list>
 		</property>
-		<property name="amountDue">
-			<bean class="domain.Money">
-				<property name="amount" value="0" />
-				<property name="currency" value="€" />
-			</bean>
-		</property>
+		<property name="amountDue"  value="0" />
+			
 		<property name="sended">
 			<list></list>
 		</property>
@@ -472,12 +447,8 @@
 				<ref bean="event4"/>
 			</list>
 		</property>
-		<property name="amountDue">
-			<bean class="domain.Money">
-				<property name="amount" value="10.5" />
-				<property name="currency" value="€" />
-			</bean>
-		</property>
+		<property name="amountDue" value="10.5" />
+			
 		<property name="sended">
 			<list></list>
 		</property>
@@ -541,28 +512,20 @@
 	</bean>
 	
 	
+	<!-- Fee -->
+	<bean id="fee" class="domain.Fee">
+		<property name="managerAmount" value="1.0" />
+		<property name="chorbiAmount" value="1.0" />
 
-	<!-- <bean id="fee" class="domain.Fee">
-		<property name="adminAmount">
-			<bean class="domain.Money">
-				<property name="amount" value="1" />
-				<property name="currency" value="€" />
-			</bean>
-		</property>
-		<property name="chorbiAmount">
-			<bean class="domain.Money">
-				<property name="amount" value="1" />
-				<property name="currency" value="€" />
-			</bean>
-		</property>
 	</bean>
- -->
+ 
 	<!-- Cache -->
 	<bean id="cache" class="domain.Cache">
 		<property name="hours" value="12" />
 		<property name="minutes" value="0" />
 		<property name="seconds" value="0" />
 	</bean>
+	
 
 	<!-- Templates -->
 	<bean id="template1" class="domain.Template">
@@ -647,7 +610,9 @@
 		<property name="moment" value="2017/05/18" />
 		<property name="manager" ref="manager1"/>
 		<property name="chorbies">
-			<list></list>
+			<list>
+			<ref bean="chorbi1"/>
+			</list>
 		</property>
 	</bean>
 	
@@ -655,7 +620,7 @@
 		<property name="title" value="event2" />		
 		<property name="description" value="Event2 description" />
 		<property name="picture" value="http:\\event2.com" />
-		<property name="seatsOffered" value="0" />
+		<property name="seatsOffered" value="10" />
 		<property name="moment" value="2015/02/05" />
 		<property name="manager" ref="manager3"/>
 		<property name="chorbies">
@@ -684,7 +649,7 @@
 		<property name="title" value="event4" />		
 		<property name="description" value="Event4 description" />
 		<property name="picture" value="http:\\event4.com" />
-		<property name="seatsOffered" value="0" />
+		<property name="seatsOffered" value="10" />
 		<property name="moment" value="2017/05/18" />
 		<property name="manager" ref="manager3"/>
 		<property name="chorbies">

@@ -23,6 +23,8 @@
 	<ul id="jMenu">
 		<!-- Do not forget the "fNiv" class for the first level links !! -->
 		<security:authorize access="hasRole('ADMIN')">
+		<li><a href="manager/administrator/register.do"><spring:message
+								code="master.page.managerRegister" /></a></li>
 			<li><a class="fNiv"><spring:message
 						code="master.page.chorbi.management" /></a>
 				<ul>
@@ -36,6 +38,8 @@
 
 			<li><a class="fNiv" href="cache/administrator/edit.do"><spring:message
 						code="master.page.cache" /></a></li>
+			<li><a class="fNiv" href="fee/administrator/edit.do"><spring:message
+						code="master.page.fee" /></a></li>
 			<li><a class="fNiv" href="dashboard/administrator.do"><spring:message
 						code="master.page.dashboard" /></a></li>
 			<li><a class="fNiv" href="banner/administrator/list.do"><spring:message
@@ -68,6 +72,15 @@
 				</ul></li>
 		</security:authorize>
 		<security:authorize access="hasRole('CHORBI')">
+		<li><a class="fNiv"><spring:message
+						code="master.page.listEvents" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="event/chorbi/listMyEvents.do"><spring:message
+								code="master.page.myevents" /></a></li>
+					<li><a href="event/list.do"><spring:message
+								code="master.page.allevents" /></a></li>
+				</ul></li>
 			<li><a href="chirp/chorbi/list.do"><spring:message
 						code="master.page.chirps" /></a></li>
 			<li><a class="fNiv" href="template/chorbi/search.do"><spring:message

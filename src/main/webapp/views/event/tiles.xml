@@ -19,4 +19,13 @@
 		<put-attribute name="body" value="/views/event/edit.jsp" />
 	</definition>
 
+	<definition name="event/editm" extends="master.page">
+		<put-attribute name="title" value="Edit a event" />
+		<put-attribute name="body" value="/views/event/editm.jsp" />
+	</definition>
+
+<definition name="event/listMyEvents" extends="master.page">
+		<put-attribute name="title" value="My Events" />
+		<put-attribute name="body" value="/views/event/listMyEvents.jsp" />
+	</definition>
 </tiles-definitions>

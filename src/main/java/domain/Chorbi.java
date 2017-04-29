@@ -34,7 +34,7 @@ public class Chorbi extends Actor {
 	private Date		birthDate;
 	private Coordinates	location;
 	private CreditCard	creditCard;
-	private Money		amountDue;
+	private Double		amountDue;
 
 
 	@NotBlank
@@ -97,10 +97,10 @@ public class Chorbi extends Actor {
 
 	@Valid
 	@NotNull
-	public Money getAmountDue() {
+	public Double getAmountDue() {
 		return this.amountDue;
 	}
-	public void setAmountDue(final Money amountDue) {
+	public void setAmountDue(final Double amountDue) {
 		this.amountDue = amountDue;
 	}
 

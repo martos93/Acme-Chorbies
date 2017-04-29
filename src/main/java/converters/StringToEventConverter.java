@@ -38,5 +38,4 @@ public class StringToEventConverter implements Converter<String, Event> {
 
 		return event;
 	}
-
 }
