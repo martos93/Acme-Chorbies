@@ -24,6 +24,8 @@
 		<bean class="converters.LoveToStringConverter" />
 		<bean class="converters.ManagerToStringConverter" />
 		<bean class="converters.TemplateToStringConverter" />
+		<bean class="converters.FeeToStringConverter" />
+		<bean class="converters.EventToStringConverter" />
 
 		<bean class="converters.StringToActorConverter" />
 		<bean class="converters.StringToAdministratorConverter" />
@@ -34,6 +36,9 @@
 		<bean class="converters.StringToLoveConverter" />
 		<bean class="converters.StringToManagerConverter" />
 		<bean class="converters.StringToTemplateConverter" />
+		<bean class="converters.StringToFeeConverter" />
+		<bean class="converters.StringToEventConverter" />
+		
 
 
 

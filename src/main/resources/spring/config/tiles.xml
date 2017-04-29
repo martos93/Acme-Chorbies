@@ -29,6 +29,7 @@
 		<value>/views/privacy/tiles.xml</value>
 		<value>/views/event/tiles.xml</value>
 		<value>/views/manager/tiles.xml</value>
+		<value>/views/fee/tiles.xml</value>
 		
 		
 	</util:list>

@@ -540,29 +540,31 @@
 		</property>
 	</bean>
 	
+	<!-- Money -->
+	<bean id="chorbiMoney" class="domain.Money">
+		<property name="amount" value="1.0" />
+		<property name="currency" value="€" />
+	</bean>
+	<bean id="managerMoney" class="domain.Money">
+		<property name="amount" value="1.0" />
+		<property name="currency" value="€" />
+	</bean>
 	
-
-	<!-- <bean id="fee" class="domain.Fee">
-		<property name="adminAmount">
-			<bean class="domain.Money">
-				<property name="amount" value="1" />
-				<property name="currency" value="€" />
-			</bean>
+	<!-- Fee -->
+	<bean id="fee" class="domain.Fee">
+		<property name="managerAmount" ref="managerMoney">
 		</property>
-		<property name="chorbiAmount">
-			<bean class="domain.Money">
-				<property name="amount" value="1" />
-				<property name="currency" value="€" />
-			</bean>
+		<property name="chorbiAmount" ref="chorbiMoney">
 		</property>
 	</bean>
- -->
+ 
 	<!-- Cache -->
 	<bean id="cache" class="domain.Cache">
 		<property name="hours" value="12" />
 		<property name="minutes" value="0" />
 		<property name="seconds" value="0" />
 	</bean>
+	
 
 	<!-- Templates -->
 	<bean id="template1" class="domain.Template">
