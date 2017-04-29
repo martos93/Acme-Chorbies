@@ -61,4 +61,12 @@ public class FeeService {
 
 	}
 
+	//other methods
+	public Fee selectFee() {
+		Fee fee;
+		fee = this.feeRepository.findAll().get(0);
+		Assert.notNull(fee);
+		return fee;
+	}
+
 }
