@@ -16,6 +16,7 @@ import org.springframework.validation.Validator;
 
 import repositories.EventRepository;
 import domain.Chorbi;
+import domain.CreditCard;
 import domain.Event;
 
 @Service
@@ -63,6 +64,17 @@ public class EventService {
 		Assert.notNull(event);
 		final Event eventSaved = this.eventRepository.save(event);
 		return eventSaved;
+	}
+
+	public Event newEvent(Event event) {
+
+		Assert.isTrue(event.getManager().equals(this.managerService.getLoggedManager()));
+		final CreditCard c = event.getManager().getCreditCard();
+		Assert.isTrue(this.actorService.checkCreditCard(c));
+
+		event = this.eventRepository.save(event);
+
+		return event;
 	}
 
 	public void delete(final Event event) {
@@ -116,12 +128,10 @@ public class EventService {
 			res = event;
 		else {
 			res = this.eventRepository.findOne(event.getId());
-			res.setChorbies(event.getChorbies());
+			res.setTitle(event.getTitle());
 			res.setDescription(event.getDescription());
-			res.setMoment(event.getMoment());
 			res.setPicture(event.getPicture());
 			res.setSeatsOffered(event.getSeatsOffered());
-			res.setTitle(event.getTitle());
 		}
 		this.validator.validate(res, binding);
 

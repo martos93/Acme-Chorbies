@@ -54,7 +54,7 @@ public class Event extends DomainEntity implements Comparable<Event> {
 		this.picture = picture;
 	}
 
-	@Min(0)
+	@Min(1)
 	public int getSeatsOffered() {
 		return this.seatsOffered;
 	}

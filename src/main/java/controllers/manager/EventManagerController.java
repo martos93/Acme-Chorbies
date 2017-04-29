@@ -138,8 +138,14 @@ public class EventManagerController extends AbstractController {
 			res.addObject("requestUri", "event/manager/create.do");
 			res.addObject("event", event);
 
-		} else
-			this.eventService.save(event);
+		} else {
+
+			this.eventService.newEvent(event);
+			final Manager logged = event.getManager();
+			logged.setAmountDue(logged.getAmountDue() + 1.00);
+			this.managerService.save(logged);
+			res = this.listEvents();
+		}
 		return res;
 
 	}

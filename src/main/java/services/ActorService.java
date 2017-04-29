@@ -2,6 +2,7 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 
 import javax.transaction.Transactional;
@@ -16,6 +17,7 @@ import repositories.ActorRepository;
 import security.Authority;
 import security.LoginService;
 import domain.Actor;
+import domain.CreditCard;
 
 @Service
 @Transactional
@@ -107,6 +109,41 @@ public class ActorService {
 		auts2.add(b);
 
 		Assert.isTrue(!auts.contains(auts2));
+	}
+
+	public boolean checkCreditCard(final CreditCard c) {
+		boolean res = true;
+		this.luhnTest(c.getNumber());
+		final String b = c.getBrandName();
+		if (b.equals("VISA") || b.equals("MASTERCARD") || b.equals("DISCOVER") || b.equals("DINNER") || b.equals("AMEX")) {
+
+			final Calendar now = Calendar.getInstance();
+			final Calendar x = Calendar.getInstance();
+			now.add(Calendar.DAY_OF_MONTH, 1);
+			x.set(c.getExpirationYear(), c.getExpirationMonth(), 1);
+			if (x.compareTo(now) < 0)
+				res = false;
+			else
+				res = this.luhnTest(c.getNumber());
+		} else
+			res = false;
+		return res;
+	}
+
+	public boolean luhnTest(final String s) {
+		int i1 = 0, i2 = 0;
+		final String aux = new StringBuffer(s).reverse().toString();
+		for (int i = 0; i < aux.length(); i++) {
+			final int digit = Character.digit(aux.charAt(i), 10);
+			if (i % 2 == 0)
+				i1 += digit;
+			else {
+				i2 += 2 * digit;
+				if (digit >= 5)
+					i2 -= 9;
+			}
+		}
+		return (i1 + i2) % 10 == 0;
 	}
 
 	public Actor reconstruct(final Actor actor, final BindingResult bindingResult) {

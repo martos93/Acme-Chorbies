@@ -89,8 +89,15 @@
 
 
 		<security:authorize access="hasRole('MANAGER')">
-			<li><a href="event/manager/listevents.do"><spring:message
+			<li><a class="fNiv"><spring:message
+						code="master.page.listEvents" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="event/manager/listevents.do"><spring:message
 						code="master.page.listEvents" /></a></li>
+					<li><a href="event/manager/create.do"><spring:message
+								code="master.page.createEvent" /></a></li>
+				</ul></li>
 		</security:authorize>
 
 
