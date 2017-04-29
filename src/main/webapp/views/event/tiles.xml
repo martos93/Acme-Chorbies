@@ -14,8 +14,8 @@
 		<put-attribute name="body" value="/views/event/listm.jsp" />
 	</definition>
 
-	<definition name="event/edit" extends="master.page">
-		<put-attribute name="title" value="Edit a event" />
+	<definition name="event/create" extends="master.page">
+		<put-attribute name="title" value="Create an event" />
 		<put-attribute name="body" value="/views/event/edit.jsp" />
 	</definition>
 

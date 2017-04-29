@@ -6,16 +6,17 @@ import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.EventService;
+import services.ManagerService;
 import controllers.AbstractController;
 import domain.Event;
 import domain.Manager;
-import services.EventService;
-import services.ManagerService;
 
 @Controller
 @RequestMapping("event/manager")
@@ -66,6 +67,33 @@ public class EventManagerController extends AbstractController {
 		}
 
 		return result;
+	}
+
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public ModelAndView create() {
+		final ModelAndView res = new ModelAndView("event/create");
+		final Event event = this.eventService.create();
+		res.addObject("event", event);
+		res.addObject("requestUri", "event/manager/create.do");
+		return res;
+	}
+
+	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
+	public ModelAndView create(Event event, final BindingResult binding) {
+
+		ModelAndView res = new ModelAndView();
+
+		event = this.eventService.reconstruct(event, binding);
+
+		if (binding.hasErrors()) {
+			res = new ModelAndView("event/create");
+			res.addObject("requestUri", "event/manager/create.do");
+			res.addObject("event", event);
+
+		} else
+			this.eventService.save(event);
+		return res;
+
 	}
 
 }
