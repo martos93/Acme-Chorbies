@@ -17,6 +17,7 @@ import org.springframework.validation.Validator;
 import domain.Chorbi;
 import domain.CreditCard;
 import domain.Event;
+import domain.Manager;
 import repositories.EventRepository;
 
 @Service
@@ -68,12 +69,22 @@ public class EventService {
 
 	public Event newEvent(Event event) {
 
-		Assert.isTrue(event.getManager().equals(this.managerService.getLoggedManager()));
+		final Manager logged = this.managerService.getLoggedManager();
+		Assert.isTrue(event.getManager().equals(logged));
 		final CreditCard c = event.getManager().getCreditCard();
 		Assert.isTrue(this.actorService.checkCreditCard(c));
 
-		event = this.eventRepository.save(event);
+		event = this.save(event);
+		logged.setAmountDue(logged.getAmountDue() + 1.00);
+		this.managerService.save(logged);
 
+		return event;
+	}
+
+	public Event editEvent(Event event) {
+		final Manager logged = this.managerService.getLoggedManager();
+		Assert.isTrue(event.getManager().equals(logged));
+		event = this.save(event);
 		return event;
 	}
 
@@ -92,6 +103,15 @@ public class EventService {
 
 		return this.eventRepository.findByMonthToStartAndSeats(now);
 	}
+
+	public Collection<Event> findByManager() {
+		this.managerService.checkLoggedIsManager();
+		final Manager r = this.managerService.getLoggedManager();
+		final Collection<Event> res = this.eventRepository.findByManager(r.getId());
+
+		return res;
+	}
+
 	public Collection<Event> findByPastsEvents() {
 		return this.eventRepository.findByPastEvents();
 	}

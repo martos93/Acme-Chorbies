@@ -95,8 +95,10 @@
 						code="master.page.listEvents" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="event/manager/listevents.do"><spring:message
+					<li><a href="event/list.do"><spring:message
 						code="master.page.listEvents" /></a></li>
+					<li><a href="event/manager/listMyEvents.do"><spring:message
+						code="master.page.myevents" /></a></li>
 					<li><a href="event/manager/create.do"><spring:message
 								code="master.page.createEvent" /></a></li>
 				</ul></li>
