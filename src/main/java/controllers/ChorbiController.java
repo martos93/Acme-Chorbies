@@ -1,13 +1,10 @@
 
 package controllers;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.validation.Valid;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import domain.Love;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
@@ -36,23 +33,19 @@ public class ChorbiController extends AbstractController {
 		final ModelAndView res = new ModelAndView();
 
 		final Collection<Chorbi> all = this.chorbiService.listAll();
-		try{
-			Chorbi logged = this.chorbiService.getLoggedChorbi();
-			String chorbiesLoved = "";
-			for(Love l:logged.getLove()){
-				chorbiesLoved += " "+l.getLoved().getId()+" ";
-			}
+		try {
+			final Chorbi logged = this.chorbiService.getLoggedChorbi();
+			final Collection<Chorbi> c = this.chorbiService.findAllLovedByChorbiId(logged.getId());
 
 			res.addObject("chorbi", all);
 			res.addObject("logged", logged);
-			res.addObject("chorbiesLoved", chorbiesLoved);
+			res.addObject("chorbiesLoved", c);
 			res.addObject("requestUri", "chorbi/list.do");
 
-		}catch (Exception e){
+		} catch (final Exception e) {
 			res.addObject("chorbi", all);
-			res.addObject("requestUri", "chorbi/list.do");
+			res.addObject("requestUri", "/chorbi/listByLikes.do");
 		}
-
 
 		return res;
 
@@ -63,25 +56,21 @@ public class ChorbiController extends AbstractController {
 		final ModelAndView res = new ModelAndView();
 
 		final Collection<Chorbi> all = this.chorbiService.getLikersByChorbiId(chorbi);
-		try{
-			Chorbi logged = this.chorbiService.getLoggedChorbi();
+		try {
+			final Chorbi logged = this.chorbiService.getLoggedChorbi();
+			final Collection<Chorbi> c = this.chorbiService.findAllLovedByChorbiId(logged.getId());
 
-			String chorbiesLoved = "";
-			for(Love l:logged.getLove()){
-				chorbiesLoved += " "+l.getLoved().getId()+" ";
-			}
-			Boolean canRun = false;
+			final Boolean canRun = false;
 
 			res.addObject("chorbi", all);
 			res.addObject("logged", logged);
-			res.addObject("chorbiesLoved", chorbiesLoved);
+			res.addObject("chorbiesLoved", c);
 			res.addObject("requestUri", "/chorbi/listByLikes.do");
 
-		}catch (Exception e){
+		} catch (final Exception e) {
 			res.addObject("chorbi", all);
 			res.addObject("requestUri", "/chorbi/listByLikes.do");
 		}
-
 		return res;
 
 	}

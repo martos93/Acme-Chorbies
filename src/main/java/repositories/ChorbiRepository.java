@@ -29,6 +29,9 @@ public interface ChorbiRepository extends JpaRepository<Chorbi, Integer> {
 	@Query("select a from Chorbi a where a.userAccount.username=?1")
 	public Chorbi findChorbiByUsername(String username);
 
+	@Query("select l.loved from Love l where l.lover.id=?1")
+	public Collection<Chorbi> findAllLovedByChorbiId(int id);
+
 	//Dashboard:
 	//The list of chorbies, sorted by the number of likes they have got:
 	@Query("select c from Chorbi c order by c.lovedBy.size DESC")

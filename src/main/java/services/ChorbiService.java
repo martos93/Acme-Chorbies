@@ -18,6 +18,10 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+import repositories.ChorbiRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 import domain.Chirp;
 import domain.Chorbi;
 import domain.Coordinates;
@@ -26,10 +30,6 @@ import domain.Event;
 import domain.Love;
 import domain.Template;
 import forms.ChorbiForm;
-import repositories.ChorbiRepository;
-import security.Authority;
-import security.LoginService;
-import security.UserAccount;
 
 @Service
 @Transactional
@@ -181,6 +181,11 @@ public class ChorbiService {
 			|| toCompare == sample + 4 || toCompare == sample + 5)
 			res = true;
 		return res;
+	}
+
+	public Collection<Chorbi> findAllLovedByChorbiId(final int id) {
+
+		return this.chorbiRepository.findAllLovedByChorbiId(id);
 	}
 
 	public Collection<Chorbi> getChorbiesByTemplate(final Template template) {
