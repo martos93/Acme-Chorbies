@@ -40,5 +40,10 @@
 		<put-attribute name="title" value="Enviar mensaje" />
 		<put-attribute name="body" value="/views/chirp/edit.jsp" />
 	</definition>
+
+	<definition name="chirp/broadcast" extends="master.page">
+		<put-attribute name="title" value="Emitir un mensaje" />
+		<put-attribute name="body" value="/views/chirp/broadcast.jsp" />
+	</definition>
 	
 </tiles-definitions>

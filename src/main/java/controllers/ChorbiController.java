@@ -36,18 +36,23 @@ public class ChorbiController extends AbstractController {
 		final ModelAndView res = new ModelAndView();
 
 		final Collection<Chorbi> all = this.chorbiService.listAll();
+		try{
+			Chorbi logged = this.chorbiService.getLoggedChorbi();
+			String chorbiesLoved = "";
+			for(Love l:logged.getLove()){
+				chorbiesLoved += " "+l.getLoved().getId()+" ";
+			}
 
-		Chorbi logged = this.chorbiService.getLoggedChorbi();
+			res.addObject("chorbi", all);
+			res.addObject("logged", logged);
+			res.addObject("chorbiesLoved", chorbiesLoved);
+			res.addObject("requestUri", "chorbi/list.do");
 
-		String chorbiesLoved = "";
-		for(Love l:logged.getLove()){
-			chorbiesLoved += " "+l.getLoved().getId()+" ";
+		}catch (Exception e){
+			res.addObject("chorbi", all);
+			res.addObject("requestUri", "chorbi/list.do");
 		}
 
-		res.addObject("chorbi", all);
-		res.addObject("logged", logged);
-		res.addObject("chorbiesLoved", chorbiesLoved);
-		res.addObject("requestUri", "chorbi/list.do");
 
 		return res;
 
@@ -58,19 +63,24 @@ public class ChorbiController extends AbstractController {
 		final ModelAndView res = new ModelAndView();
 
 		final Collection<Chorbi> all = this.chorbiService.getLikersByChorbiId(chorbi);
+		try{
+			Chorbi logged = this.chorbiService.getLoggedChorbi();
 
-		Chorbi logged = this.chorbiService.getLoggedChorbi();
+			String chorbiesLoved = "";
+			for(Love l:logged.getLove()){
+				chorbiesLoved += " "+l.getLoved().getId()+" ";
+			}
+			Boolean canRun = false;
 
-		String chorbiesLoved = "";
-		for(Love l:logged.getLove()){
-			chorbiesLoved += " "+l.getLoved().getId()+" ";
+			res.addObject("chorbi", all);
+			res.addObject("logged", logged);
+			res.addObject("chorbiesLoved", chorbiesLoved);
+			res.addObject("requestUri", "/chorbi/listByLikes.do");
+
+		}catch (Exception e){
+			res.addObject("chorbi", all);
+			res.addObject("requestUri", "/chorbi/listByLikes.do");
 		}
-		Boolean canRun = false;
-
-		res.addObject("chorbi", all);
-		res.addObject("logged", logged);
-		res.addObject("chorbiesLoved", chorbiesLoved);
-		res.addObject("requestUri", "/chorbi/listByLikes.do");
 
 		return res;
 

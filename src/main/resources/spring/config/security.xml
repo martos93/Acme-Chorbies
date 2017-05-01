@@ -76,6 +76,8 @@
 
 		<security:intercept-url pattern="/event/manager/create.do"
 			access="hasRole('MANAGER')" />
+		<security:intercept-url pattern="/chirp/manager/**"
+								access="hasRole('MANAGER')" />
 
 		<security:intercept-url pattern="/event/manager/**"
 			access="hasRole('MANAGER')" />

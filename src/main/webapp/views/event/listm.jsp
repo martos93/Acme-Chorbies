@@ -45,6 +45,13 @@
 		<spring:message code="event.moment" var="moment" />
 		<display:column property="moment" title="${moment}" />
 
+		<spring:message code="event.broadcast" var="broadcast" />
+		<display:column title="${broadcast}">
+			<input type="button"
+				   onclick="document.location.href='chirp/manager/broadcast.do?eventId=${row.id}'"
+				   value="${broadcast }" />
+		</display:column>
+
 		<spring:message code="event.delete" var="delete" />
 		<display:column title="${delete}">
 

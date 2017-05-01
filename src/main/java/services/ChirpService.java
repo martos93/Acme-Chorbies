@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
-import domain.Actor;
+import domain.*;
+import forms.ChirpManagerForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,8 +14,6 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import domain.Chirp;
-import domain.Chorbi;
 import forms.ChirpForm;
 import repositories.ChirpRepository;
 import security.Authority;
@@ -84,6 +83,18 @@ public class ChirpService {
 		chirp.setReceiver(chirpForm.getReceiver());
 		chirp.setText(chirpForm.getText());
 		chirp.setSubject(chirpForm.getSubject());
+
+		this.validator.validate(chirp, binding);
+		return chirp;
+	}
+
+	public Chirp reconstruct(ChirpManagerForm chirpManagerForm, final BindingResult binding, Chorbi reciever){
+		Chirp chirp = create();
+		System.out.println("Reconstruc: "+chirp.getSenderM());
+		chirp.setAttachments(chirpManagerForm.getAttachments());
+		chirp.setReceiver(reciever);
+		chirp.setText(chirpManagerForm.getText());
+		chirp.setSubject(chirpManagerForm.getSubject());
 
 		this.validator.validate(chirp, binding);
 		return chirp;
@@ -180,5 +191,31 @@ public class ChirpService {
 
 		this.save(chirp);
 
+	}
+
+	public void broadcastChirps(Event event, ChirpManagerForm chirpManagerForm, BindingResult binding){
+		final Authority aut = new Authority();
+		aut.setAuthority(Authority.MANAGER);
+
+		try{
+			Manager manager = managerService.getLoggedManager();
+			Assert.isTrue(manager.getUserAccount().getAuthorities().contains(aut));
+			Assert.isTrue(event.getManager().equals(manager));
+			for(Chorbi c:event.getChorbies()){
+				Chirp aux = reconstruct(chirpManagerForm, binding, c);
+				aux.setSenderM(manager);
+				Chorbi receiverChorbi = aux.getReceiver();
+				receiverChorbi.getReceived().add(aux);
+				this.chorbiService.save(receiverChorbi);
+
+				manager.getSended().add(aux);
+				this.managerService.save(manager);
+
+				this.save(aux);
+			}
+
+		}catch (Exception e){
+			System.out.println(e.getMessage());
+		}
 	}
 }
