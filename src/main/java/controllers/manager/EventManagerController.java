@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.EventService;
-import services.ManagerService;
 import controllers.AbstractController;
 import domain.Event;
 import domain.Manager;
+import forms.ChirpManagerForm;
+import services.ChirpService;
+import services.EventService;
+import services.ManagerService;
 
 @Controller
 @RequestMapping("event/manager")
@@ -29,6 +31,9 @@ public class EventManagerController extends AbstractController {
 
 	@Autowired
 	private EventService	eventService;
+
+	@Autowired
+	private ChirpService	chirpService;
 
 
 	//Constructor-----------------------------------------------
@@ -93,6 +98,15 @@ public class EventManagerController extends AbstractController {
 			modelAndView = this.createEditModelAndView(event);
 		else
 			try {
+				if (event.getId() != 0) {
+					final ChirpManagerForm chirpManagerForm = new ChirpManagerForm();
+					chirpManagerForm.setSubject(event.getTitle().toUpperCase() + " was modified!");
+					chirpManagerForm.setText("The " + event.getTitle().toUpperCase() + " has been modified by " + event.getManager().getName() + "!");
+					chirpManagerForm.setAttachments(new ArrayList<String>());
+
+					this.chirpService.broadcastChirps(event, chirpManagerForm, bindingResult);
+				}
+
 				this.eventService.save(event);
 				modelAndView = this.listEvents();
 
@@ -108,6 +122,13 @@ public class EventManagerController extends AbstractController {
 		ModelAndView result;
 		final Event event = this.eventService.findOne(id);
 		try {
+
+			final ChirpManagerForm chirpManagerForm = new ChirpManagerForm();
+			chirpManagerForm.setSubject(event.getTitle().toUpperCase() + " was deleted!");
+			chirpManagerForm.setText("Sorry but " + event.getTitle().toUpperCase() + " has been deleted by " + event.getManager().getName() + "!");
+			chirpManagerForm.setAttachments(new ArrayList<String>());
+
+			this.chirpService.broadcastChirps(event, chirpManagerForm, null);
 			this.eventService.delete(event);
 			result = new ModelAndView("redirect:listevents.do");
 		} catch (final Throwable oops) {
