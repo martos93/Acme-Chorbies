@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ActorService;
 import services.ChorbiService;
 import domain.Chorbi;
 import forms.ChorbiForm;
@@ -26,6 +27,9 @@ public class ChorbiController extends AbstractController {
 
 	@Autowired
 	private ChorbiService	chorbiService;
+	
+	@Autowired
+	private ActorService actorService;;
 
 
 	@RequestMapping("/list")
@@ -71,6 +75,27 @@ public class ChorbiController extends AbstractController {
 			res.addObject("chorbi", all);
 			res.addObject("requestUri", "/chorbi/listByLikes.do");
 		}
+		return res;
+
+	}
+	
+	@RequestMapping("/listILike")
+	public ModelAndView listILike() {
+		final ModelAndView res = new ModelAndView();
+		try {
+			final Chorbi logged = this.chorbiService.getLoggedChorbi();
+			final Collection<Chorbi> chorbiesILike = this.chorbiService.findAllLovedByChorbiId(logged.getId());
+			boolean canShow=actorService.checkCreditCard(logged.getCreditCard());
+			
+			res.addObject("logged", logged);
+			res.addObject("chorbiesILike", chorbiesILike);
+			res.addObject("canShow",canShow);
+			res.addObject("requestUri", "chorbi/listILike.do");
+
+		} catch (final Exception e) {
+			res.addObject("requestUri", "/welcome/index.do");
+		}
+
 		return res;
 
 	}

@@ -49,6 +49,9 @@ public class ChorbiService {
 
 	@Autowired
 	private Validator				validator;
+	
+	@Autowired
+	private ActorService 			actorService;
 
 
 	public Chorbi create() {
@@ -190,7 +193,7 @@ public class ChorbiService {
 
 	public Collection<Chorbi> getChorbiesByTemplate(final Template template) {
 
-		Assert.isTrue(this.hasValidCreditCard(this.getLoggedChorbi()));
+		Assert.isTrue(actorService.checkCreditCard(getLoggedChorbi().getCreditCard()));
 
 		final Collection<Chorbi> res = this.findAll();
 		res.remove(this.findOne(this.findByPrincipal().getId()));
@@ -386,15 +389,6 @@ public class ChorbiService {
 				anos = anos - 1;
 		}
 		return anos;
-	}
-
-	public boolean hasValidCreditCard(final Chorbi chorbi) {
-		final CreditCard c = chorbi.getCreditCard();
-
-		final Calendar calendar = new GregorianCalendar(c.getExpirationYear(), c.getExpirationMonth(), 1);
-		final Date expiration = calendar.getTime();
-
-		return expiration.getTime() > (System.currentTimeMillis() + 86400000);
 	}
 
 	public Chorbi updateFee(final Chorbi chorbi) {

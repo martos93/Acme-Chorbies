@@ -82,6 +82,8 @@
 			access="hasRole('CHORBI')" />
 		<security:intercept-url pattern="/event/chorbi/**"
 			access="hasRole('CHORBI')" />
+		<security:intercept-url pattern="/chorbi/listILike.do"
+			access="hasRole('CHORBI')" />
 
 		<security:intercept-url pattern="/event/manager/create.do"
 			access="hasRole('MANAGER')" />
