@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -49,9 +48,9 @@ public class ChorbiService {
 
 	@Autowired
 	private Validator				validator;
-	
+
 	@Autowired
-	private ActorService 			actorService;
+	private ActorService			actorService;
 
 
 	public Chorbi create() {
@@ -116,7 +115,10 @@ public class ChorbiService {
 	public Boolean isChorbi() {
 		Boolean res = false;
 		try {
-			res = LoginService.getPrincipal().getAuthorities().contains(Authority.CHORBI);
+			final Authority aut = new Authority();
+			aut.setAuthority(Authority.CHORBI);
+
+			res = LoginService.getPrincipal().getAuthorities().contains(aut);
 		} catch (final Exception e) {
 			res = false;
 		}
@@ -193,7 +195,7 @@ public class ChorbiService {
 
 	public Collection<Chorbi> getChorbiesByTemplate(final Template template) {
 
-		Assert.isTrue(actorService.checkCreditCard(getLoggedChorbi().getCreditCard()));
+		Assert.isTrue(this.actorService.checkCreditCard(this.getLoggedChorbi().getCreditCard()));
 
 		final Collection<Chorbi> res = this.findAll();
 		res.remove(this.findOne(this.findByPrincipal().getId()));

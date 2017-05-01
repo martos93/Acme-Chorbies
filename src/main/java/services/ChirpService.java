@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
-import domain.*;
-import forms.ChirpManagerForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,11 +12,16 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import forms.ChirpForm;
 import repositories.ChirpRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.Chirp;
+import domain.Chorbi;
+import domain.Event;
+import domain.Manager;
+import forms.ChirpForm;
+import forms.ChirpManagerForm;
 
 @Service
 @Transactional
@@ -67,16 +70,15 @@ public class ChirpService {
 		final Collection<String> atch = new ArrayList<String>();
 		res.setAttachments(atch);
 		res.setMoment(new Date(System.currentTimeMillis() - 1000));
-		UserAccount user = LoginService.getPrincipal();
-		for(Authority a: user.getAuthorities()){
-			if(a.getAuthority().equals(Authority.CHORBI)){
+		final UserAccount user = LoginService.getPrincipal();
+		for (final Authority a : user.getAuthorities())
+			if (a.getAuthority().equals(Authority.CHORBI)) {
 				res.setSenderC(this.chorbiService.findByPrincipal());
 				break;
-			}else if(a.getAuthority().equals(Authority.MANAGER)){
+			} else if (a.getAuthority().equals(Authority.MANAGER)) {
 				res.setSenderM(this.managerService.findByPrincipal());
 				break;
 			}
-		}
 		return res;
 
 	}
@@ -92,8 +94,8 @@ public class ChirpService {
 		return chirp;
 	}
 
-	public Chirp reconstruct(ChirpManagerForm chirpManagerForm, final BindingResult binding, Chorbi reciever){
-		Chirp chirp = create();
+	public Chirp reconstruct(final ChirpManagerForm chirpManagerForm, final BindingResult binding, final Chorbi reciever) {
+		final Chirp chirp = this.create();
 		chirp.setAttachments(chirpManagerForm.getAttachments());
 		chirp.setReceiver(reciever);
 		chirp.setText(chirpManagerForm.getText());
@@ -104,24 +106,13 @@ public class ChirpService {
 	}
 
 	public void deleteChirp(final int chirpId) {
+		Assert.isTrue(this.chorbiService.isAuthenticated());
+		Assert.isTrue(this.chorbiService.isChorbi());
+		final Chorbi c = this.chorbiService.findByPrincipal();
+
 		final Chirp chirp = this.findOne(chirpId);
-		if (chirp.getReceiver() != null && chirp.getReceiver().getId() == this.chorbiService.findByPrincipal().getId())
-			chirp.setReceiver(null);
-		if (chirp.getSenderC() != null && chirp.getSenderC().getId() == this.chorbiService.findByPrincipal().getId())
-			chirp.setSenderC(null);
-
-		final Authority aut = new Authority();
-		aut.setAuthority(Authority.CHORBI);
-
-		try {
-			Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(aut));
-		} catch (final Exception e) {
-
-		}
-
-		if (chirp.getReceiver() == null)
-			if (chirp.getSenderC() == null)
-				this.delete(chirp);
+		if (chirp.getReceiver().getId() == c.getId() || chirp.getSenderC().getId() == c.getId())
+			this.delete(chirp);
 
 	}
 
@@ -196,17 +187,17 @@ public class ChirpService {
 
 	}
 
-	public void broadcastChirps(Event event, ChirpManagerForm chirpManagerForm, BindingResult binding){
+	public void broadcastChirps(final Event event, final ChirpManagerForm chirpManagerForm, final BindingResult binding) {
 		final Authority aut = new Authority();
 		aut.setAuthority(Authority.MANAGER);
 
-		try{
-			Manager manager = managerService.getLoggedManager();
+		try {
+			final Manager manager = this.managerService.getLoggedManager();
 			Assert.isTrue(manager.getUserAccount().getAuthorities().contains(aut));
 			Assert.isTrue(event.getManager().equals(manager));
-			for(Chorbi c:event.getChorbies()){
-				Chirp aux = reconstruct(chirpManagerForm, binding, c);
-				Chorbi receiverChorbi = aux.getReceiver();
+			for (final Chorbi c : event.getChorbies()) {
+				final Chirp aux = this.reconstruct(chirpManagerForm, binding, c);
+				final Chorbi receiverChorbi = aux.getReceiver();
 				receiverChorbi.getReceived().add(aux);
 				this.chorbiService.save(receiverChorbi);
 
@@ -216,7 +207,7 @@ public class ChirpService {
 				this.save(aux);
 			}
 
-		}catch (Exception e){
+		} catch (final Exception e) {
 			System.out.println(e.getMessage());
 		}
 	}
