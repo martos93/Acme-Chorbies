@@ -1,6 +1,7 @@
 
 package repositories;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -40,4 +41,21 @@ public interface ChorbiRepository extends JpaRepository<Chorbi, Integer> {
 	//The chorbies who have sent more chirps:
 	@Query("select c from Chorbi c where c.sended.size >=ALL(select c.sended.size from Chorbi c)")
 	public Collection<Chorbi> chorbiMoreChirpsSended();
+
+	//A listing of chorbies sorted by the number of events to which they have registered.
+	@Query("select c from Chorbi c order by c.events.size DESC")
+	public Collection<Chorbi> sortedChorbiesByEvents();
+
+	//A listing of chorbies that includes the amount that they due in fees.
+	@Query("select c.name,c.amountDue from Chorbi c")
+	ArrayList<Object> chorbiesAndFees();
+
+	//The minimum, the maximum, and the average number of stars per chorbi.
+	@Query("select min(l.stars),avg(l.stars),max(l.stars) from Love l")
+	public Object[] minAvgMaxStarsPerChorbi();
+
+	//The list of chorbies, sorted by the average number of stars that they've got.
+	@Query("select c from Chorbi c order by c.lovedBy.size DESC")
+	ArrayList<Chorbi> sortedChorbiesByStars();
+
 }

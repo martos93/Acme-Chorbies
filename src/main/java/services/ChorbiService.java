@@ -417,4 +417,20 @@ public class ChorbiService {
 		this.administratorService.checkLoggedIsAdmin();
 		return this.chorbiRepository.chorbiMoreChirpsSended();
 	}
+	public Collection<Chorbi> sortedChorbiesByEvents() {
+		this.administratorService.checkLoggedIsAdmin();
+		return this.chorbiRepository.sortedChorbiesByEvents();
+	}
+	public ArrayList<Object> chorbiesAndFees() {
+		this.administratorService.checkLoggedIsAdmin();
+		return this.chorbiRepository.chorbiesAndFees();
+	}
+	public Object[] minAvgMaxStarsPerChorbi() {
+		this.administratorService.checkLoggedIsAdmin();
+		return this.chorbiRepository.minAvgMaxStarsPerChorbi();
+	}
+	public List<Chorbi> sortedChorbiesByStars() {
+		this.administratorService.checkLoggedIsAdmin();
+		return this.chorbiRepository.sortedChorbiesByStars();
+	}
 }

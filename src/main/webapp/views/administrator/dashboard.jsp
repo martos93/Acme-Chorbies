@@ -93,5 +93,67 @@
             <li><jstl:out value="${cmc.userAccount.username}"/></li>
         </jstl:if>
     </jstl:forEach>
+    
+     <!-- A listing of managers sorted by the number of events that they organise: -->
+    <h2><spring:message code = "administrator.dashboard.11"/></h2>
+    <jstl:forEach items="${sortedManagersByEvents}" var="csl">
+        <jstl:if test="${csl!=null }">
+            <li><jstl:out value="${csl.userAccount.username}"/></li>
+        </jstl:if>
+    </jstl:forEach>
+    
+     <!-- A listing of managers that includes the amount that they due in fees: -->
+	
+	<h2>
+		<spring:message code="administrator.dashboard.12" />
+		:
+	</h2>
+	<jstl:forEach items="${managersAndFees}" var="r">
+		<jstl:if test="${r==null }">
+			<li>0</li>
+		</jstl:if>
+		<jstl:if test="${r!=null }">
+			<li>${r}</li>
+		</jstl:if>
+	</jstl:forEach>
+	
+	<!-- A listing of chorbies sorted by the number of events to which they have registered:-->
+    <h2><spring:message code = "administrator.dashboard.13"/></h2>
+    <jstl:forEach items="${sortedChorbiesByEvents}" var="cmc">
+        <jstl:if test="${cmc!=null }">
+            <li><jstl:out value="${cmc.userAccount.username}"/></li>
+        </jstl:if>
+    </jstl:forEach>
+    
+    <!-- A listing of chorbies that includes the amount that they due in fees: -->
+	
+	<h2>
+		<spring:message code="administrator.dashboard.14" />
+		:
+	</h2>
+	<jstl:forEach items="${chorbiesAndFees}" var="r">
+		<jstl:if test="${r==null }">
+			<li>0</li>
+		</jstl:if>
+		<jstl:if test="${r!=null }">
+			<li>${r}</li>
+		</jstl:if>
+	</jstl:forEach>
+	
+	  <!-- The minimum, the maximum, and the average number of stars per chorbi -->
+    <h2><spring:message code = "administrator.dashboard.15"/></h2>
+    <jstl:forEach items="${minAvgMaxStarsPerChorbi}" var="mml">
+        <jstl:if test="${mml!=null}">
+            <li>${mml}</li>
+        </jstl:if>
+    </jstl:forEach>
+    
+     <!-- The list of chorbies, sorted by the average number of stars that they've got: -->
+    <h2><spring:message code = "administrator.dashboard.16"/></h2>
+    <jstl:forEach items="${sortedChorbiesByStars}" var="csl">
+        <jstl:if test="${csl!=null }">
+            <li><jstl:out value="${csl.userAccount.username}"/></li>
+        </jstl:if>
+    </jstl:forEach>
 
 </security:authorize>

@@ -612,6 +612,21 @@
 		<property name="comment" value="So beautiful" />
 		<property name="lover" ref="chorbi1" />
 		<property name="loved" ref="chorbi2" />
+		<property name="stars" value="2"/>
+	</bean>
+	<bean id="love2" class="domain.Love">
+		<property name="moment" value="2017/01/01" />
+		<property name="comment" value="Not Cute" />
+		<property name="lover" ref="chorbi2" />
+		<property name="loved" ref="chorbi3" />
+		<property name="stars" value="1"/>
+
+	</bean>
+	<bean id="love3" class="domain.Love">
+		<property name="moment" value="2017/03/03" />
+		<property name="comment" value="I love him" />
+		<property name="lover" ref="chorbi2" />
+		<property name="loved" ref="chorbi1" />
 		<property name="stars" value="3"/>
 
 	</bean>

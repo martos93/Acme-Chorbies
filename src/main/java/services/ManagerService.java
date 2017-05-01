@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -28,13 +29,16 @@ import security.UserAccount;
 public class ManagerService {
 
 	@Autowired
-	private ManagerRepository	managerRepository;
+	private ManagerRepository		managerRepository;
 
 	@Autowired
-	private ActorService		actorService;
+	private ActorService			actorService;
 
 	@Autowired
-	private Validator			validator;
+	private Validator				validator;
+
+	@Autowired
+	private AdministratorService	administratorService;
 
 
 	public Manager getLoggedManager() {
@@ -183,6 +187,16 @@ public class ManagerService {
 	public Manager modify(final Manager manager) {
 		Assert.isTrue(manager.getId() == this.findByPrincipal().getId());
 		return this.managerRepository.saveAndFlush(manager);
+	}
+
+	//Dashboard:
+	public List<Manager> sortedManagersByEvents() {
+		this.administratorService.checkLoggedIsAdmin();
+		return this.managerRepository.sortedManagersByEvents();
+	}
+	public ArrayList<Object> managersAndFees() {
+		this.administratorService.checkLoggedIsAdmin();
+		return this.managerRepository.managersAndFees();
 	}
 
 }
