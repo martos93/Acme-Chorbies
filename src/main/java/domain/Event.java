@@ -88,7 +88,6 @@ public class Event extends DomainEntity implements Comparable<Event> {
 	private Manager				manager;
 	private Collection<Chorbi>	chorbies;
 
-
 	@NotNull
 	@Valid
 	@ManyToOne(optional = false)
