@@ -2,7 +2,6 @@
 package controllers.manager;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +16,6 @@ import services.EventService;
 import services.ManagerService;
 import controllers.AbstractController;
 import domain.Event;
-import domain.Manager;
 
 @Controller
 @RequestMapping("event/manager")
@@ -39,23 +37,6 @@ public class EventManagerController extends AbstractController {
 
 	//Methods---------------------------------------------------
 
-	@RequestMapping("/listevents")
-	public ModelAndView listEvents() {
-		final ModelAndView modelAndView;
-
-		final Manager manager = this.managerService.findByPrincipal();
-
-		final ArrayList<Event> events = new ArrayList<>(manager.getEvents());
-		Collections.sort(events);
-		Collections.reverse(events);
-
-		modelAndView = new ModelAndView("event/listm");
-		modelAndView.addObject("events", events);
-		modelAndView.addObject("requestURI", "/listevents.do");
-
-		return modelAndView;
-	}
-
 	public ModelAndView createEditModelAndView(final Event event) {
 		ModelAndView modelAndView;
 		modelAndView = this.createEditModelAndView(event, null);
@@ -65,7 +46,7 @@ public class EventManagerController extends AbstractController {
 	public ModelAndView createEditModelAndView(final Event event, final String string) {
 		ModelAndView modelAndView;
 
-		modelAndView = new ModelAndView("event/editm");
+		modelAndView = new ModelAndView("event/edit");
 		modelAndView.addObject("requestURI", "event/manager/edit.do");
 		modelAndView.addObject("event", event);
 		modelAndView.addObject("message", string);
@@ -93,8 +74,8 @@ public class EventManagerController extends AbstractController {
 			modelAndView = this.createEditModelAndView(event);
 		else
 			try {
-				this.eventService.save(event);
-				modelAndView = this.listEvents();
+				this.eventService.editEvent(event);
+				modelAndView = this.listMyEvents();
 
 			} catch (final Throwable oops) {
 				modelAndView = this.createEditModelAndView(event, "event.commit.error");
@@ -109,9 +90,9 @@ public class EventManagerController extends AbstractController {
 		final Event event = this.eventService.findOne(id);
 		try {
 			this.eventService.delete(event);
-			result = new ModelAndView("redirect:listevents.do");
+			result = new ModelAndView("redirect:listMyEvents.do");
 		} catch (final Throwable oops) {
-			result = new ModelAndView("redirect:listevents.do");
+			result = new ModelAndView("redirect:listMyEvents.do");
 		}
 
 		return result;
@@ -141,13 +122,23 @@ public class EventManagerController extends AbstractController {
 		} else {
 
 			this.eventService.newEvent(event);
-			final Manager logged = event.getManager();
-			logged.setAmountDue(logged.getAmountDue() + 1.00);
-			this.managerService.save(logged);
-			res = this.listEvents();
+			res = this.listMyEvents();
 		}
 		return res;
 
+	}
+
+	@RequestMapping("/listMyEvents")
+	public ModelAndView listMyEvents() {
+		final ModelAndView modelAndView;
+
+		final ArrayList<Event> events = new ArrayList<>(this.eventService.findByManager());
+
+		modelAndView = new ModelAndView("event/listMyEvents");
+		modelAndView.addObject("events", events);
+		modelAndView.addObject("requestURI", "/listMyEvents.do");
+
+		return modelAndView;
 	}
 
 }

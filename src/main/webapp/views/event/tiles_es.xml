@@ -9,24 +9,19 @@
 		<put-attribute name="body" value="/views/event/list.jsp" />
 	</definition>
 
-	<definition name="event/listm" extends="master.page">
-		<put-attribute name="title" value="Lista de eventos" />
-		<put-attribute name="body" value="/views/event/listm.jsp" />
-	</definition>
-
 	<definition name="event/create" extends="master.page">
 		<put-attribute name="title" value="Crear un evento" />
 		<put-attribute name="body" value="/views/event/edit.jsp" />
 	</definition>
 
-	<definition name="event/editm" extends="master.page">
+	<definition name="event/edit" extends="master.page">
 		<put-attribute name="title" value="Editar un evento" />
-		<put-attribute name="body" value="/views/event/editm.jsp" />
+		<put-attribute name="body" value="/views/event/edit.jsp" />
 	</definition>
 	
 	<definition name="event/listMyEvents" extends="master.page">
 		<put-attribute name="title" value="Mis Eventos" />
-		<put-attribute name="body" value="/views/event/listMyEvents.jsp" />
+		<put-attribute name="body" value="/views/event/listm.jsp" />
 	</definition>
 	
 	

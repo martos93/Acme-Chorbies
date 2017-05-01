@@ -11,6 +11,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <security:authorize access="hasRole('MANAGER')">
 	<display:table name="events" id="row" requestURI="${requestURI}"
 		pagesize="10" class="displaytag">

@@ -43,9 +43,10 @@ public class ManagerService {
 
 	public Manager getLoggedManager() {
 		Manager res = null;
-		if (this.actorService.isAuthenticated())
-			res = this.managerRepository.managerByUsername(LoginService.getPrincipal().getUsername());
-
+		if (this.actorService.isAuthenticated()){
+			String username = LoginService.getPrincipal().getUsername();
+			res = this.managerRepository.managerByUsername(username);
+		}
 		return res;
 	}
 
