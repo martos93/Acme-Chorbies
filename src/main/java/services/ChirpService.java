@@ -68,13 +68,17 @@ public class ChirpService {
 		res.setAttachments(atch);
 		res.setMoment(new Date(System.currentTimeMillis() - 1000));
 		UserAccount user = LoginService.getPrincipal();
-		if(user.getAuthorities().contains(Authority.CHORBI)){
-			res.setSenderC(this.chorbiService.findByPrincipal());
-		}else if(user.getAuthorities().contains(Authority.MANAGER)){
-			res.setSenderM(this.managerService.findByPrincipal());
+		for(Authority a: user.getAuthorities()){
+			if(a.getAuthority().equals(Authority.CHORBI)){
+				res.setSenderC(this.chorbiService.findByPrincipal());
+				break;
+			}else if(a.getAuthority().equals(Authority.MANAGER)){
+				res.setSenderM(this.managerService.findByPrincipal());
+				break;
+			}
 		}
-
 		return res;
+
 	}
 
 	public Chirp reconstruct(final ChirpForm chirpForm, final BindingResult binding) {
@@ -90,7 +94,6 @@ public class ChirpService {
 
 	public Chirp reconstruct(ChirpManagerForm chirpManagerForm, final BindingResult binding, Chorbi reciever){
 		Chirp chirp = create();
-		System.out.println("Reconstruc: "+chirp.getSenderM());
 		chirp.setAttachments(chirpManagerForm.getAttachments());
 		chirp.setReceiver(reciever);
 		chirp.setText(chirpManagerForm.getText());
@@ -203,7 +206,6 @@ public class ChirpService {
 			Assert.isTrue(event.getManager().equals(manager));
 			for(Chorbi c:event.getChorbies()){
 				Chirp aux = reconstruct(chirpManagerForm, binding, c);
-				aux.setSenderM(manager);
 				Chorbi receiverChorbi = aux.getReceiver();
 				receiverChorbi.getReceived().add(aux);
 				this.chorbiService.save(receiverChorbi);
