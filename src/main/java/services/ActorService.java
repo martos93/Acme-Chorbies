@@ -104,9 +104,12 @@ public class ActorService {
 		a.setAuthority(Authority.ADMIN);
 		final Authority b = new Authority();
 		b.setAuthority(Authority.CHORBI);
+		final Authority c = new Authority();
+		c.setAuthority(Authority.MANAGER);
 
 		auts2.add(a);
 		auts2.add(b);
+		auts2.add(c);
 
 		Assert.isTrue(!auts.contains(auts2));
 	}

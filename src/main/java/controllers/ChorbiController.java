@@ -6,6 +6,7 @@ import java.util.Collection;
 
 import javax.validation.Valid;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import domain.Love;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -64,7 +65,7 @@ public class ChorbiController extends AbstractController {
 		for(Love l:logged.getLove()){
 			chorbiesLoved += " "+l.getLoved().getId()+" ";
 		}
-
+		Boolean canRun = false;
 
 		res.addObject("chorbi", all);
 		res.addObject("logged", logged);

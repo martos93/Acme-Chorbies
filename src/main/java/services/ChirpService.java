@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import domain.Actor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,7 @@ import forms.ChirpForm;
 import repositories.ChirpRepository;
 import security.Authority;
 import security.LoginService;
+import security.UserAccount;
 
 @Service
 @Transactional
@@ -66,8 +68,13 @@ public class ChirpService {
 		final Collection<String> atch = new ArrayList<String>();
 		res.setAttachments(atch);
 		res.setMoment(new Date(System.currentTimeMillis() - 1000));
-		res.setSenderC(this.chorbiService.findByPrincipal());
-		res.setSenderM(this.managerService.findByPrincipal());
+		UserAccount user = LoginService.getPrincipal();
+		if(user.getAuthorities().contains(Authority.CHORBI)){
+			res.setSenderC(this.chorbiService.findByPrincipal());
+		}else if(user.getAuthorities().contains(Authority.MANAGER)){
+			res.setSenderM(this.managerService.findByPrincipal());
+		}
+
 		return res;
 	}
 

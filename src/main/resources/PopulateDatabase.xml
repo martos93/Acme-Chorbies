@@ -390,7 +390,9 @@
 		<property name="amountDue" value="1" />
 			
 		<property name="sended">
-			<list></list>
+			<list>
+				<ref bean="chirp4"/>
+			</list>
 		</property>
 	</bean>
 	
@@ -495,6 +497,20 @@
 			</list>
 		</property>
 		<property name="senderC" ref="chorbi2" />
+		<property name="receiver" ref="chorbi1" />
+	</bean>
+
+	<bean id="chirp4" class="domain.Chirp">
+		<property name="moment" value="2017/03/15 12:20" />
+		<property name="subject" value="Prueba de M" />
+		<property name="text" value="El manager probando" />
+
+		<property name="attachments">
+			<list>
+				<value>http://www.asdf.es/asdf.jpg</value>
+			</list>
+		</property>
+		<property name="senderM" ref="manager1" />
 		<property name="receiver" ref="chorbi1" />
 	</bean>
 

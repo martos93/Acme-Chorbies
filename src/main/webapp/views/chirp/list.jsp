@@ -12,7 +12,6 @@
 	pageEncoding="ISO-8859-1"%>
 
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="security"
@@ -70,9 +69,11 @@
 
 	<spring:message code="chirp.reply" var="replyColumn" />
 	<display:column title="${replyColumn}">
+		<jstl:if test="${row.senderM == null}">
 		<input type="button"
-			onclick="document.location.href='chirp/chorbi/reply.do?senderName=${row.sender.name}'"
+			onclick="document.location.href='chirp/chorbi/reply.do?senderName=${row.senderC.userAccount.username}'"
 			value="${replyColumn }" />
+		</jstl:if>
 	</display:column>
 
 </display:table>
