@@ -11,13 +11,23 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<form:form action="${requestURI}" modelAttribute="love">
-	<form:hidden path="id" />
-	<form:hidden path="loved"/>
-	<form:hidden path="lover"/>
-	<form:hidden path="moment"/>
+<form:form action="${requestURI}" modelAttribute="loveForm">
+
+	<acme:textbox readonly="true" code="love.loved" path="loved"/>
 
 	<acme:textarea code="love.comment" path="comment" />
+
+	<div class="form-group">
+		<form:label path="stars">
+			<spring:message code="love.stars" />
+		</form:label>
+		<select id="stars" name="stars" ng-model="loveForm.stars">
+			<option value="0"><spring:message code="love.star0" /> </option>
+			<option value="1"><spring:message code="love.star1" /></option>
+			<option value="2"><spring:message code="love.star2" /></option>
+			<option value="3"><spring:message code="love.star3" /></option>
+		</select>
+	</div>
 
 	<acme:submit name="save" code="love.save" />
 

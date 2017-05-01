@@ -26,6 +26,36 @@
 	<spring:message code="love.comment" var="comment" />
 	<display:column property="comment" title="${comment}" />
 
+	<spring:message code="love.stars" var="stars" />
+	<jstl:if test="${row.stars == 0}">
+		<display:column title="${stars}">
+			<img src="images/star0.png">
+			<img src="images/star0.png">
+			<img src="images/star0.png">
+		</display:column>
+	</jstl:if>
+	<jstl:if test="${row.stars == 1}">
+		<display:column title="${stars}">
+			<img src="images/star0.png">
+			<img src="images/star0.png">
+			<img src="images/star.png">
+		</display:column>
+	</jstl:if>
+	<jstl:if test="${row.stars == 2}">
+		<display:column title="${stars}">
+			<img src="images/star0.png">
+			<img src="images/star.png">
+			<img src="images/star.png">
+		</display:column>
+	</jstl:if>
+	<jstl:if test="${row.stars == 3}">
+		<display:column title="${stars}">
+			<img src="images/star.png">
+			<img src="images/star.png">
+			<img src="images/star.png">
+		</display:column>
+	</jstl:if>
+
 
 	<display:column>
 		<input

@@ -1,10 +1,12 @@
 
 package controllers;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.validation.Valid;
 
+import domain.Love;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
@@ -34,8 +36,16 @@ public class ChorbiController extends AbstractController {
 
 		final Collection<Chorbi> all = this.chorbiService.listAll();
 
+		Chorbi logged = this.chorbiService.getLoggedChorbi();
+
+		String chorbiesLoved = "";
+		for(Love l:logged.getLove()){
+			chorbiesLoved += " "+l.getLoved().getId()+" ";
+		}
+
 		res.addObject("chorbi", all);
-		res.addObject("logged", this.chorbiService.getLoggedChorbi());
+		res.addObject("logged", logged);
+		res.addObject("chorbiesLoved", chorbiesLoved);
 		res.addObject("requestUri", "chorbi/list.do");
 
 		return res;
@@ -48,7 +58,17 @@ public class ChorbiController extends AbstractController {
 
 		final Collection<Chorbi> all = this.chorbiService.getLikersByChorbiId(chorbi);
 
+		Chorbi logged = this.chorbiService.getLoggedChorbi();
+
+		String chorbiesLoved = "";
+		for(Love l:logged.getLove()){
+			chorbiesLoved += " "+l.getLoved().getId()+" ";
+		}
+
+
 		res.addObject("chorbi", all);
+		res.addObject("logged", logged);
+		res.addObject("chorbiesLoved", chorbiesLoved);
 		res.addObject("requestUri", "/chorbi/listByLikes.do");
 
 		return res;

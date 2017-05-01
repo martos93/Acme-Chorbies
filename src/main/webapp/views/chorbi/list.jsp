@@ -138,7 +138,7 @@
 		<display:column title="${titleColumn}">
 			<input
 				onclick="javascript: window.location.replace('chorbi/listByLikes.do?chorbi=${row.id}');"
-				value="<spring:message code="chorbi.love" />" type="button" />
+				value="<spring:message code="chorbi.see" />" type="button" />
 		</display:column>
 
 
@@ -150,10 +150,12 @@
 
 		<spring:message code="chorbi.like" var="titleColumn" />
 		<display:column title="${titleColumn}">
-			<jstl:if test="${row.id!=logged.id }">
+			<jstl:if test="${row.id!=logged.id}">
+				<jstl:if test="${fn:contains(chorbiesLoved, row.id)!=true}">
 			<input
 				onclick="javascript: window.location.replace('like/chorbi/create.do?id=${row.id}');"
 				value="<spring:message code="chorbi.like" />" type="button" />
+				</jstl:if>
 			</jstl:if>
 		</display:column>
 

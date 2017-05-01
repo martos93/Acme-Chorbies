@@ -6,6 +6,7 @@ import java.util.Date;
 
 import javax.transaction.Transactional;
 
+import forms.LoveForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -108,18 +109,13 @@ public class LoveService {
 
 	}
 
-	public Love reconstruct(final Love love, final BindingResult binding) {
-		Love res;
+	public Love reconstruct(final LoveForm loveForm, final BindingResult binding) {
+		Love res = create();
+		res.setComment(loveForm.getComment());
+		res.setStars(loveForm.getStars());
+		res.setLoved(this.chorbiService.findChorbiByUsername(loveForm.getLoved()));
 
-		if (love.getId() == 0)
-			res = love;
-		else {
-			res = this.loveRepository.findOne(love.getId());
-			res.setComment(love.getComment());
-
-			this.validator.validate(res, binding);
-		}
-
+		this.validator.validate(res, binding);
 		return res;
 	}
 
