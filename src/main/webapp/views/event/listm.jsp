@@ -50,9 +50,11 @@
 		<security:authorize access="hasRole('MANAGER')">		
 			<spring:message code="event.broadcast" var="broadcast" />
 			<display:column title="${broadcast}">
+				<jstl:if test="${not empty row.chorbies}">
 				<input type="button"
 					   onclick="document.location.href='chirp/manager/broadcast.do?eventId=${row.id}'"
 					   value="${broadcast }" />
+				</jstl:if>
 			</display:column>
 	
 			<spring:message code="event.delete" var="delete" />
