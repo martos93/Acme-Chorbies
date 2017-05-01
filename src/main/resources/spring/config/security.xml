@@ -103,7 +103,9 @@
 
 		<security:intercept-url pattern="/cache/administrator/**"
 			access="hasRole('ADMIN')" />
-			<security:intercept-url pattern="/fee/administrator/**"
+		<security:intercept-url pattern="/fee/administrator/**"
+			access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/chorbi/administrator/**"
 			access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/manager/administrator/register.do"
 			access="hasRole('ADMIN')" />

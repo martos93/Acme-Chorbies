@@ -1,12 +1,3 @@
-<%--
- * action-1.jsp
- *
- * Copyright (C) 2017 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
- * http://www.tdg-seville.info/License.html
- --%>
 
 <%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
@@ -15,5 +6,16 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<p><spring:message code="administrator.action.1" /></p>
+<p><spring:message code="administrator.updateFees" /></p>
+
+<form:form action="${requestURI}" modelAttribute="fee">
+	<security:authorize access="hasRole('ADMIN')">
+	<acme:submit code="administrator.update" name="save" />
+
+
+	<acme:cancel url="/welcome/index.do" code="fee.cancel" />
+	
+</security:authorize>
+</form:form>

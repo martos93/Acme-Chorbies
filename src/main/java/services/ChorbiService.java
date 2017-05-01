@@ -18,17 +18,18 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import repositories.ChorbiRepository;
-import security.Authority;
-import security.LoginService;
-import security.UserAccount;
 import domain.Chirp;
 import domain.Chorbi;
 import domain.Coordinates;
 import domain.CreditCard;
+import domain.Event;
 import domain.Love;
 import domain.Template;
 import forms.ChorbiForm;
+import repositories.ChorbiRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 
 @Service
 @Transactional
@@ -39,6 +40,9 @@ public class ChorbiService {
 
 	@Autowired
 	private TemplateService			templateService;
+
+	@Autowired
+	private FeeService				feeService;
 
 	@Autowired
 	private AdministratorService	administratorService;
@@ -386,6 +390,16 @@ public class ChorbiService {
 		final Date expiration = calendar.getTime();
 
 		return expiration.getTime() > (System.currentTimeMillis() + 86400000);
+	}
+
+	public Chorbi updateFee(final Chorbi chorbi) {
+		this.administratorService.checkLoggedIsAdmin();
+		final Collection<Event> events = chorbi.getEvents();
+		final int eventsRegistered = events.size();
+		final Double chorbisFee = this.feeService.selectFee().getChorbiAmount();
+		chorbi.setAmountDue(chorbisFee * eventsRegistered);
+		return this.save(chorbi);
+
 	}
 
 	//Dashboard:

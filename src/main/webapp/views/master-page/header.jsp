@@ -33,6 +33,8 @@
 								code="master.page.chorbiBann" /></a></li>
 					<li><a href="administrator/listChorbiBanned.do"><spring:message
 								code="master.page.chorbiUnban" /></a></li>
+					<li><a href="chorbi/administrator/updateFees.do"><spring:message
+								code="master.page.updateFees" /></a></li>
 				</ul></li>
 
 
