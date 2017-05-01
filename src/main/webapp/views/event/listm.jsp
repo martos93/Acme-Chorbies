@@ -14,7 +14,7 @@
 
 
 	<display:table name="events" id="row" requestURI="${requestURI}"
-		pagesize="10" class="displaytag">
+		pagesize="5" class="displaytag">
 		<security:authorize access="hasRole('MANAGER')">
 			<spring:message code="event.edit" var="edit" />
 			<display:column title="${edit}">
@@ -39,8 +39,8 @@
 		<spring:message code="event.seatsOffered" var="seatsOffered" />
 		<display:column property="seatsOffered" title="${seatsOffered}" />
 
-		<spring:message code="event.seatsFree" var="seatsFree" />
-		<display:column title="${seatsFree}">
+		<spring:message code="event.seatsFree" var="seatsFree"/>
+		<display:column title="${seatsFree}" sortable="true">
 		${row.seatsOffered - fn:length(row.chorbies) }
 		</display:column>
 		

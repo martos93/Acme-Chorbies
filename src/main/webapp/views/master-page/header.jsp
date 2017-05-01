@@ -51,8 +51,15 @@
 		<security:authorize access="isAnonymous()">
 			<li><a class="fNiv" href="security/login.do"><spring:message
 						code="master.page.login" /></a></li>
-			<li><a class="fNiv" href="event/list.do"><spring:message
+			<li><a class="fNiv"><spring:message
+						code="master.page.listEvents" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="event/list.do"><spring:message
 						code="master.page.listEvents" /></a></li>
+					<li><a href="event/close.do"><spring:message
+						code="master.page.closeEvents" /></a></li>
+				</ul></li>
 			<li><a class="fNiv" href="chorbi/register.do"><spring:message
 						code="master.page.register" /></a></li>
 		</security:authorize>
@@ -82,6 +89,8 @@
 								code="master.page.myevents" /></a></li>
 					<li><a href="event/list.do"><spring:message
 								code="master.page.allevents" /></a></li>
+					<li><a href="event/close.do"><spring:message
+						code="master.page.closeEvents" /></a></li>
 				</ul></li>
 			<li><a href="chirp/chorbi/list.do"><spring:message
 						code="master.page.chirps" /></a></li>
@@ -101,6 +110,8 @@
 						code="master.page.myevents" /></a></li>
 					<li><a href="event/manager/create.do"><spring:message
 								code="master.page.createEvent" /></a></li>
+					<li><a href="event/close.do"><spring:message
+						code="master.page.closeEvents" /></a></li>
 				</ul></li>
 		</security:authorize>
 
