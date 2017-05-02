@@ -8,9 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Event;
 import services.ChorbiService;
 import services.EventService;
+import domain.Event;
 
 @Controller
 @RequestMapping("/event")
@@ -35,6 +35,18 @@ public class EventController extends AbstractController {
 		res.addObject("eventF", eventsF);
 		res.addObject("requestURI", "event/list.do");
 		res.addObject("chorbi", this.chorbiService.getLoggedChorbi());
+		return res;
+	}
+
+	@RequestMapping("/close")
+	public ModelAndView closeList() {
+		final ModelAndView res = new ModelAndView("event/close");
+
+		final Collection<Event> events = this.eventService.findByMonthToStartAndSeats();
+
+		res.addObject("events", events);
+		res.addObject("requestURI", "event/close.do");
+
 		return res;
 	}
 

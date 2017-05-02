@@ -150,11 +150,11 @@
 
 		<spring:message code="chorbi.like" var="titleColumn" />
 		<display:column title="${titleColumn}">
-			<jstl:if test="${row.id!=logged.id }">
-				<jstl:if test="${fn:contains(chorbiesLoved, row.id) !=true}">
-			<input
-				onclick="javascript: window.location.replace('like/chorbi/create.do?id=${row.id}');"
-				value="<spring:message code="chorbi.like" />" type="button" />
+			<jstl:if test="${logged!=row }">
+				<jstl:if test="${!chorbiesLoved.contains(row)}">
+					<input
+					onclick="javascript: window.location.replace('like/chorbi/create.do?id=${row.id}');"
+					value="<spring:message code="chorbi.like" />" type="button" />
 				</jstl:if>
 			</jstl:if>
 		</display:column>

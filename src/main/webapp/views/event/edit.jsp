@@ -14,12 +14,12 @@
 <form:form action="${requestUri}" modelAttribute="event">
 	<form:hidden path="id"/>
 	<form:hidden path="manager"/>
-	<form:hidden path="moment"/>
 	<form:hidden path="chorbies"/>
 	
 	<acme:textbox code="event.title" path="title"/>
 	<acme:textbox code="event.description" path="description"/>
 	<acme:textbox code="event.picture" path="picture"/>
+	<acme:textbox code="event.moment" path="moment"/> (yyyy/mm/dd)
 	<acme:textbox code="event.seatsOffered" path="seatsOffered"/>
 	
 	<acme:submit code="event.save" name="save"/>

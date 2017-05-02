@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -18,6 +17,10 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+import repositories.ChorbiRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 import domain.Chirp;
 import domain.Chorbi;
 import domain.Coordinates;
@@ -26,10 +29,6 @@ import domain.Event;
 import domain.Love;
 import domain.Template;
 import forms.ChorbiForm;
-import repositories.ChorbiRepository;
-import security.Authority;
-import security.LoginService;
-import security.UserAccount;
 
 @Service
 @Transactional
@@ -49,6 +48,9 @@ public class ChorbiService {
 
 	@Autowired
 	private Validator				validator;
+
+	@Autowired
+	private ActorService			actorService;
 
 
 	public Chorbi create() {
@@ -113,7 +115,10 @@ public class ChorbiService {
 	public Boolean isChorbi() {
 		Boolean res = false;
 		try {
-			res = LoginService.getPrincipal().getAuthorities().contains(Authority.CHORBI);
+			final Authority aut = new Authority();
+			aut.setAuthority(Authority.CHORBI);
+
+			res = LoginService.getPrincipal().getAuthorities().contains(aut);
 		} catch (final Exception e) {
 			res = false;
 		}
@@ -183,9 +188,14 @@ public class ChorbiService {
 		return res;
 	}
 
+	public Collection<Chorbi> findAllLovedByChorbiId(final int id) {
+
+		return this.chorbiRepository.findAllLovedByChorbiId(id);
+	}
+
 	public Collection<Chorbi> getChorbiesByTemplate(final Template template) {
 
-		Assert.isTrue(this.hasValidCreditCard(this.getLoggedChorbi()));
+		Assert.isTrue(this.actorService.checkCreditCard(this.getLoggedChorbi().getCreditCard()));
 
 		final Collection<Chorbi> res = this.findAll();
 		res.remove(this.findOne(this.findByPrincipal().getId()));
@@ -381,15 +391,6 @@ public class ChorbiService {
 				anos = anos - 1;
 		}
 		return anos;
-	}
-
-	public boolean hasValidCreditCard(final Chorbi chorbi) {
-		final CreditCard c = chorbi.getCreditCard();
-
-		final Calendar calendar = new GregorianCalendar(c.getExpirationYear(), c.getExpirationMonth(), 1);
-		final Date expiration = calendar.getTime();
-
-		return expiration.getTime() > (System.currentTimeMillis() + 86400000);
 	}
 
 	public Chorbi updateFee(final Chorbi chorbi) {

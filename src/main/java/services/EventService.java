@@ -43,7 +43,6 @@ public class EventService {
 
 	public Event create() {
 		final Event res = new Event();
-		res.setMoment(Calendar.getInstance().getTime());
 		res.setManager(this.managerService.getLoggedManager());
 		res.setChorbies(new ArrayList<Chorbi>());
 
@@ -136,6 +135,7 @@ public class EventService {
 			res.setDescription(event.getDescription());
 			res.setPicture(event.getPicture());
 			res.setSeatsOffered(event.getSeatsOffered());
+			res.setMoment(event.getMoment());
 		}
 		this.validator.validate(res, binding);
 

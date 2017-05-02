@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import domain.Chorbi;
 import domain.Template;
+import services.ActorService;
 import services.ChorbiService;
 import services.TemplateService;
 
@@ -27,7 +28,10 @@ public class TemplateChorbiController {
 
 	@Autowired
 	private ChorbiService	chorbiService;
-
+	
+	@Autowired
+	private ActorService 	actorService;
+	
 
 	protected ModelAndView createEditModelAndView(final Template template) {
 		ModelAndView result;
@@ -75,7 +79,7 @@ public class TemplateChorbiController {
 				System.out.println(binding.getAllErrors());
 			} else if (this.templateService.sameTemplate(template, lastSearch) == true && this.templateService.isCached(template) == true) {
 
-				Assert.isTrue(this.chorbiService.hasValidCreditCard(this.chorbiService.getLoggedChorbi()));
+				Assert.isTrue(actorService.checkCreditCard(chorbiService.getLoggedChorbi().getCreditCard()));
 				final Collection<Chorbi> res = template.getResults();
 				System.out.println("devolvemos guardado");
 				result = new ModelAndView("chorbi/list");
