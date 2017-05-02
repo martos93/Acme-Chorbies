@@ -57,6 +57,7 @@
 	<spring:message code="event.seatsFree" var="seatsFree"  />
 		<display:column title="${seatsFree}"  style="background-color:green;" sortable="true">
 		${row.seatsOffered - fn:length(row.chorbies) }
+		
 		</display:column>
 	
 	<spring:message code="event.moment" var="moment" />
