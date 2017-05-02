@@ -11,6 +11,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
+<jstl:if test="${canShow==true }">
 <display:table name="loves" id="row" requestURI="${requestURI}"
 	pagesize="10" class="displaytag">
 
@@ -67,4 +68,15 @@
 
 
 </display:table>
+
+</jstl:if>
+
+<jstl:if test="${canShow==false }">
+	<div style="color: red;">
+		<b><jstl:out value="Your credit card must be a valid credit card!!" /></b>
+	</div>
+	<div>
+		<b>Your credit card will not be charged.</b>
+	</div>
+</jstl:if>
 

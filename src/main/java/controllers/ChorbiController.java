@@ -78,27 +78,6 @@ public class ChorbiController extends AbstractController {
 		return res;
 
 	}
-	
-	@RequestMapping("/listILike")
-	public ModelAndView listILike() {
-		final ModelAndView res = new ModelAndView();
-		try {
-			final Chorbi logged = this.chorbiService.getLoggedChorbi();
-			final Collection<Chorbi> chorbiesILike = this.chorbiService.findAllLovedByChorbiId(logged.getId());
-			boolean canShow=actorService.checkCreditCard(logged.getCreditCard());
-			
-			res.addObject("logged", logged);
-			res.addObject("chorbiesILike", chorbiesILike);
-			res.addObject("canShow",canShow);
-			res.addObject("requestUri", "chorbi/listILike.do");
-
-		} catch (final Exception e) {
-			res.addObject("requestUri", "/welcome/index.do");
-		}
-
-		return res;
-
-	}
 
 	//Edition
 	@RequestMapping(value = "/register", method = RequestMethod.GET)

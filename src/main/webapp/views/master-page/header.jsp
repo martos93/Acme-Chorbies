@@ -94,8 +94,6 @@
 				</ul></li>
 			<li><a href="chirp/chorbi/list.do"><spring:message
 						code="master.page.chirps" /></a></li>
-			<li><a href="chorbi/listILike.do"><spring:message
-						code="master.page.chorbisILike" /></a></li>
 			<li><a class="fNiv" href="template/chorbi/search.do"><spring:message
 						code="master.page.search" /></a></li>
 		</security:authorize>
