@@ -77,6 +77,7 @@
 				onclick="javascript: window.location.replace('event/chorbi/unregister.do?id=${row.id}');"
 				value="<spring:message code="event.unregister" />" type="button"
 				name="unregister" />
+				
 		</jstl:if>
 		</display:column>
 	</security:authorize>
