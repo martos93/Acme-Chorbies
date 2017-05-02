@@ -30,7 +30,6 @@ public class Manager extends Actor {
 		this.company = company;
 	}
 
-	@Valid
 	public CreditCard getCreditCard() {
 		return this.creditCard;
 	}
