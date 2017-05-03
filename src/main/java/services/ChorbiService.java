@@ -17,10 +17,6 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import repositories.ChorbiRepository;
-import security.Authority;
-import security.LoginService;
-import security.UserAccount;
 import domain.Chirp;
 import domain.Chorbi;
 import domain.Coordinates;
@@ -29,6 +25,10 @@ import domain.Event;
 import domain.Love;
 import domain.Template;
 import forms.ChorbiForm;
+import repositories.ChorbiRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 
 @Service
 @Transactional
@@ -69,6 +69,8 @@ public class ChorbiService {
 		res.setReceived(new ArrayList<Chirp>());
 		res.setLove(new ArrayList<Love>());
 		res.setLovedBy(new ArrayList<Love>());
+		res.setAmountDue(new Double(0.0));
+		res.setEvents(new ArrayList<Event>());
 
 		return res;
 	}

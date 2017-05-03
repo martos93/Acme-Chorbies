@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.ActorService;
-import services.ChorbiService;
 import domain.Chorbi;
 import forms.ChorbiForm;
+import services.ActorService;
+import services.ChorbiService;
 
 @Controller
 @RequestMapping("/chorbi")
@@ -27,9 +27,9 @@ public class ChorbiController extends AbstractController {
 
 	@Autowired
 	private ChorbiService	chorbiService;
-	
+
 	@Autowired
-	private ActorService actorService;;
+	private ActorService	actorService;;
 
 
 	@RequestMapping("/list")
@@ -178,6 +178,7 @@ public class ChorbiController extends AbstractController {
 					Assert.isTrue(this.chorbiService.edad(chorbi) >= 18);
 
 					this.chorbiService.modify(chorbi);
+
 					res = new ModelAndView("redirect:../welcome/index.do");
 				}
 			} catch (final DataIntegrityViolationException oops) {
