@@ -23,7 +23,7 @@
 	<ul id="jMenu">
 		<!-- Do not forget the "fNiv" class for the first level links !! -->
 		<security:authorize access="hasRole('ADMIN')">
-		<li><a href="manager/administrator/register.do"><spring:message
+		<li><a href="manager_/administrator/register.do"><spring:message
 								code="master.page.managerRegister" /></a></li>
 			<li><a class="fNiv"><spring:message
 						code="master.page.chorbi.management" /></a>

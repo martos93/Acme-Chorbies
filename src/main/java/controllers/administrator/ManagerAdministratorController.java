@@ -18,7 +18,7 @@ import forms.ManagerForm;
 import services.ManagerService;
 
 @Controller
-@RequestMapping("/manager/administrator")
+@RequestMapping("/manager_/administrator")
 public class ManagerAdministratorController extends AbstractController{
 	
 
@@ -32,7 +32,7 @@ public class ManagerAdministratorController extends AbstractController{
 
 			final ManagerForm c = new ManagerForm();
 
-			res.addObject("requestUri", "manager/administrator/register.do");
+			res.addObject("requestUri", "manager_/administrator/register.do");
 			res.addObject("managerForm", c);
 			res.addObject("edit", false);
 			return res;
@@ -47,7 +47,7 @@ public class ManagerAdministratorController extends AbstractController{
 
 			c = this.managerService.reconstructForm(manager);
 
-			res.addObject("requestUri", "manager/administrator/edit.do");
+			res.addObject("requestUri", "manager_/administrator/edit.do");
 			res.addObject("managerForm", c);
 			res.addObject("edit", true);
 			return res;
@@ -64,13 +64,13 @@ public class ManagerAdministratorController extends AbstractController{
 
 				if (bindingResult.hasErrors()) {
 					System.out.println(bindingResult.getAllErrors());
-					res.addObject("requestUri", "manager/administrator/register.do");
+					res.addObject("requestUri", "manager_/administrator/register.do");
 					res.addObject("edit", false);
 					res.addObject("managerForm", managerForm);
 				} else if (managerForm.isAcceptTerms() != true) {
 					res.addObject("managerForm", managerForm);
 					res.addObject("edit", false);
-					res.addObject("requestUri", "manager/administrator/register.do");
+					res.addObject("requestUri", "manager_/administrator/register.do");
 					res.addObject("message", "manager.acceptTerms.error");
 				} else
 					try {
@@ -116,7 +116,7 @@ public class ManagerAdministratorController extends AbstractController{
 
 					if (bindingResult.hasErrors()) {
 						System.out.println(bindingResult.getAllErrors());
-						res.addObject("requestUri", "manager/administrator/edit.do");
+						res.addObject("requestUri", "manager_/administrator/edit.do");
 						res.addObject("managerForm", managerForm);
 						res.addObject("edit", true);
 					} else {
