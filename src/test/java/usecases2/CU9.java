@@ -66,6 +66,7 @@ public class CU9 extends AbstractTest {
 			this.feeService.save(fee);
 
 			this.feeRepository.flush();
+			this.unauthenticate();
 
 		} catch (final Throwable oops) {
 			caught = oops.getClass();

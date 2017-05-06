@@ -51,11 +51,8 @@ public class ChorbiAdministratorController extends AbstractController {
 
 		try {
 			final Collection<Chorbi> all = this.chorbiService.findAll();
-			for (final Chorbi chorbi : all) {
-				System.out.println("Primero " + chorbi.getAmountDue());
+			for (final Chorbi chorbi : all)
 				this.chorbiService.updateFee(chorbi);
-				System.out.println("Luego " + chorbi.getAmountDue());
-			}
 			final ModelAndView result = new ModelAndView("redirect:/");
 			return result;
 		} catch (final Throwable oops) {

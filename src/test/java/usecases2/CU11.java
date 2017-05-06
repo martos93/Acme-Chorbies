@@ -46,7 +46,7 @@ public class CU11 extends AbstractTest {
 			}, {
 				"admin", null
 			}, {
-				"customer1", IllegalArgumentException.class
+				"chorbi1", IllegalArgumentException.class
 			}
 		};
 
