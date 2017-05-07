@@ -96,6 +96,8 @@ public class LoveService {
 		love.setLoved(loved);
 		this.loveRepository.save(love);
 
+		Assert.isTrue(love.getLover()!= love.getLoved());
+
 		this.chorbiService.save(lover);
 		this.chorbiService.save(loved);
 	}
