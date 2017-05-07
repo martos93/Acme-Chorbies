@@ -14,11 +14,11 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+import repositories.EventRepository;
 import domain.Chorbi;
 import domain.CreditCard;
 import domain.Event;
 import domain.Manager;
-import repositories.EventRepository;
 
 @Service
 @Transactional
@@ -68,6 +68,8 @@ public class EventService {
 
 	public Event newEvent(Event event) {
 
+		Assert.isTrue(this.actorService.isAuthenticated());
+		this.managerService.checkLoggedIsManager();
 		final Manager logged = this.managerService.getLoggedManager();
 		Assert.isTrue(event.getManager().equals(logged));
 		final CreditCard c = event.getManager().getCreditCard();
