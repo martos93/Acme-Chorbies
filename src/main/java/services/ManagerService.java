@@ -14,15 +14,15 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+import repositories.ManagerRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 import domain.Chirp;
 import domain.CreditCard;
 import domain.Event;
 import domain.Manager;
 import forms.ManagerForm;
-import repositories.ManagerRepository;
-import security.Authority;
-import security.LoginService;
-import security.UserAccount;
 
 @Service
 @Transactional
@@ -43,8 +43,8 @@ public class ManagerService {
 
 	public Manager getLoggedManager() {
 		Manager res = null;
-		if (this.actorService.isAuthenticated()){
-			String username = LoginService.getPrincipal().getUsername();
+		if (this.actorService.isAuthenticated()) {
+			final String username = LoginService.getPrincipal().getUsername();
 			res = this.managerRepository.managerByUsername(username);
 		}
 		return res;
@@ -98,6 +98,19 @@ public class ManagerService {
 		final Authority aut = new Authority();
 		aut.setAuthority(Authority.MANAGER);
 		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(aut));
+	}
+
+	public boolean checkIsManager() {
+		boolean res = false;
+		final Authority aut = new Authority();
+		aut.setAuthority(Authority.MANAGER);
+		try {
+			res = LoginService.getPrincipal().getAuthorities().contains(aut);
+
+		} catch (final Exception e) {
+
+		}
+		return res;
 	}
 
 	public ManagerForm reconstructForm(final Manager manager) {
@@ -176,7 +189,7 @@ public class ManagerService {
 
 	public void register(Manager manager) {
 		Assert.notNull(manager);
-		Assert.isTrue(administratorService.isAdministrator());
+		Assert.isTrue(this.administratorService.isAdministrator());
 		UserAccount userAccount;
 		final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 		userAccount = manager.getUserAccount();

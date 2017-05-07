@@ -29,6 +29,14 @@ public class CU2 extends AbstractTest {
 	private EventService	eventService;
 
 
+	//CU2: Un usuario no logueado accede a una vista donde se listan TODOS los eventos registrados. Los eventos que ya han pasado los verá en gris. 
+	//Los que se organizan en menos de un mes y tienen sitios libres también los verá destacados de otra forma.
+	//Los demás los verá normalmente. Los eventos se deben poder ordenar por el número de plazas disponibles.
+
+	//RF:Browse a listing that includes every event that was registered in the system. Past events must be greyed out; 
+	//events that are going to be organised in less than one month and have seats available must also be somewhat highlighted;
+	//the rest of events must be displayed normally.
+
 	@Test
 	public void closeEventList() {
 		final Object[][] testingData = {

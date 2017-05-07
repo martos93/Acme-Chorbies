@@ -29,6 +29,9 @@ public class CU1 extends AbstractTest {
 	private EventService	eventService;
 
 
+	//CU 1 - Un usuario no logueado accede a una vista donde se listan los eventos que se van a organizar en menos de un mes y tienen sitios libres. 
+	//RF: A user who is not authenticated must be able to:
+	//Browse the listing of events that are going to be organised in less than one month and have seats available.
 	@Test
 	public void closeEventList() {
 		final Object[][] testingData = {
