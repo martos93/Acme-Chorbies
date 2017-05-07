@@ -43,17 +43,17 @@ public class CU4 extends AbstractTest {
 			}, {
 				"manager1", null, "dsadadsa", "desc", 2, "http:\\google.com/123"
 			}, {
-				"manager1", null, "dsadadsa", "desc", 1, ""
+				"manager2", null, "dsadadsa", "desc", 1, ""
 			}, {
 				"manager1", null, "dsadadsa", "desc", 200, "http:\\pict.com/dsad"
 			}, {
 				"manager1", ConstraintViolationException.class, "title", "desc", 0, ""
 			}, {
-				"manager1", ConstraintViolationException.class, "title", "", 1, ""
+				"manager2", ConstraintViolationException.class, "title", "", 1, ""
 			}, {
 				"manager1", ConstraintViolationException.class, "", "desc", 1, ""
 			}, {
-				"manager1", ConstraintViolationException.class, "title", "desc", 1, "ddd"
+				"manager3", ConstraintViolationException.class, "title", "desc", 1, "ddd"
 			}
 		};
 		for (int i = 0; i < testingData.length; i++)
