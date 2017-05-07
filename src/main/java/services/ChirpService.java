@@ -191,10 +191,12 @@ public class ChirpService {
 		final Authority aut = new Authority();
 		aut.setAuthority(Authority.MANAGER);
 
+		final Manager manager = this.managerService.getLoggedManager();
+		Assert.isTrue(manager.getUserAccount().getAuthorities().contains(aut));
+		Assert.isTrue(event.getManager().equals(manager));
+
 		try {
-			final Manager manager = this.managerService.getLoggedManager();
-			Assert.isTrue(manager.getUserAccount().getAuthorities().contains(aut));
-			Assert.isTrue(event.getManager().equals(manager));
+
 			for (final Chorbi c : event.getChorbies()) {
 				final Chirp aux = this.reconstruct(chirpManagerForm, binding, c);
 				final Chorbi receiverChorbi = aux.getReceiver();
