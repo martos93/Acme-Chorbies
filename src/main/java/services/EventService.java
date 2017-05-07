@@ -90,6 +90,7 @@ public class EventService {
 	public void delete(final Event event) {
 
 		this.managerService.checkLoggedIsManager();
+		Assert.isTrue(event.getManager().equals(this.managerService.getLoggedManager()));
 		this.eventRepository.delete(event);
 
 	}
