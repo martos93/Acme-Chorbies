@@ -176,6 +176,7 @@ public class ManagerService {
 
 	public void register(Manager manager) {
 		Assert.notNull(manager);
+		Assert.isTrue(administratorService.isAdministrator());
 		UserAccount userAccount;
 		final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 		userAccount = manager.getUserAccount();

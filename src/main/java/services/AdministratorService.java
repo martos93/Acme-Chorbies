@@ -51,6 +51,20 @@ public class AdministratorService {
 		aut.setAuthority(Authority.ADMIN);
 		Assert.isTrue(LoginService.getPrincipal().getAuthorities().contains(aut));
 	}
+	
+	public Boolean isAdministrator() {
+		Boolean res = false;
+		try {
+			final Authority aut = new Authority();
+			aut.setAuthority(Authority.ADMIN);
+
+			res = LoginService.getPrincipal().getAuthorities().contains(aut);
+		} catch (final Exception e) {
+			res = false;
+		}
+
+		return res;
+	}
 
 	public void banChorbi(final Chorbi c) {
 		Assert.isTrue(this.actorService.isAuthenticated());

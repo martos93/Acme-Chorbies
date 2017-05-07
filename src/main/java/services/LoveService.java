@@ -60,6 +60,7 @@ public class LoveService {
 	}
 
 	public Collection<Love> findAllLove() {
+		Assert.isTrue(chorbiService.isChorbi());
 		final Chorbi chorbi = this.chorbiService.findByPrincipal();
 		return chorbi.getLove();
 	}
