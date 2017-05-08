@@ -71,10 +71,10 @@ public class EventManagerController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(Event event, final BindingResult bindingResult) {
+	public ModelAndView save(final Event e, final BindingResult bindingResult) {
 		ModelAndView modelAndView;
 
-		event = this.eventService.reconstruct(event, bindingResult);
+		final Event event = this.eventService.reconstruct(e, bindingResult);
 		if (bindingResult.hasErrors())
 			modelAndView = this.createEditModelAndView(event);
 		else
@@ -86,14 +86,13 @@ public class EventManagerController extends AbstractController {
 					chirpManagerForm.setText("The " + event.getTitle().toUpperCase() + " has been modified by " + event.getManager().getName() + "!");
 					chirpManagerForm.setAttachments(new ArrayList<String>());
 
-					this.chirpService.broadcastChirps(event, chirpManagerForm, bindingResult);
+					this.chirpService.broadcastChirps(event, chirpManagerForm, null);
+					this.eventService.editEvent(event);
+					modelAndView = this.listMyEvents();
+				} else {
+					this.eventService.save(event);
+					modelAndView = this.listMyEvents();
 				}
-
-				this.eventService.save(event);
-				modelAndView = this.listMyEvents();
-
-				this.eventService.editEvent(event);
-				modelAndView = this.listMyEvents();
 
 			} catch (final Throwable oops) {
 				modelAndView = this.createEditModelAndView(event, "event.commit.error");
@@ -133,12 +132,9 @@ public class EventManagerController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
-	public ModelAndView create(Event event, final BindingResult binding) {
+	public ModelAndView create(final Event event, final BindingResult binding) {
 
 		ModelAndView res = new ModelAndView();
-
-		event = this.eventService.reconstruct(event, binding);
-
 		if (binding.hasErrors()) {
 			res = new ModelAndView("event/create");
 			res.addObject("requestUri", "event/manager/create.do");
