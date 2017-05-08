@@ -1,10 +1,8 @@
 
 package controllers.chorbi;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
-import forms.LoveForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -20,6 +18,7 @@ import services.LoveService;
 import controllers.AbstractController;
 import domain.Chorbi;
 import domain.Love;
+import forms.LoveForm;
 
 @Component
 @RequestMapping("like/chorbi")
@@ -31,9 +30,9 @@ public class LoveChorbiController extends AbstractController {
 
 	@Autowired
 	private ChorbiService	chorbiService;
-	
+
 	@Autowired
-	private ActorService 	actorService;
+	private ActorService	actorService;
 
 
 	//Constructor----------------------------------------------
@@ -46,15 +45,15 @@ public class LoveChorbiController extends AbstractController {
 	@RequestMapping("/listLikes")
 	public ModelAndView listLikes() {
 		final ModelAndView modelAndView;
-		
+
 		final Chorbi logged = this.chorbiService.getLoggedChorbi();
 		final Collection<Love> loves = this.loveService.findAllLove();
-		boolean canShow=actorService.checkCreditCard(logged.getCreditCard());
+		final boolean canShow = this.actorService.checkCreditCard(logged.getCreditCard());
 
 		modelAndView = new ModelAndView("love/list");
 		modelAndView.addObject("loves", loves);
 		modelAndView.addObject("actor", logged);
-		modelAndView.addObject("canShow",canShow);
+		modelAndView.addObject("canShow", canShow);
 		modelAndView.addObject("requestURI", "/listLikes.do");
 
 		return modelAndView;
@@ -69,7 +68,7 @@ public class LoveChorbiController extends AbstractController {
 		modelAndView = new ModelAndView("love/list");
 		modelAndView.addObject("loves", loves);
 		modelAndView.addObject("actor", this.chorbiService.findByPrincipal());
-		modelAndView.addObject("canShow",true);
+		modelAndView.addObject("canShow", true);
 		modelAndView.addObject("requestURI", "/listLikedBy.do");
 
 		return modelAndView;
@@ -85,7 +84,7 @@ public class LoveChorbiController extends AbstractController {
 		ModelAndView modelAndView;
 
 		modelAndView = new ModelAndView("love/edit");
-		modelAndView.addObject("requestURI", "like/chorbi/create.do?id="+this.chorbiService.findChorbiByUsername(loveForm.getLoved()).getId());
+		modelAndView.addObject("requestURI", "like/chorbi/create.do?id=" + this.chorbiService.findChorbiByUsername(loveForm.getLoved()).getId());
 		modelAndView.addObject("loveForm", loveForm);
 		modelAndView.addObject("message", string);
 		return modelAndView;
@@ -119,32 +118,29 @@ public class LoveChorbiController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(LoveForm loveForm, final BindingResult bindingResult) {
+	public ModelAndView save(final LoveForm loveForm, final BindingResult bindingResult) {
 		ModelAndView modelAndView;
 		if (bindingResult.hasErrors())
 			modelAndView = this.createEditModelAndView(loveForm);
 		else
 			try {
-				Love love = this.loveService.reconstruct(loveForm, bindingResult);
-				Chorbi principal = this.chorbiService.findByPrincipal();
+				final Love love = this.loveService.reconstruct(loveForm, bindingResult);
+				final Chorbi principal = this.chorbiService.findByPrincipal();
 				boolean repeat = false;
 				love.setLover(principal);
 				if (!love.getLoved().equals(love.getLover())) {
-					for(Love l: principal.getLove()){
-						if(l.getLoved().equals(love.getLoved())){
+					for (final Love l : principal.getLove())
+						if (l.getLoved().equals(love.getLoved())) {
 							repeat = true;
 							break;
 						}
-					}
-					if(!repeat){
+					if (!repeat) {
 						this.loveService.addLove(love);
 						modelAndView = new ModelAndView("redirect:/welcome/index.do");
 
-					}else{
+					} else
 						modelAndView = this.createEditModelAndView(loveForm, "love.commit.error");
-					}
-				}
-				else
+				} else
 					modelAndView = this.createEditModelAndView(loveForm, "love.commit.error");
 
 			} catch (final Throwable oops) {
