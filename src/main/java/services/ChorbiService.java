@@ -344,7 +344,6 @@ public class ChorbiService {
 		location.setState(chorbiForm.getState());
 
 		chorbi.setLocation(location);
-
 		final CreditCard creditcard = new CreditCard();
 		creditcard.setBrandName(chorbiForm.getBrandName());
 		creditcard.setCvvCode(chorbiForm.getCvvCode());

@@ -120,7 +120,6 @@ public class ChorbiController extends AbstractController {
 				res.addObject("message", "chorbi.acceptTerms.error");
 			} else
 				try {
-
 					Assert.isTrue(this.chorbiService.edad(chorbi) >= 18);
 					this.chorbiService.register(chorbi);
 					res = new ModelAndView("redirect:../welcome/index.do");

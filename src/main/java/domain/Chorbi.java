@@ -29,7 +29,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 	@Index(columnList = "birthDate")
 })
 public class Chorbi extends Actor {
-
 	//Atributes----------------------------------------------------------------------
 
 	private String		picture;
