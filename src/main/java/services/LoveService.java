@@ -1,21 +1,23 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 
 import javax.transaction.Transactional;
 
-import forms.LoveForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import repositories.LoveRepository;
 import domain.Chorbi;
 import domain.Love;
+import forms.LoveForm;
+import repositories.LoveRepository;
 
 @Service
 @Transactional
@@ -60,7 +62,7 @@ public class LoveService {
 	}
 
 	public Collection<Love> findAllLove() {
-		Assert.isTrue(chorbiService.isChorbi());
+		Assert.isTrue(this.chorbiService.isChorbi());
 		final Chorbi chorbi = this.chorbiService.findByPrincipal();
 		return chorbi.getLove();
 	}
@@ -87,6 +89,29 @@ public class LoveService {
 		Chorbi loved;
 		Chorbi lover;
 
+		final String comment = love.getComment();
+		final String[] str = comment.split(" ");
+		final ArrayList<String> arrayList = new ArrayList<>();
+
+		final String phone = love.getLover().getPhoneNumber();
+		final String[] strp = phone.split(" ");
+		final ArrayList<String> pList = new ArrayList<>();
+		for (final String string : strp)
+			pList.add(string);
+		for (final String string : str)
+			if (string.equals(love.getLover().getEmail()) || pList.contains(string)) {
+				final int i = string.length();
+
+				final String repated = String.join("", Collections.nCopies(i, "*"));
+				arrayList.add(repated);
+			} else
+				arrayList.add(string);
+		String comm = new String();
+		for (int i = 0; i < arrayList.size(); i++)
+			comm += arrayList.get(i) + " ";
+
+		love.setComment(comm);
+
 		loved = love.getLoved();
 		Assert.notNull(loved);
 		lover = love.getLover();
@@ -96,7 +121,7 @@ public class LoveService {
 		love.setLoved(loved);
 		this.loveRepository.save(love);
 
-		Assert.isTrue(love.getLover()!= love.getLoved());
+		Assert.isTrue(love.getLover() != love.getLoved());
 
 		this.chorbiService.save(lover);
 		this.chorbiService.save(loved);
@@ -113,7 +138,7 @@ public class LoveService {
 	}
 
 	public Love reconstruct(final LoveForm loveForm, final BindingResult binding) {
-		Love res = create();
+		final Love res = this.create();
 		res.setComment(loveForm.getComment());
 		res.setStars(loveForm.getStars());
 		res.setLoved(this.chorbiService.findChorbiByUsername(loveForm.getLoved()));

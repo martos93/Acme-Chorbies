@@ -10,81 +10,83 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 
-	<display:table name="events" id="row" requestURI="${requestURI}"
-		pagesize="5" class="displaytag">
-		<security:authorize access="hasRole('MANAGER')">
-			<spring:message code="event.edit" var="edit" />
-			<display:column title="${edit}">
-	
-				<input
-					onclick="javascript: window.location.replace('event/manager/edit.do?id=${row.id}');"
-					value="<spring:message code="event.edit" />" type="button"
-					name="edit" />
-	
-			</display:column>
-		</security:authorize>
-		
-		<spring:message code="event.title" var="title" />
-		<display:column property="title" title="${title}" />
+<display:table name="events" id="row" requestURI="${requestURI}"
+	pagesize="5" class="displaytag">
+	<security:authorize access="hasRole('MANAGER')">
+		<spring:message code="event.edit" var="edit" />
+		<display:column title="${edit}">
 
-		<spring:message code="event.description" var="description" />
-		<display:column property="description" title="${description}" />
+			<input
+				onclick="javascript: window.location.replace('event/manager/edit.do?id=${row.id}');"
+				value="<spring:message code="event.edit" />" type="button"
+				name="edit" />
 
-		<spring:message code="event.picture" var="picture" />
-		<display:column property="picture" title="${picture}" />
+		</display:column>
+	</security:authorize>
 
-		<spring:message code="event.seatsOffered" var="seatsOffered" />
-		<display:column property="seatsOffered" title="${seatsOffered}" />
+	<spring:message code="event.title" var="title" />
+	<display:column property="title" title="${title}" />
 
-		<spring:message code="event.seatsFree" var="seatsFree"/>
-		<display:column title="${seatsFree}" sortable="true">
+	<spring:message code="event.description" var="description" />
+	<display:column property="description" title="${description}" />
+
+	<spring:message code="event.picture" var="picture" />
+	<display:column property="picture" title="${picture}" />
+
+	<spring:message code="event.seatsOffered" var="seatsOffered" />
+	<display:column property="seatsOffered" title="${seatsOffered}" />
+
+	<spring:message code="event.seatsFree" var="seatsFree" />
+	<display:column title="${seatsFree}" sortable="true">
 		${row.seatsOffered - fn:length(row.chorbies) }
 		</display:column>
-		
-		<spring:message code="event.moment" var="moment" />
-		<display:column property="moment" title="${moment}" />
-		
-		<security:authorize access="hasRole('MANAGER')">		
-			<spring:message code="event.broadcast" var="broadcast" />
-			<display:column title="${broadcast}">
-				<jstl:if test="${not empty row.chorbies}">
+
+	<spring:message code="event.moment" var="moment" />
+	<display:column property="moment" title="${moment}" />
+
+	<security:authorize access="hasRole('MANAGER')">
+		<spring:message code="event.broadcast" var="broadcast" />
+		<display:column title="${broadcast}">
+			<jstl:if test="${not empty row.chorbies}">
 				<input type="button"
-					   onclick="document.location.href='chirp/manager/broadcast.do?eventId=${row.id}'"
-					   value="${broadcast }" />
-				</jstl:if>
-			</display:column>
-	
-			<spring:message code="event.delete" var="delete" />
-			<display:column title="${delete}">
-	
-				<input
-					onclick="javascript: window.location.replace('event/manager/delete.do?id=${row.id}');"
-					value="<spring:message code="event.delete" />" type="button"
-					name="delete" />
-	
-			</display:column>
-			</security:authorize>
-			
-			
-			<security:authorize access="hasRole('CHORBI')">					
-				<spring:message code="event.unregister" var="unregister" />
-				<display:column title="${unregister}">
-	
-				<input
-					onclick="javascript: window.location.replace('event/chorbi/unregister.do?id=${row.id}');"
-					value="<spring:message code="event.unregister" />" type="button"
-					name="unregister" />
-	
-				</display:column>
-			</security:authorize>
-		
+					onclick="document.location.href='chirp/manager/broadcast.do?eventId=${row.id}'"
+					value="${broadcast }" />
+			</jstl:if>
+		</display:column>
+
+		<spring:message code="event.delete" var="delete" />
+		<display:column title="${delete}">
+
+			<input
+				onclick="javascript: window.location.replace('event/manager/delete.do?id=${row.id}');"
+				value="<spring:message code="event.delete" />" type="button"
+				name="delete" />
+
+		</display:column>
+	</security:authorize>
 
 
-	</display:table>
+	<security:authorize access="hasRole('CHORBI')">
+		<spring:message code="event.unregister" var="unregister" />
+		<display:column title="${unregister}">
 
+			<input
+				onclick="javascript: window.location.replace('event/chorbi/unregister.do?id=${row.id}');"
+				value="<spring:message code="event.unregister" />" type="button"
+				name="unregister" />
+
+		</display:column>
+	</security:authorize>
+
+
+
+</display:table>
+
+
+<security:authorize access="hasRole('MANAGER')">
 	<div>
 		<input
 			onclick="javascript: window.location.replace('event/manager/create.do');"
@@ -92,4 +94,5 @@
 			name="create" />
 
 	</div>
+</security:authorize>
 

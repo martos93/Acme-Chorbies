@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.ActorService;
-import services.ChorbiService;
-import services.LoveService;
 import controllers.AbstractController;
 import domain.Chorbi;
 import domain.Love;
 import forms.LoveForm;
+import services.ActorService;
+import services.ChorbiService;
+import services.LoveService;
 
 @Component
 @RequestMapping("like/chorbi")
@@ -64,11 +64,13 @@ public class LoveChorbiController extends AbstractController {
 		final ModelAndView modelAndView;
 
 		final Collection<Love> loves = this.loveService.findAllLoveBy();
+		final Chorbi logged = this.chorbiService.getLoggedChorbi();
+		final boolean canShow = this.actorService.checkCreditCard(logged.getCreditCard());
 
 		modelAndView = new ModelAndView("love/list");
 		modelAndView.addObject("loves", loves);
-		modelAndView.addObject("actor", this.chorbiService.findByPrincipal());
-		modelAndView.addObject("canShow", true);
+		modelAndView.addObject("actor", logged);
+		modelAndView.addObject("canShow", canShow);
 		modelAndView.addObject("requestURI", "/listLikedBy.do");
 
 		return modelAndView;
@@ -105,11 +107,20 @@ public class LoveChorbiController extends AbstractController {
 
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public ModelAndView delete(@RequestParam final int id) {
-		ModelAndView modelAndView;
+		ModelAndView modelAndView = new ModelAndView("redirect:/like/chorbi/list.do");
 
 		try {
-			this.loveService.removeLove(id);
-			modelAndView = new ModelAndView("redirect:/welcome/index.do");
+			final Love love = this.loveService.findOne(id);
+			final Chorbi chorbi = this.chorbiService.findByPrincipal();
+
+			if (chorbi.getLovedBy().contains(love)) {
+				this.loveService.removeLove(id);
+				modelAndView = new ModelAndView("redirect:/like/chorbi/listLikedBy.do");
+			}
+			if (chorbi.getLove().contains(love)) {
+				this.loveService.removeLove(id);
+				modelAndView = new ModelAndView("redirect:/like/chorbi/listLikes.do");
+			}
 		} catch (final Throwable oops) {
 			modelAndView = new ModelAndView("redirect:/chorbi/list.do");
 		}
@@ -136,7 +147,7 @@ public class LoveChorbiController extends AbstractController {
 						}
 					if (!repeat) {
 						this.loveService.addLove(love);
-						modelAndView = new ModelAndView("redirect:/welcome/index.do");
+						modelAndView = new ModelAndView("redirect:/like/chorbi/listLikes.do");
 
 					} else
 						modelAndView = this.createEditModelAndView(loveForm, "love.commit.error");
