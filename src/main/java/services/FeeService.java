@@ -8,6 +8,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import domain.Fee;
 import repositories.FeeRepository;
@@ -21,6 +23,9 @@ public class FeeService {
 
 	@Autowired
 	private AdministratorService	administratorService;
+
+	@Autowired
+	private Validator				validator;
 
 
 	public FeeService() {
@@ -37,10 +42,13 @@ public class FeeService {
 		return res;
 
 	}
-	public void save(final Fee fee) {
-		this.administratorService.checkLoggedIsAdmin();
+	public Fee save(final Fee fee) {
 		Assert.notNull(fee);
-		this.feeRepository.save(fee);
+		final Fee saved;
+		this.administratorService.checkLoggedIsAdmin();
+		saved = this.feeRepository.save(fee);
+		this.feeRepository.flush();
+		return saved;
 	}
 
 	public Fee findOne(final int id) {
@@ -65,6 +73,23 @@ public class FeeService {
 		fee = this.feeRepository.findAll().get(0);
 		Assert.notNull(fee);
 		return fee;
+	}
+
+	public Fee reconstruct(final Fee fee, final BindingResult binding) {
+
+		Fee res = new Fee();
+
+		if (fee.getId() == 0)
+			res = fee;
+		else {
+			res = this.feeRepository.findOne(fee.getId());
+			res.setChorbiAmount(fee.getChorbiAmount());
+			res.setManagerAmount(fee.getManagerAmount());
+		}
+		this.validator.validate(res, binding);
+
+		return res;
+
 	}
 
 }

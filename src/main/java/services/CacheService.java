@@ -8,6 +8,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import domain.Cache;
 import repositories.CacheRepository;
@@ -22,6 +24,9 @@ public class CacheService {
 
 	@Autowired
 	private AdministratorService	administratorService;
+
+	@Autowired
+	private Validator				validator;
 
 
 	//Constructor--------------------------------------------------------
@@ -65,6 +70,24 @@ public class CacheService {
 		cache = this.cacheRepository.findAll().get(0);
 		Assert.notNull(cache);
 		return cache;
+	}
+
+	public Cache reconstruct(final Cache cache, final BindingResult binding) {
+
+		Cache res = new Cache();
+
+		if (cache.getId() == 0)
+			res = cache;
+		else {
+			res = this.cacheRepository.findOne(cache.getId());
+			res.setHours(cache.getHours());
+			res.setMinutes(cache.getMinutes());
+			res.setSeconds(cache.getSeconds());
+		}
+		this.validator.validate(res, binding);
+
+		return res;
+
 	}
 
 }

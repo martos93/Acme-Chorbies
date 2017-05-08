@@ -1,8 +1,6 @@
 
 package controllers.administrator;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -55,7 +53,7 @@ public class CacheAdministratorController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final Cache cache, final BindingResult binding) {
+	public ModelAndView save(Cache cache, final BindingResult binding) {
 
 		ModelAndView result;
 
@@ -63,10 +61,12 @@ public class CacheAdministratorController {
 			result = this.createEditModelAndView(cache);
 		else
 			try {
+				cache = this.cacheService.reconstruct(cache, binding);
 				this.cacheService.save(cache);
 				result = new ModelAndView("redirect:/");
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(cache, "cache.commit.error");
+				System.out.println(oops.getMessage());
 			}
 		return result;
 	}
