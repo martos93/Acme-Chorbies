@@ -4,6 +4,8 @@ package domain;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -14,6 +16,8 @@ public class Cache extends DomainEntity {
 	private String	seconds;
 
 
+	@Min(0)
+	@Digits(integer = 9, fraction = 2)
 	public String getHours() {
 		return this.hours;
 	}
@@ -22,6 +26,8 @@ public class Cache extends DomainEntity {
 		this.hours = hours;
 	}
 
+	@Min(0)
+	@Digits(integer = 9, fraction = 2)
 	public String getMinutes() {
 		return this.minutes;
 	}
@@ -30,6 +36,8 @@ public class Cache extends DomainEntity {
 		this.minutes = minutes;
 	}
 
+	@Min(0)
+	@Digits(integer = 9, fraction = 2)
 	public String getSeconds() {
 		return this.seconds;
 	}

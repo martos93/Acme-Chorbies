@@ -1,8 +1,6 @@
 
 package controllers.administrator;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -53,7 +51,7 @@ public class FeeAdministratorController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final Fee fee, final BindingResult binding) {
+	public ModelAndView save(Fee fee, final BindingResult binding) {
 
 		ModelAndView result;
 
@@ -61,10 +59,12 @@ public class FeeAdministratorController {
 			result = this.createEditModelAndView(fee);
 		else
 			try {
+				fee = this.feeService.reconstruct(fee, binding);
 				this.feeService.save(fee);
 				result = new ModelAndView("redirect:/");
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(fee, "fee.commit.error");
+				System.out.println(oops.getMessage());
 			}
 		return result;
 	}
