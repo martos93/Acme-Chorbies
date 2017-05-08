@@ -131,7 +131,6 @@ public class LoveService {
 
 		final Love love = this.findOne(loveId);
 		Assert.isTrue(this.chorbiService.isAuthenticated());
-		Assert.isTrue(this.chorbiService.findByPrincipal().equals(love.getLover()));
 
 		this.loveRepository.delete(love);
 
