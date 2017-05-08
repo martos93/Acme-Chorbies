@@ -12,5 +12,5 @@
 
     <acme:submit code="chirp.save" name="save"/>
 
-    <acme:cancel code="chirp.cancel" url="/event/manager/listevents.do"/>
+    <acme:cancel code="chirp.cancel" url="/event/manager/listMyEvents.do"/>
 </form:form>

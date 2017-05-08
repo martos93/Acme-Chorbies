@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import services.ChirpService;
 import services.EventService;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Controller
@@ -51,7 +52,10 @@ public class ChirpManagerController extends AbstractController {
             try {
                 Event event = this.eventService.findOne(eventId);
                 this.chirpService.broadcastChirps(event, chirpManagerForm, binding);
-                result = new ModelAndView("welcome/index");
+                result = new ModelAndView("event/listMyEvents");
+                final ArrayList<Event> events = new ArrayList<>(this.eventService.findByManager());
+                result.addObject("events", events);
+                result.addObject("requestURI", "event/manager/listMyEvents.do");
 
             } catch (final Throwable oops) {
                 result = this.createModelAndView(chirpManagerForm, eventId, "chirp.commit.error");
