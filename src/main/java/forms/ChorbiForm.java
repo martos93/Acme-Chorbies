@@ -66,7 +66,6 @@ public class ChorbiForm {
 	}
 
 	@CreditCardNumber
-	@NotBlank
 	public String getNumber() {
 		return this.number;
 	}

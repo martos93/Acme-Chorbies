@@ -323,8 +323,10 @@ public class ChorbiService {
 
 	public Chorbi reconstruct(final ChorbiForm chorbiForm, final BindingResult binding) {
 		final Chorbi chorbi = this.create();
-		chorbi.getUserAccount().setUsername(chorbiForm.getUsername());
-		chorbi.getUserAccount().setPassword(chorbiForm.getPassword());
+		if (chorbiForm.getUsername().length() > 0)
+			chorbi.getUserAccount().setUsername(chorbiForm.getUsername());
+		if (chorbiForm.getPassword().length() > 0)
+			chorbi.getUserAccount().setPassword(chorbiForm.getPassword());
 		chorbi.setName(chorbiForm.getName());
 		chorbi.setSurname(chorbiForm.getSurname());
 		chorbi.setEmail(chorbiForm.getEmail());
