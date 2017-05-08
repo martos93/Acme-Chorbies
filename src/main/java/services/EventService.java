@@ -14,11 +14,11 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import repositories.EventRepository;
 import domain.Chorbi;
 import domain.CreditCard;
 import domain.Event;
 import domain.Manager;
+import repositories.EventRepository;
 
 @Service
 @Transactional
@@ -127,19 +127,13 @@ public class EventService {
 	}
 
 	public Event reconstruct(final Event event, final BindingResult binding) {
+		final Event res = this.findOne(event.getId());
+		res.setTitle(event.getTitle());
+		res.setDescription(event.getDescription());
+		res.setPicture(event.getPicture());
+		res.setSeatsOffered(event.getSeatsOffered());
+		res.setMoment(event.getMoment());
 
-		Event res = new Event();
-
-		if (event.getId() == 0)
-			res = event;
-		else {
-			res = this.eventRepository.findOne(event.getId());
-			res.setTitle(event.getTitle());
-			res.setDescription(event.getDescription());
-			res.setPicture(event.getPicture());
-			res.setSeatsOffered(event.getSeatsOffered());
-			res.setMoment(event.getMoment());
-		}
 		this.validator.validate(res, binding);
 
 		return res;
