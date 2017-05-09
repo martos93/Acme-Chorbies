@@ -3,7 +3,6 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 
 import javax.transaction.Transactional;
@@ -105,9 +104,7 @@ public class LoveService {
 			eList.add(string);
 		for (final String string : str)
 			if (eList.contains(string) || pList.contains(string)) {
-				final int i = string.length();
-
-				final String repated = String.join("", Collections.nCopies(i, "*"));
+				final String repated = "********";
 				arrayList.add(repated);
 			} else
 				arrayList.add(string);
