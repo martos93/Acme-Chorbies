@@ -127,7 +127,7 @@ public class EventManagerController extends AbstractController {
 		final ModelAndView res = new ModelAndView("event/create");
 		final Event event = this.eventService.create();
 		res.addObject("event", event);
-		res.addObject("requestUri", "event/manager/create.do");
+		res.addObject("requestURI", "event/manager/create.do");
 		return res;
 	}
 
@@ -137,7 +137,7 @@ public class EventManagerController extends AbstractController {
 		ModelAndView res = new ModelAndView();
 		if (binding.hasErrors()) {
 			res = new ModelAndView("event/create");
-			res.addObject("requestUri", "event/manager/create.do");
+			res.addObject("requestURI", "event/manager/create.do");
 			res.addObject("event", event);
 
 		} else {
