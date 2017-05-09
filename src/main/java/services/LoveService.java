@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 
 import javax.transaction.Transactional;
@@ -13,10 +14,10 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import repositories.LoveRepository;
 import domain.Chorbi;
 import domain.Love;
 import forms.LoveForm;
+import repositories.LoveRepository;
 
 @Service
 @Transactional
@@ -97,12 +98,17 @@ public class LoveService {
 		final ArrayList<String> pList = new ArrayList<>();
 		for (final String string : strp)
 			pList.add(string);
+		final String email = love.getLover().getEmail();
+		final String[] stre = email.split(" ");
+		final ArrayList<String> eList = new ArrayList<>();
+		for (final String string : stre)
+			eList.add(string);
 		for (final String string : str)
-			if (string.equals(love.getLover().getEmail()) || pList.contains(string)) {
+			if (eList.contains(string) || pList.contains(string)) {
 				final int i = string.length();
 
-				//				final String repated = String.join("", Collections.nCopies(i, "*"));
-//				arrayList.add(repated);
+				final String repated = String.join("", Collections.nCopies(i, "*"));
+				arrayList.add(repated);
 			} else
 				arrayList.add(string);
 		String comm = new String();
