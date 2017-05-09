@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 
 import repositories.ManagerRepository;
 import security.Authority;
@@ -33,9 +31,6 @@ public class ManagerService {
 
 	@Autowired
 	private ActorService			actorService;
-
-	@Autowired
-	private Validator				validator;
 
 	@Autowired
 	private AdministratorService	administratorService;
@@ -163,7 +158,7 @@ public class ManagerService {
 		return manager;
 	}
 
-	public Manager reconstruct(final ManagerForm managerForm, final BindingResult binding) {
+	public Manager reconstruct(final ManagerForm managerForm) {
 		final Manager manager = this.create();
 		manager.getUserAccount().setUsername(managerForm.getUsername());
 		manager.getUserAccount().setPassword(managerForm.getPassword());
@@ -183,7 +178,6 @@ public class ManagerService {
 		manager.setCreditCard(creditcard);
 		manager.setVAT(managerForm.getVAT());
 
-		this.validator.validate(manager, binding);
 		return manager;
 	}
 
