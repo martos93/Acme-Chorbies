@@ -154,8 +154,16 @@ public class ChorbiController extends AbstractController {
 		final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 		if (chorbiForm.getPassword().isEmpty() == false) {
 			System.out.println(chorbiForm.getChorbiId());
-			Assert.isTrue(encoder.encodePassword(chorbiForm.getPassword(), null).equals(chorbi.getUserAccount().getPassword()));
 
+			try {
+				Assert.isTrue(encoder.encodePassword(chorbiForm.getPassword(), null).equals(chorbi.getUserAccount().getPassword()));
+			} catch (final Throwable oops) {
+				res.addObject("chorbiForm", chorbiForm);
+				res.addObject("edit", true);
+
+				res.addObject("message", "chorbi.password.error2");
+				return res;
+			}
 			try {
 				if (chorbiForm.getNewpassword().length() > 0 && chorbiForm.getRepeatnewpassword().length() > 0 || chorbiForm.getNewpassword().length() > 0 || chorbiForm.getRepeatnewpassword().length() > 0)
 					Assert.isTrue(chorbiForm.getNewpassword().equals(chorbiForm.getRepeatnewpassword()));
@@ -190,6 +198,7 @@ public class ChorbiController extends AbstractController {
 		} else {
 			res.addObject("chorbiForm", chorbiForm);
 			res.addObject("edit", true);
+
 			res.addObject("message", "chorbi.password.error");
 		}
 		return res;

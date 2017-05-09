@@ -11,7 +11,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<form:form action="${requestUri}" modelAttribute="event">
+<form:form action="${requestURI}" modelAttribute="event">
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 	<form:hidden path="manager" />
