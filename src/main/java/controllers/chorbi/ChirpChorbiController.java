@@ -37,9 +37,8 @@ public class ChirpChorbiController extends AbstractController {
 	public ModelAndView list() {
 		ModelAndView result;
 		result = new ModelAndView("chirp/list");
-
-		result.addObject("sended", this.chorbiService.findByPrincipal().getSended());
-		result.addObject("received", this.chorbiService.findByPrincipal().getReceived());
+		result.addObject("sended", chorbiService.findByPrincipal().getSended());
+		result.addObject("received", chorbiService.findByPrincipal().getReceived());
 
 		result.addObject("requestUri", "chirp/chorbi/list.do");
 
@@ -242,9 +241,13 @@ public class ChirpChorbiController extends AbstractController {
 
 		try {
 			this.chirpService.deleteChirp(chirpId);
+			Chorbi chorbi=chorbiService.findByPrincipal();
 			result = new ModelAndView("redirect:list.do");
+			result.addObject("chorbi",chorbi);
+			
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:list.do");
+			
 		}
 
 		return result;

@@ -470,6 +470,8 @@
 		</property>
 		<property name="senderC" ref="chorbi1" />
 		<property name="receiver" ref="chorbi2" />
+		<property name="senderName" value="chorbi1"/>
+		<property name="receiverName" value="chorbi2"/>
 	</bean>
 
 	<bean id="chirp2" class="domain.Chirp">
@@ -484,6 +486,8 @@
 		</property>
 		<property name="senderC" ref="chorbi1" />
 		<property name="receiver" ref="chorbi2" />
+		<property name="senderName" value="chorbi1"/>
+		<property name="receiverName" value="chorbi2"/>
 	</bean>
 
 	<bean id="chirp3" class="domain.Chirp">
@@ -498,6 +502,8 @@
 		</property>
 		<property name="senderC" ref="chorbi2" />
 		<property name="receiver" ref="chorbi1" />
+		<property name="senderName" value="chorbi2"/>
+		<property name="receiverName" value="chorbi1"/>
 	</bean>
 
 	<bean id="chirp4" class="domain.Chirp">
@@ -512,6 +518,8 @@
 		</property>
 		<property name="senderM" ref="manager1" />
 		<property name="receiver" ref="chorbi1" />
+		<property name="senderName" value="manager1"/>
+		<property name="receiverName" value="chorbi1"/>
 	</bean>
 
 	<!-- Banner -->

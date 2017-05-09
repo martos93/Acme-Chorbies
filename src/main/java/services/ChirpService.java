@@ -89,17 +89,22 @@ public class ChirpService {
 		chirp.setReceiver(chirpForm.getReceiver());
 		chirp.setText(chirpForm.getText());
 		chirp.setSubject(chirpForm.getSubject());
+		chirp.setReceiverName(chirpForm.getReceiver().getUserAccount().getUsername());
+		chirp.setSenderName(chirp.getSenderC().getUserAccount().getUsername());
 
 		this.validator.validate(chirp, binding);
 		return chirp;
 	}
 
-	public Chirp reconstruct(final ChirpManagerForm chirpManagerForm, final BindingResult binding, final Chorbi reciever) {
+	public Chirp reconstruct(final ChirpManagerForm chirpManagerForm, final BindingResult binding, final Chorbi receiver) {
 		final Chirp chirp = this.create();
 		chirp.setAttachments(chirpManagerForm.getAttachments());
-		chirp.setReceiver(reciever);
+		chirp.setReceiver(receiver);
 		chirp.setText(chirpManagerForm.getText());
 		chirp.setSubject(chirpManagerForm.getSubject());
+		chirp.setReceiverName(".");
+		chirp.setSenderName(".");
+		
 
 		this.validator.validate(chirp, binding);
 		return chirp;
@@ -108,12 +113,15 @@ public class ChirpService {
 	public void deleteChirp(final int chirpId) {
 		Assert.isTrue(this.chorbiService.isAuthenticated());
 		Assert.isTrue(this.chorbiService.isChorbi());
-		final Chorbi c = this.chorbiService.findByPrincipal();
-
 		final Chirp chirp = this.findOne(chirpId);
-		if (chirp.getReceiver().getId() == c.getId() || chirp.getSenderC().getId() == c.getId())
-			this.delete(chirp);
+		if (chirp.getReceiver() != null && chirp.getReceiver().getId() == chorbiService.findByPrincipal().getId())
+			chirp.setReceiver(null);
+		if (chirp.getSenderC() != null && chirp.getSenderC().getId() == chorbiService.findByPrincipal().getId())
+			chirp.setSenderC(null);
 
+		if (chirp.getReceiver() == null)
+			if (chirp.getSenderC() == null)
+				this.delete(chirp);
 	}
 
 	public void sendChirp(final Chirp chirp) {
@@ -198,6 +206,7 @@ public class ChirpService {
 		try {
 
 			for (final Chorbi c : event.getChorbies()) {
+				
 				final Chirp aux = this.reconstruct(chirpManagerForm, binding, c);
 				final Chorbi receiverChorbi = aux.getReceiver();
 				receiverChorbi.getReceived().add(aux);

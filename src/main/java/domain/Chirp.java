@@ -26,6 +26,8 @@ public class Chirp extends DomainEntity {
 	private String				text;
 	private String				subject;
 	private Collection<String>	attachments;
+	private String				senderName;
+	private String				receiverName;
 
 
 	@NotNull
@@ -98,6 +100,24 @@ public class Chirp extends DomainEntity {
 	}
 	public void setSenderM(final Manager senderM) {
 		this.senderM = senderM;
+	}
+	
+	@NotBlank
+	public String getSenderName() {
+		return this.senderName;
+	}
+
+	public void setSenderName(final String senderName) {
+		this.senderName = senderName;
+	}
+
+	@NotBlank
+	public String getReceiverName() {
+		return this.receiverName;
+	}
+
+	public void setReceiverName(final String receiverName) {
+		this.receiverName = receiverName;
 	}
 
 }

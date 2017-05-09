@@ -6,6 +6,7 @@
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <form:form action="${requestURI}" modelAttribute="chirpManagerForm">
+	
     <acme:textbox  code="chirp.subject" path="subject"/>
     <acme:textarea code="chirp.text" path="text"/>
     <acme:textbox code="chirp.attachments" path="attachments"/>

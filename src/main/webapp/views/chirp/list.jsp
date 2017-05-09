@@ -71,7 +71,7 @@
 	<display:column title="${replyColumn}">
 		<jstl:if test="${row.senderM == null}">
 		<input type="button"
-			onclick="document.location.href='chirp/chorbi/reply.do?senderName=${row.senderC.userAccount.username}'"
+			onclick="document.location.href='chirp/chorbi/reply.do?senderName=${row.senderName}'"
 			value="${replyColumn }" />
 		</jstl:if>
 	</display:column>
