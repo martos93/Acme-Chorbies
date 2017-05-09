@@ -2,6 +2,7 @@
 package controllers.manager;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -138,15 +139,17 @@ public class EventManagerController extends AbstractController {
 			res.addObject("requestURI", "event/manager/create.do");
 			res.addObject("event", event);
 
-		} else {
-
+		} else if (event.getMoment().after(new Date(System.currentTimeMillis()))) {
 			this.eventService.newEvent(event);
-			res = this.listMyEvents();
+			res = new ModelAndView("redirect:listMyEvents.do");
+		} else {
+			res = new ModelAndView("event/create");
+			res.addObject("event", event);
+			res.addObject("message", "event.error.date");
 		}
 		return res;
 
 	}
-
 	@RequestMapping("/listMyEvents")
 	public ModelAndView listMyEvents() {
 		final ModelAndView modelAndView;
