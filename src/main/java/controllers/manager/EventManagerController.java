@@ -12,21 +12,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ChirpService;
+import services.EventService;
 import controllers.AbstractController;
 import domain.Event;
 import forms.ChirpManagerForm;
-import services.ChirpService;
-import services.EventService;
-import services.ManagerService;
 
 @Controller
 @RequestMapping("event/manager")
 public class EventManagerController extends AbstractController {
 
 	//Service---------------------------------------------------
-	@Autowired
-	private ManagerService	managerService;
-
 	@Autowired
 	private EventService	eventService;
 
@@ -132,9 +128,11 @@ public class EventManagerController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
-	public ModelAndView create(final Event event, final BindingResult binding) {
+	public ModelAndView create(Event event, final BindingResult binding) {
 
 		ModelAndView res = new ModelAndView();
+
+		event = this.eventService.reconstruct(event, binding);
 		if (binding.hasErrors()) {
 			res = new ModelAndView("event/create");
 			res.addObject("requestURI", "event/manager/create.do");

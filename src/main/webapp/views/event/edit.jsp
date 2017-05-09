@@ -13,7 +13,6 @@
 
 <form:form action="${requestURI}" modelAttribute="event">
 	<form:hidden path="id" />
-	<form:hidden path="version" />
 	<form:hidden path="manager" />
 	<form:hidden path="chorbies" />
 
