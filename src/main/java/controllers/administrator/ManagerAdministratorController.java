@@ -60,7 +60,7 @@ public class ManagerAdministratorController extends AbstractController{
 
 			if (managerForm.getPassword().equals(managerForm.getConfirmPassword())) {
 
-				final Manager manager = this.managerService.reconstruct(managerForm, bindingResult);
+				final Manager manager = this.managerService.reconstruct(managerForm);
 
 				if (bindingResult.hasErrors()) {
 					System.out.println(bindingResult.getAllErrors());
