@@ -39,11 +39,11 @@ public class CU7 extends AbstractTest {
 	public void registerEvent() {
 		final Object[][] testingData = {
 			{
-				"chorbi1", null, 57
+				"chorbi1", null, 65
 			}, {
-				"chorbi2", IllegalArgumentException.class, 57
+				"chorbi2", IllegalArgumentException.class, 65
 			}, {
-				"chorbi3", IllegalArgumentException.class, 57
+				"chorbi3", IllegalArgumentException.class, 65
 			},
 
 		};
