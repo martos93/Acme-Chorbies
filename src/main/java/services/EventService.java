@@ -137,8 +137,10 @@ public class EventService {
 			res.setPicture(event.getPicture());
 			res.setSeatsOffered(event.getSeatsOffered());
 			res.setMoment(event.getMoment());
+			res.setManager(managerService.findByPrincipal());
+			res.setChorbies(event.getChorbies());
 		}
-		this.validator.validate(res, binding);
+//		this.validator.validate(res, binding);
 
 		return res;
 
