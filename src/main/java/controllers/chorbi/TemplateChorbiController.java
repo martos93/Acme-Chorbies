@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Chorbi;
-import domain.Template;
 import services.ActorService;
 import services.ChorbiService;
 import services.TemplateService;
+import domain.Chorbi;
+import domain.Template;
 
 @Component
 @RequestMapping("/template/chorbi")
@@ -28,10 +28,10 @@ public class TemplateChorbiController {
 
 	@Autowired
 	private ChorbiService	chorbiService;
-	
+
 	@Autowired
-	private ActorService 	actorService;
-	
+	private ActorService	actorService;
+
 
 	protected ModelAndView createEditModelAndView(final Template template) {
 		ModelAndView result;
@@ -67,26 +67,25 @@ public class TemplateChorbiController {
 	}
 
 	@RequestMapping(value = "/search", method = RequestMethod.POST, params = "search")
-	public ModelAndView save(final Template template, final BindingResult binding) {
+	public ModelAndView save(Template template, final BindingResult binding) {
 
 		ModelAndView result;
-		try {
-			//final Template t = this.templateService.reconstruct(template, binding);
-			final Template lastSearch = this.chorbiService.getLoggedChorbi().getTemplate();
 
-			if (binding.hasErrors()) {
-				result = this.createEditModelAndView(template);
-				System.out.println(binding.getAllErrors());
-			} else if (this.templateService.sameTemplate(template, lastSearch) == true && this.templateService.isCached(template) == true) {
+		template = this.templateService.reconstruct(template, binding);
+		final Template lastSearch = this.chorbiService.getLoggedChorbi().getTemplate();
 
-				Assert.isTrue(actorService.checkCreditCard(chorbiService.getLoggedChorbi().getCreditCard()));
-				final Collection<Chorbi> res = template.getResults();
-				System.out.println("devolvemos guardado");
-				result = new ModelAndView("chorbi/list");
-				result.addObject("chorbi", res);
-				result.addObject("requestURI", "chorbi/list.do");
-			} else {
+		if (binding.hasErrors()) {
+			result = this.createEditModelAndView(template);
+			System.out.println(binding.getAllErrors());
+		} else if (this.templateService.sameTemplate(template, lastSearch) == true && this.templateService.isCached(template) == true) {
 
+			Assert.isTrue(this.actorService.checkCreditCard(this.chorbiService.getLoggedChorbi().getCreditCard()));
+			final Collection<Chorbi> res = template.getResults();
+			result = new ModelAndView("chorbi/list");
+			result.addObject("chorbi", res);
+			result.addObject("requestURI", "chorbi/list.do");
+		} else
+			try {
 				final Collection<Chorbi> res = this.chorbiService.getChorbiesByTemplate(template);
 				System.out.println("devolvemos nuevo");
 				Template temp = this.templateService.findOne(template.getId());
@@ -102,13 +101,12 @@ public class TemplateChorbiController {
 				result = new ModelAndView("chorbi/list");
 				result.addObject("chorbi", res);
 				result.addObject("requestUri", "chorbi/list.do");
-			}
-		} catch (final Throwable oops) {
-			System.out.println(oops.getMessage());
-			result = this.createEditModelAndView(template, "template.commit.error");
+			} catch (final Throwable oops) {
+				System.out.println(oops.getMessage());
+				result = this.createEditModelAndView(template, "template.commit.error");
 
-		}
+			}
+
 		return result;
 	}
-
 }
